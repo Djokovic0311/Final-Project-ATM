@@ -24,13 +24,4 @@ public class Currency {
         this.exchangeRate = exchangeRate;
     }
 }
-//
-//enum CurrencyType {
-//    // currency types supported
-//    USD,
-//    GBP,
-//    EUR,
-//    CNY,
-//    HKD
-//}
 

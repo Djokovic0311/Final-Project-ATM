@@ -1,8 +1,7 @@
 public class SavingAccount extends Account{
 
-
     @Override
-    public boolean transfer(int from, int to, Currency currency) {
+    public boolean transfer(Account to, Currency currency) {
         return false;
     }
 }

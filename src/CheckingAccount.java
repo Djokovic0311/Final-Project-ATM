@@ -2,10 +2,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CheckingAccount extends Account{
-    // map key: one of 5 typea of currency(type, rate)
-    private Map<Currency, Double> balance;
 
-    // constructor with currency list
+    // constructor with currency
     public CheckingAccount(List<Currency> currencies) {
         this.currencies = currencies;
     }
