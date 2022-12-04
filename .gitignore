@@ -1,0 +1,14 @@
+.idea/
+out/
+part1/
+
+*.DS_Store
+*.iml
+*.classpath
+*.settings
+*.project
+*.log
+*.class
+*.wav
+Footer
+Footer
