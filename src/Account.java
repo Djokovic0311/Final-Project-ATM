@@ -54,7 +54,7 @@ public abstract class Account {
     
     // transfer money from one account to another, 
     // return true if the transfer is valid
-    public abstract boolean transfer(Account to, Currency currency);
+    public abstract boolean transfer(Account to, Currency currency, double amount);
 
     // set the balance of a given currency
     public void setBalanceByCurrency(Currency currency, double amount)  {
@@ -66,10 +66,20 @@ public abstract class Account {
         return this.balance.get(currency);
     }
 
-    // add amount to a specific currency
-    public void addToCurrency(Currency currency, double amount) {
+    // deposit amount to a specific currency
+    public void deposit(Currency currency, double amount) {
         this.balance.put(currency, this.balance.getOrDefault(currency,0.0) + amount);
     }
+
+    // withdraw amount to a specific currency, if not enough, return false
+    public boolean withdraw(Currency currency, double amount) {
+        if(this.balance.containsKey(currency) && this.balance.get(currency) >= amount) {
+            this.balance.put(currency, this.balance.getOrDefault(currency,0.0) - amount);
+            return true;
+        }
+        else return false;
+    }
+
     // getters and setters
     public int getAccountID() {
         return accountID;
