@@ -1,6 +1,6 @@
-/*
+/**
     This is the enum for transaction type
-       @author: Jiahang Li
+    @author: Jiahang Li
     @version: 1.0
  */
 
@@ -9,5 +9,5 @@ public enum TransactionType {
     SELLSTOCK,
     TRANSFER,
     WITHDRAW,
-    DEPOSIT
+    MANAGER, DEPOSIT
 }
