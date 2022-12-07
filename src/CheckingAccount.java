@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.Map;
-/*
+/**
     This is the class for Checking Account
     @author: Jiahang Li
     @version: 1.0
