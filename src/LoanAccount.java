@@ -21,8 +21,5 @@ public class LoanAccount extends Account{
             customer.createAccount(type, startBalance);}
     }
 
-    public Loan[] checkLoans() {
-    	return //read from SQL
-    }
 }
 
