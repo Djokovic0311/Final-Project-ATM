@@ -1,6 +1,9 @@
 import java.awt.*;
+import java.awt.event.*;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
+
 /*
  * Created by JFormDesigner on Wed Dec 07 17:34:37 EST 2022
  */
@@ -8,11 +11,42 @@ import javax.swing.border.*;
 
 
 /**
- * @author unknown
+ * @author Jiahang Li
+ * @version 1.0
  */
-public class GUILoginWindow extends JFrame {
+public class GUILoginWindow extends JFrame{
     public GUILoginWindow() {
         initComponents();
+    }
+
+    private void reset(ActionEvent ae) {
+        userNameTextField.setText("");
+        passwordTextField.setText("");
+        RoleComboBox.setSelectedIndex(0);
+    }
+
+    private void login(ActionEvent e) {
+        String userName = userNameTextField.getText().toString();
+        String password = passwordTextField.getText().toString();
+        String role =  Objects.requireNonNull(RoleComboBox.getSelectedItem()).toString();
+        if(Utils.isEmpty(userName)) {
+            JOptionPane.showMessageDialog(this,"UserName cannot be empty");
+            return;
+        }
+        if(Utils.isEmpty(password)) {
+            JOptionPane.showMessageDialog(this,"Password cannot be empty");
+            return;
+        }
+        if("Customer".equals(role)) {
+            // customer login
+        }
+        else if("Manager".equals(role)) {
+            // manager login
+        }
+    }
+
+    private void register(ActionEvent e) {
+        // TODO add your code here
     }
 
     private void initComponents() {
@@ -20,15 +54,16 @@ public class GUILoginWindow extends JFrame {
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         heading = new JLabel();
-        label2 = new JLabel();
-        label3 = new JLabel();
-        textField1 = new JTextField();
-        textField2 = new JTextField();
-        comboBox1 = new JComboBox<>();
-        label4 = new JLabel();
+        usernameLabel = new JLabel();
+        passwordLabel = new JLabel();
+        userNameTextField = new JTextField();
+        passwordTextField = new JTextField();
+        RoleComboBox = new JComboBox<>();
+        roleLabel = new JLabel();
         buttonBar = new JPanel();
-        registerButton = new JButton();
         loginButton = new JButton();
+        registerButton = new JButton();
+        resetButton = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -49,32 +84,32 @@ public class GUILoginWindow extends JFrame {
                 contentPanel.add(heading);
                 heading.setBounds(0, 0, 374, heading.getPreferredSize().height);
 
-                //---- label2 ----
-                label2.setText("UserName");
-                contentPanel.add(label2);
-                label2.setBounds(80, 35, 80, 45);
+                //---- usernameLabel ----
+                usernameLabel.setText("UserName");
+                contentPanel.add(usernameLabel);
+                usernameLabel.setBounds(80, 35, 80, 45);
 
-                //---- label3 ----
-                label3.setText("Password");
-                contentPanel.add(label3);
-                label3.setBounds(80, 80, 80, 45);
-                contentPanel.add(textField1);
-                textField1.setBounds(165, 45, 130, 30);
-                contentPanel.add(textField2);
-                textField2.setBounds(165, 90, 130, 30);
+                //---- passwordLabel ----
+                passwordLabel.setText("Password");
+                contentPanel.add(passwordLabel);
+                passwordLabel.setBounds(80, 80, 80, 45);
+                contentPanel.add(userNameTextField);
+                userNameTextField.setBounds(165, 45, 130, 30);
+                contentPanel.add(passwordTextField);
+                passwordTextField.setBounds(165, 90, 130, 30);
 
-                //---- comboBox1 ----
-                comboBox1.setModel(new DefaultComboBoxModel<>(new String[] {
+                //---- RoleComboBox ----
+                RoleComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "Customer",
                     "Manager"
                 }));
-                contentPanel.add(comboBox1);
-                comboBox1.setBounds(160, 135, 135, comboBox1.getPreferredSize().height);
+                contentPanel.add(RoleComboBox);
+                RoleComboBox.setBounds(160, 135, 135, RoleComboBox.getPreferredSize().height);
 
-                //---- label4 ----
-                label4.setText("Role");
-                contentPanel.add(label4);
-                label4.setBounds(80, 125, 80, 45);
+                //---- roleLabel ----
+                roleLabel.setText("Role");
+                contentPanel.add(roleLabel);
+                roleLabel.setBounds(80, 125, 80, 45);
 
                 //======== buttonBar ========
                 {
@@ -83,20 +118,29 @@ public class GUILoginWindow extends JFrame {
                     ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 80};
                     ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0};
 
-                    //---- registerButton ----
-                    registerButton.setText("New User? Click to Register!");
-                    buttonBar.add(registerButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 5, 5), 0, 0));
-
                     //---- loginButton ----
                     loginButton.setText("Login");
+                    loginButton.addActionListener(e -> login(e));
                     buttonBar.add(loginButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 5, 0), 0, 0));
+
+                    //---- registerButton ----
+                    registerButton.setText("New User? Click to Register!");
+                    registerButton.addActionListener(e -> register(e));
+                    buttonBar.add(registerButton, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 5), 0, 0));
+
+                    //---- resetButton ----
+                    resetButton.setText("Reset");
+                    resetButton.addActionListener(e -> reset(e));
+                    buttonBar.add(resetButton, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 0), 0, 0));
                 }
                 contentPanel.add(buttonBar);
-                buttonBar.setBounds(0, 178, 374, buttonBar.getPreferredSize().height);
+                buttonBar.setBounds(0, 165, 375, 90);
 
                 {
                     // compute preferred size
@@ -125,14 +169,18 @@ public class GUILoginWindow extends JFrame {
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JLabel heading;
-    private JLabel label2;
-    private JLabel label3;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JComboBox<String> comboBox1;
-    private JLabel label4;
+    private JLabel usernameLabel;
+    private JLabel passwordLabel;
+    private JTextField userNameTextField;
+    private JTextField passwordTextField;
+    private JComboBox<String> RoleComboBox;
+    private JLabel roleLabel;
     private JPanel buttonBar;
-    private JButton registerButton;
     private JButton loginButton;
+    private JButton registerButton;
+    private JButton resetButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+    public static void main(String[] args){
+        new GUILoginWindow().setVisible(true);
+    }
 }
