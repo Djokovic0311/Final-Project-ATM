@@ -1,3 +1,5 @@
+package model;
+
 /**
     This is the factory to create accounts
     @author: Jiahang Li

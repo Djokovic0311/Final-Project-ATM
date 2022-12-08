@@ -1,3 +1,8 @@
+package model;
+
+import model.Transaction;
+import model.TransactionType;
+
 import java.util.Date;
 
 /**
@@ -5,7 +10,7 @@ import java.util.Date;
  @author: Jiahang Li
  @version: 1.0
  */
-public class WithdrawTransaction extends Transaction{
+public class WithdrawTransaction extends Transaction {
     public WithdrawTransaction(String ID, Date timestamp, double amount, String userID) {
         super(ID, timestamp, amount, userID, TransactionType.WITHDRAW);
     }

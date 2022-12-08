@@ -1,7 +1,12 @@
-import java.util.List;
+package model;
+
+import model.Account;
+import model.AccountType;
+import model.Currency;
+
 import java.util.Map;
 /*
-    This is the class for Manager's Account
+    This is the class for Manager's model.Account
     @author: Jiahang Li
     @version: 1.0
 */

@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 /**
  This is the class for manager transaction

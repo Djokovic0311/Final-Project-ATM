@@ -1,3 +1,5 @@
+package model;
+
 /**
     This is the enum for transaction type
     @author: Jiahang Li

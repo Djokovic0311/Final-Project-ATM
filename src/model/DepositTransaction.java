@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 
 /**
@@ -5,7 +7,7 @@ import java.util.Date;
     @author: Jiahang Li
     @version: 1.0
  */
-public class DepositTransaction extends Transaction{
+public class DepositTransaction extends Transaction {
     public DepositTransaction(String ID, Date timestamp, double amount, String userID) {
         super(ID, timestamp, amount, userID, TransactionType.DEPOSIT);
     }

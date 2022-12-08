@@ -1,8 +1,16 @@
-public class Customer extends User{
+package model;
+
+import model.Account;
+import model.CheckingAccount;
+
+public class Customer extends User {
     private int[] savingAccounts;
     private int[] checkingAccounts;
     private int loanAccount;
     private int securityAccount;
+
+    public Customer() {
+    }
 
     public Customer(String name, int ID, String type, int password) {
         super(name, ID, type, password);
@@ -91,7 +99,7 @@ public class Customer extends User{
 
     @override
     public String toString() {
-        return "Customer name: " + name + ", Customer ID: " + ID + ", Current Balance: " + getBalance();
+        return "model.Customer name: " + name + ", model.Customer ID: " + ID + ", Current Balance: " + getBalance();
     }
 
 
@@ -242,4 +250,6 @@ public class Customer extends User{
             sa.redeem(interest);
         }
     }
+
+
 }

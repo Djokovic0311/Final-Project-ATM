@@ -1,5 +1,5 @@
-/*
-    This is the class for Currency
+package model;/*
+    This is the class for model.Currency
     @author: Jiahang Li
     @version: 1.0
 */

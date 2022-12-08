@@ -1,3 +1,5 @@
+package model;
+
 public class User {
     private String name;
     private int ID;
@@ -10,7 +12,7 @@ public class User {
     public User(String name, int ID, String type, int password) {
         this.name = name;
         this.ID = ID;
-        if type.equals("m") {
+        if (type.equals("m")) {
             this.type = Type.Manager;
         } else {
             this.type = Type.Customer;
@@ -35,5 +37,21 @@ public class User {
             return true;
         }
         return false;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setPassword(int password) {
+        this.password = password;
     }
 }

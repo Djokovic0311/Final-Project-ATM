@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Objects;
@@ -37,7 +39,7 @@ public class GUILoginWindow extends JFrame{
             JOptionPane.showMessageDialog(this,"Password cannot be empty");
             return;
         }
-        if("Customer".equals(role)) {
+        if("model.Customer".equals(role)) {
             // customer login
         }
         else if("Manager".equals(role)) {
@@ -101,7 +103,7 @@ public class GUILoginWindow extends JFrame{
 
                 //---- RoleComboBox ----
                 RoleComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
-                    "Customer",
+                    "model.Customer",
                     "Manager"
                 }));
                 contentPanel.add(RoleComboBox);
@@ -127,7 +129,7 @@ public class GUILoginWindow extends JFrame{
                         new Insets(0, 0, 5, 0), 0, 0));
 
                     //---- registerButton ----
-                    registerButton.setText("New User? Click to Register!");
+                    registerButton.setText("New model.User? Click to Register!");
                     registerButton.addActionListener(e -> register(e));
                     buttonBar.add(registerButton, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,

@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -6,7 +8,7 @@ import java.util.Map;
  @author: Jiahang Li
  @version: 1.0
  */
-public class BuyStockTransaction extends Transaction{
+public class BuyStockTransaction extends Transaction {
     // amount of each stock purchased
     private Map<String, Integer> stockMap;
 

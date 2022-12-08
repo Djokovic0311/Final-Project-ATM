@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 
 /**
@@ -49,7 +51,7 @@ public class TransferTransaction extends Transaction{
 
     @Override
     public String toString() {
-        return "TransferTransaction{" +
+        return "model.TransferTransaction{" +
                 "fromAccountID=" + fromAccountID +
                 ", toAccountID=" + toAccountID +
                 ", toUserID=" + toUserID +

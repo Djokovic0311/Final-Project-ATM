@@ -1,11 +1,15 @@
-import java.util.List;
+package model;
+
+import model.Account;
+import model.AccountType;
+
 import java.util.Map;
 /**
-    This is the class for Checking Account
+    This is the class for Checking model.Account
     @author: Jiahang Li
     @version: 1.0
 */
-public class CheckingAccount extends Account{
+public class CheckingAccount extends Account {
 
     // constructor with currency
     public CheckingAccount(int accountID, String ownerName, String pwd, AccountType type) {

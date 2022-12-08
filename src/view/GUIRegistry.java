@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -13,14 +15,16 @@ import javax.swing.border.*;
  * @version 1.0
  */
 public class GUIRegistry extends JFrame {
+    private LoginController loginController = new LoginController();
     public GUIRegistry() {
         initComponents();
     }
 
-    private void register(ActionEvent e) {
+    private void register(ActionEvent e) throws Exception {
         String userName = this.userNameTextField.getText();
         String password = String.valueOf(this.passwordTextField.getPassword());
-        int i =
+        int i = loginController.signUpCustomer(userName,password);
+        if(i == )
     }
 
     private void initComponents() {
@@ -50,7 +54,7 @@ public class GUIRegistry extends JFrame {
                 contentPanel.setLayout(null);
 
                 //---- label1 ----
-                label1.setText("New Customer Register");
+                label1.setText("New model.Customer Register");
                 label1.setHorizontalAlignment(SwingConstants.CENTER);
                 contentPanel.add(label1);
                 label1.setBounds(0, 0, 374, label1.getPreferredSize().height);

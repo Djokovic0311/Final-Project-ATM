@@ -1,14 +1,13 @@
+package model;
+
 import java.util.Map;
 import java.util.HashMap;
 
 /*
-    This is the abstract class for Account
+    This is the abstract class for model.Account
     @author: Jiahang Li
     @version: 1.0
 */
-
-import javax.security.auth.login.AccountException;
-import java.util.Map;
 
 public abstract class Account {
     // account ID

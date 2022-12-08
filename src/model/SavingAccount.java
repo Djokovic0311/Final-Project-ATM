@@ -1,9 +1,15 @@
+package model;
+
+import model.Account;
+import model.AccountType;
+import model.Currency;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
 /*
-    This is the class for Saving Account
+    This is the class for Saving model.Account
     @author: Jiahang Li
     @version: 1.0
 */

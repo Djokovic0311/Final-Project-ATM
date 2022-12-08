@@ -1,3 +1,5 @@
+package model;
+
 public enum CurrencyType {
     USD(1F),
     EUR(0.82780F),
