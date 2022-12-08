@@ -1,6 +1,8 @@
 package view;
 
 import controller.LoginController;
+import utils.ATMConstant;
+import utils.Utils;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,6 +20,7 @@ import javax.swing.border.*;
  */
 public class GUIRegistry extends JFrame {
     private LoginController loginController = new LoginController();
+    private ATMConstant atmConstant = new ATMConstant();
     public GUIRegistry() {
         initComponents();
     }
@@ -26,7 +29,22 @@ public class GUIRegistry extends JFrame {
         String userName = this.userNameTextField.getText();
         String password = String.valueOf(this.passwordTextField.getPassword());
         int i = loginController.signUpCustomer(userName,password);
-        if(i == )
+        if(Utils.isEmpty(userName)) {
+            JOptionPane.showMessageDialog(null, "Username cannot be empty");
+            return;
+        }
+        if(Utils.isEmpty(password)) {
+            JOptionPane.showMessageDialog(null, "Password cannot be empty");
+            return;
+        }
+        if(i == atmConstant.getSUCCESS()) {
+            // succeed to register, go back to login page
+            dispose();
+            new GUILoginWindow().setVisible(true);
+        } else {
+            // TODO: fail to register
+            JOptionPane.showMessageDialog(null, "Fail to register");
+        }
     }
 
     private void initComponents() {
@@ -101,7 +119,13 @@ public class GUIRegistry extends JFrame {
 
                 //---- registerButton ----
                 registerButton.setText("Register");
-                registerButton.addActionListener(e -> register(e));
+                registerButton.addActionListener(e -> {
+                    try {
+                        register(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(registerButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));

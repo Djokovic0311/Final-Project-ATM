@@ -1,7 +1,8 @@
 package view;
-
+import utils.Utils;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -29,7 +30,7 @@ public class GUILoginWindow extends JFrame{
 
     private void login(ActionEvent e) {
         String userName = userNameTextField.getText().toString();
-        String password = passwordTextField.getPassword().toString();
+        String password = Arrays.toString(passwordTextField.getPassword());
         String role =  Objects.requireNonNull(RoleComboBox.getSelectedItem()).toString();
         if(Utils.isEmpty(userName)) {
             JOptionPane.showMessageDialog(this,"UserName cannot be empty");
@@ -41,9 +42,11 @@ public class GUILoginWindow extends JFrame{
         }
         if("model.Customer".equals(role)) {
             // customer login
+            JOptionPane.showMessageDialog(null,"Hello customer!");
         }
         else if("Manager".equals(role)) {
             // manager login
+            JOptionPane.showMessageDialog(null,"Hello manager!");
         }
     }
 
