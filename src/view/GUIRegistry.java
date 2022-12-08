@@ -1,5 +1,7 @@
 package view;
 
+import controller.LoginController;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

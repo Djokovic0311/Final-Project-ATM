@@ -1,6 +1,5 @@
 package model;
 
-import model.Account;
 import model.CheckingAccount;
 
 public class Customer extends User {
@@ -20,30 +19,30 @@ public class Customer extends User {
         securityAccount = -1;
     }
 
-    public boolean createAccount(Account.Type type, int startBalance) {
+    public boolean createAccount(AccountType type, int startBalance) {
         // Is there any minimum balance requirement when opening an account?
         // How to get the opening fee?
         // When creating a new account, how does the startBalance come from? (espiacially for checking account)
         // Where to store the new account?
-        if (type == Account.Type.Saving) {
+        if (type == AccountType.SAVINGS) {
             int open_fee = 0;
             SavingAccount saving_account = new SavingAccount(startBalance - open_fee);
             if (savingAccounts == null) {
-                savingAccounts = new int[]{saving_account.getID()}
+                savingAccounts = new int[]{saving_account.getAccountID()};
             } else {
                 int[] temp = new int[savingAccounts.length + 1];
                 for (int i = 0; i < savingAccounts.length; i ++) {
                     temp[i] = savingAccounts[i];
                 }
-                temp[temp.length-1] = saving_account.getID();
+                temp[temp.length-1] = saving_account.getAccountID();
                 savingAccounts = temp;
             }
             return true;
-        } elif (type == Account.Type.Checking) {
+        } else if (type == AccountType.CHECKINGS) {
             int open_fee = 0;
             CheckingAccount checking_account = new CheckingAccount(startBalance - open_fee);
             if (checkingAccounts == null) {
-                checkingAccounts = new int[]{checking_account.getID()}
+                checkingAccounts = new int[]{checking_account.getAccountID()}
             } else {
                 int[] temp = new int[checkingAccounts.length + 1];
                 for (int i = 0; i < checkingAccounts.length; i ++) {
@@ -53,11 +52,11 @@ public class Customer extends User {
                 checkingAccounts = temp;
             }
             return true;
-        }  elif (type == Account.Type.Loan) {
+        }  else if (type == AccountType.LOAN) {
             LoanAccount loan_account = new LoanAccount(startBalance); // Here startBalance is in fact how much loan requested
             loanAccount = loaning_account.getID();
             return true;
-        }  elif (type == Account.Type.Security) {
+        }  else if (type == AccountType.SECURITY) {
             if (startBalance <= 1000) { // must have over 1000 at begining.
                 return false
             }
@@ -68,9 +67,9 @@ public class Customer extends User {
                     return true;
                 }
             }
-            return false
+            return false;
         }
-        return false
+        return false;
     }
 
     public int getBalance() {
@@ -97,29 +96,29 @@ public class Customer extends User {
     }
 
 
-    @override
+    @Override
     public String toString() {
-        return "model.Customer name: " + name + ", model.Customer ID: " + ID + ", Current Balance: " + getBalance();
+        return "Customer name: " + getName() + ", Customer ID: " + getID() + ", Current Balance: " + getBalance();
     }
 
 
-    public boolean closeAccount(Account.Type type, int accountID) {
+    public boolean closeAccount(AccountType type, int accountID) {
         // When closing account, where does the money goes?
-        if (type == Account.Type.Saving) {
+        if (type == AccountType.SAVINGS) {
             for (int i = 0; i < savingAccounts.length; i ++) {
                 if (savingAccounts[i] == accountID) {
                     SavingAccount sa = // Here get the account using its ID
                     return sa.close();
                 }
             }
-        } elif (type == Account.Type.Checking) {
+        } else if (type == AccountType.CHECKINGS) {
             for (int i = 0; i < checkingAccounts.length; i ++) {
                 if (checkingAccounts[i] == accountID) {
                     CheckingAccount c = // Here get the account using its ID
                     return c.close();
                 }
             }
-        } elif (type == Account.Type.Security) {
+        } else if (type == AccountType.SECURITY) {
             if (securityAccount == accountID) {
                 SecurityAccount se = // Here get the account using its ID
                 return se.close();
@@ -197,13 +196,13 @@ public class Customer extends User {
         for (int i = 0; i < savingAccounts.length; i ++) {
             if (savingAccounts[i] == accountID) {
                 SavingAccount sa = // Here get the account using its ID
-                return sa.transfer(destiniationID, amount)
+                return sa.transfer(destiniationID, amount);
             }
         }
         for (int i = 0; i < checkingAccounts.length; i ++) {
             if (checkingAccounts[i] == accountID) {
                 CheckingAccount c = // Here get the account using its ID
-                return c.transfer(destiniationID, amount)
+                return c.transfer(destiniationID, amount);
             }
         }
         if (sourceID == securityAccount) {
