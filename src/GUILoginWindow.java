@@ -27,7 +27,7 @@ public class GUILoginWindow extends JFrame{
 
     private void login(ActionEvent e) {
         String userName = userNameTextField.getText().toString();
-        String password = passwordTextField.getText().toString();
+        String password = passwordTextField.getPassword().toString();
         String role =  Objects.requireNonNull(RoleComboBox.getSelectedItem()).toString();
         if(Utils.isEmpty(userName)) {
             JOptionPane.showMessageDialog(this,"UserName cannot be empty");
@@ -46,7 +46,8 @@ public class GUILoginWindow extends JFrame{
     }
 
     private void register(ActionEvent e) {
-        // TODO add your code here
+        dispose();
+        new GUIRegistry().setVisible(true);
     }
 
     private void initComponents() {
@@ -57,7 +58,7 @@ public class GUILoginWindow extends JFrame{
         usernameLabel = new JLabel();
         passwordLabel = new JLabel();
         userNameTextField = new JTextField();
-        passwordTextField = new JTextField();
+        passwordTextField = new JPasswordField();
         RoleComboBox = new JComboBox<>();
         roleLabel = new JLabel();
         buttonBar = new JPanel();
@@ -172,7 +173,7 @@ public class GUILoginWindow extends JFrame{
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JTextField userNameTextField;
-    private JTextField passwordTextField;
+    private JPasswordField passwordTextField;
     private JComboBox<String> RoleComboBox;
     private JLabel roleLabel;
     private JPanel buttonBar;

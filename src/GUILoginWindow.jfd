@@ -43,7 +43,7 @@ new FormModel {
 						"width": 130
 						"height": 30
 					} )
-					add( new FormComponent( "javax.swing.JTextField" ) {
+					add( new FormComponent( "javax.swing.JPasswordField" ) {
 						name: "passwordTextField"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"width": 130
