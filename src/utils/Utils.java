@@ -1,5 +1,9 @@
 package utils;
 
+import model.Customer;
+
+import java.util.Objects;
+
 /*
     This is the global utils class
     @author: Jiahang Li
@@ -13,4 +17,8 @@ public class Utils {
         int rs = (int) ((Math.random() * 9 + 1) * Math.pow(10, len - 1));
         return rs;
      }
+     // hash username to id
+    public static int createHashCodeForPersonId(Customer customer){
+        return Objects.hash(customer.getName());
+    }
 }

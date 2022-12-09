@@ -52,7 +52,9 @@ public class GUILoginWindow extends JFrame{
             JOptionPane.showMessageDialog(null,"Hello customer!");
             int statusCode = loginController.signIn(userName, password);
             if(statusCode == atmConstant.getSUCCESS()) {
+                //TODO: SET CUSTOMER HOMEPAGE VISIBLE
                 setVisible(false);
+
             }
             else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username or Password!");
@@ -61,6 +63,14 @@ public class GUILoginWindow extends JFrame{
         else if("Manager".equals(role)) {
             // manager login
             JOptionPane.showMessageDialog(null,"Hello manager!");
+            int statusCode = loginController.signIn(userName, password);
+            if(statusCode == atmConstant.getSUCCESS()) {
+                //TODO: SET MANAGER HOMEPAGE VISIBLE
+                setVisible(false);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Incorrect Username or Password!");
+            }
         }
     }
 
@@ -140,7 +150,13 @@ public class GUILoginWindow extends JFrame{
 
                     //---- loginButton ----
                     loginButton.setText("Login");
-                    loginButton.addActionListener(e -> login(e));
+                    loginButton.addActionListener(e -> {
+                        try {
+                            login(e);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
                     buttonBar.add(loginButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                         new Insets(0, 0, 5, 0), 0, 0));

@@ -1,15 +1,22 @@
 package model;
 
+import java.util.Objects;
+
 public class User {
     private String name;
     private int ID;
+
+    public User() {
+
+    }
+
     public enum Type {
         Manager, Customer
     }
     private Type type;
-    private int password;
+    private String password;
 
-    public User(String name, int ID, String type, int password) {
+    public User(String name, int ID, String type, String password) {
         this.name = name;
         this.ID = ID;
         if (type.equals("m")) {
@@ -32,8 +39,8 @@ public class User {
         return type;
     }
 
-    public boolean logIn(int password) {
-        if (password == this.password) {
+    public boolean logIn(String password) {
+        if (Objects.equals(password, this.password)) {
             return true;
         }
         return false;
@@ -51,11 +58,11 @@ public class User {
         this.type = type;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 }

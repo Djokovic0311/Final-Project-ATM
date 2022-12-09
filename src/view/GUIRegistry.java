@@ -39,12 +39,20 @@ public class GUIRegistry extends JFrame {
         }
         if(i == atmConstant.getSUCCESS()) {
             // succeed to register, go back to login page
+            JOptionPane.showMessageDialog(null, "Registration Success!!!");
             dispose();
             new GUILoginWindow().setVisible(true);
         } else {
-            // TODO: fail to register
+            //TODO: fail to register
             JOptionPane.showMessageDialog(null, "Fail to register");
         }
+    }
+
+    private void cancel(ActionEvent e) {
+        
+        dispose();
+        GUILoginWindow loginWindow = new GUILoginWindow();
+        loginWindow.setVisible(true);
     }
 
     private void initComponents() {
@@ -74,7 +82,7 @@ public class GUIRegistry extends JFrame {
                 contentPanel.setLayout(null);
 
                 //---- label1 ----
-                label1.setText("New model.Customer Register");
+                label1.setText("New Customer Register");
                 label1.setHorizontalAlignment(SwingConstants.CENTER);
                 contentPanel.add(label1);
                 label1.setBounds(0, 0, 374, label1.getPreferredSize().height);
@@ -119,19 +127,14 @@ public class GUIRegistry extends JFrame {
 
                 //---- registerButton ----
                 registerButton.setText("Register");
-                registerButton.addActionListener(e -> {
-                    try {
-                        register(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                registerButton.addActionListener(e -> register(e));
                 buttonBar.add(registerButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
+                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

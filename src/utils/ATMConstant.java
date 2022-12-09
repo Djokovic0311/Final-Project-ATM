@@ -2,7 +2,9 @@ package utils;
 
 public class ATMConstant {
     private int idBits = 8;
-    private int SUCCESS = 0;
+    private int SUCCESS = 1;
+    private int ERROR = 0;
+    private int NO_USER_FOUND = 2;
     // TODO: DB INFO
     private String DBURL = "";
     private String DBUSERNAME = "";
@@ -46,5 +48,21 @@ public class ATMConstant {
 
     public void setDBPWD(String DBPWD) {
         this.DBPWD = DBPWD;
+    }
+
+    public int getERROR() {
+        return ERROR;
+    }
+
+    public void setERROR(int ERROR) {
+        this.ERROR = ERROR;
+    }
+
+    public int getNO_USER_FOUND() {
+        return NO_USER_FOUND;
+    }
+
+    public void setNO_USER_FOUND(int NO_USER_FOUND) {
+        this.NO_USER_FOUND = NO_USER_FOUND;
     }
 }
