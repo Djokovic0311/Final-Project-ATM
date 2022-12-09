@@ -10,25 +10,27 @@ new FormModel {
 			"vgap": 10
 		} ) {
 			name: "this"
+			"title": "Hello Customer!"
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
-				"text": "text"
+				name: "profileButton"
+				"text": "Manage Profile"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "profile", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button3"
-				"text": "text"
+				"text": "Account Matters"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button2"
-				"text": "text"
+				name: "moneyButton"
+				"text": "Money Matters"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button4"
-				"text": "text"
+				name: "backButton"
+				"text": "Back"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 400, 300 )
+			"size": new java.awt.Dimension( 435, 335 )
 		} )
 	}
 }

@@ -1,4 +1,7 @@
 package view;
+import controller.AccountController;
+import controller.LoginController;
+import utils.ATMConstant;
 import utils.Utils;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,6 +21,10 @@ import javax.swing.border.*;
  * @version 1.0
  */
 public class GUILoginWindow extends JFrame{
+    private LoginController loginController = new LoginController();
+    private AccountController accountController = new AccountController();
+    private ATMConstant atmConstant = new ATMConstant();
+
     public GUILoginWindow() {
         initComponents();
     }
@@ -28,7 +35,7 @@ public class GUILoginWindow extends JFrame{
         RoleComboBox.setSelectedIndex(0);
     }
 
-    private void login(ActionEvent e) {
+    private void login(ActionEvent e) throws Exception {
         String userName = userNameTextField.getText().toString();
         String password = Arrays.toString(passwordTextField.getPassword());
         String role =  Objects.requireNonNull(RoleComboBox.getSelectedItem()).toString();
@@ -40,9 +47,16 @@ public class GUILoginWindow extends JFrame{
             JOptionPane.showMessageDialog(this,"Password cannot be empty");
             return;
         }
-        if("model.Customer".equals(role)) {
+        if("Customer".equals(role)) {
             // customer login
             JOptionPane.showMessageDialog(null,"Hello customer!");
+            int statusCode = loginController.signIn(userName, password);
+            if(statusCode == atmConstant.getSUCCESS()) {
+                setVisible(false);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Incorrect Username or Password!");
+            }
         }
         else if("Manager".equals(role)) {
             // manager login

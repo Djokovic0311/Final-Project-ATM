@@ -5,6 +5,7 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -15,41 +16,47 @@ public class GUICustomerHomePage extends JFrame {
         initComponents();
     }
 
+    private void profile(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
-        button1 = new JButton();
+        profileButton = new JButton();
         button3 = new JButton();
-        button2 = new JButton();
-        button4 = new JButton();
+        moneyButton = new JButton();
+        backButton = new JButton();
 
         //======== this ========
+        setTitle("Hello Customer!");
         var contentPane = getContentPane();
         contentPane.setLayout(new GridLayout(2, 2, 10, 10));
 
-        //---- button1 ----
-        button1.setText("text");
-        contentPane.add(button1);
+        //---- profileButton ----
+        profileButton.setText("Manage Profile");
+        profileButton.addActionListener(e -> profile(e));
+        contentPane.add(profileButton);
 
         //---- button3 ----
-        button3.setText("text");
+        button3.setText("Account Matters");
         contentPane.add(button3);
 
-        //---- button2 ----
-        button2.setText("text");
-        contentPane.add(button2);
+        //---- moneyButton ----
+        moneyButton.setText("Money Matters");
+        contentPane.add(moneyButton);
 
-        //---- button4 ----
-        button4.setText("text");
-        contentPane.add(button4);
+        //---- backButton ----
+        backButton.setText("Back");
+        contentPane.add(backButton);
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
-    private JButton button1;
+    private JButton profileButton;
     private JButton button3;
-    private JButton button2;
-    private JButton button4;
+    private JButton moneyButton;
+    private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
