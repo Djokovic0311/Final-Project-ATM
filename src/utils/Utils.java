@@ -18,7 +18,7 @@ public class Utils {
         return rs;
      }
      // hash username to id
-    public static int createHashCodeForPersonId(Customer customer){
-        return Objects.hash(customer.getName());
+    public static int createHashCodeForPersonId(String userName){
+        return Objects.hash(userName);
     }
 }

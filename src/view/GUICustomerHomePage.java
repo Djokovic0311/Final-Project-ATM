@@ -6,24 +6,37 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 
 /**
  * @author unknown
  */
 public class GUICustomerHomePage extends JFrame {
-    public GUICustomerHomePage() {
+    private List userInfo;
+    private String userName;
+    public GUICustomerHomePage(List userInfo, String userName) {
+        this.userInfo = userInfo;
+        this.userName = userName;
         initComponents();
     }
 
     private void profile(ActionEvent e) {
         // TODO add your code here
+        dispose();
+        new GUIUserProfileWindow(userInfo, userName).setVisible(true);
+    }
+
+    private void back(ActionEvent e) {
+        dispose();
+        GUILoginWindow guiLoginWindow = new GUILoginWindow();
+        guiLoginWindow.setVisible(true);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         profileButton = new JButton();
-        button3 = new JButton();
+        accountButton = new JButton();
         moneyButton = new JButton();
         backButton = new JButton();
 
@@ -34,12 +47,15 @@ public class GUICustomerHomePage extends JFrame {
 
         //---- profileButton ----
         profileButton.setText("Manage Profile");
-        profileButton.addActionListener(e -> profile(e));
+        profileButton.addActionListener(e -> {
+			profile(e);
+			profile(e);
+		});
         contentPane.add(profileButton);
 
-        //---- button3 ----
-        button3.setText("Account Matters");
-        contentPane.add(button3);
+        //---- accountButton ----
+        accountButton.setText("Account Matters");
+        contentPane.add(accountButton);
 
         //---- moneyButton ----
         moneyButton.setText("Money Matters");
@@ -47,6 +63,7 @@ public class GUICustomerHomePage extends JFrame {
 
         //---- backButton ----
         backButton.setText("Back");
+        backButton.addActionListener(e -> back(e));
         contentPane.add(backButton);
         pack();
         setLocationRelativeTo(getOwner());
@@ -55,7 +72,7 @@ public class GUICustomerHomePage extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JButton profileButton;
-    private JButton button3;
+    private JButton accountButton;
     private JButton moneyButton;
     private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

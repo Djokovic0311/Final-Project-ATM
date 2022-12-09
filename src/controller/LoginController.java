@@ -17,7 +17,7 @@ public class LoginController {
 
         Customer customer = new Customer();
         customer.setName(name);
-        int customerId = Utils.createHashCodeForPersonId(customer);
+        int customerId = Utils.createHashCodeForPersonId(name);
 
         customer.setID(customerId);
         customer.setPassword(pwd);

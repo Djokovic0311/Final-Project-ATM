@@ -6,6 +6,7 @@ import utils.Utils;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -39,6 +40,7 @@ public class GUILoginWindow extends JFrame{
         String userName = userNameTextField.getText().toString();
         String password = Arrays.toString(passwordTextField.getPassword());
         String role =  Objects.requireNonNull(RoleComboBox.getSelectedItem()).toString();
+
         if(Utils.isEmpty(userName)) {
             JOptionPane.showMessageDialog(this,"UserName cannot be empty");
             return;
@@ -55,6 +57,8 @@ public class GUILoginWindow extends JFrame{
                 //TODO: SET CUSTOMER HOMEPAGE VISIBLE
                 setVisible(false);
 
+                List userInfo = accountController.getAccountInfoForCustomer(userName);
+                new GUICustomerHomePage(userInfo, userName);
             }
             else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username or Password!");

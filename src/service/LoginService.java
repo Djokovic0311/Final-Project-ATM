@@ -6,6 +6,7 @@ package service;/*
 
 import dao.UserDao;
 import model.Customer;
+import model.User;
 import utils.ATMConstant;
 import utils.Utils;
 
@@ -21,7 +22,7 @@ public class LoginService {
     public int signIn(String userName,String password) {
         Customer customer = new Customer();
         customer.setName(userName);
-        int customerId = Utils.createHashCodeForPersonId(customer);
+        int customerId = Utils.createHashCodeForPersonId(userName);
         customer.setID(customerId);
         customer.setPassword(password);
 
@@ -53,5 +54,11 @@ public class LoginService {
             else return atmConstant.getERROR();
         }
         else return atmConstant.getERROR();
+    }
+
+    public User getCustomerInfo(String userName) {
+        int customerID = Utils.createHashCodeForPersonId(userName);
+        User user = userDao.selectUserById(customerID);
+        return user;
     }
 }
