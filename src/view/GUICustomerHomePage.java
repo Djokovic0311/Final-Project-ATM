@@ -14,15 +14,16 @@ import javax.swing.*;
  */
 public class GUICustomerHomePage extends JFrame {
     private List userInfo;
+    private List userAccounts;
     private String userName;
-    public GUICustomerHomePage(List userInfo, String userName) {
+    public GUICustomerHomePage(List userInfo, List userAccounts, String userName) {
         this.userInfo = userInfo;
         this.userName = userName;
+        this.userAccounts = userAccounts;
         initComponents();
     }
 
     private void profile(ActionEvent e) {
-        // TODO add your code here
         dispose();
         new GUIUserProfileWindow(userInfo, userName).setVisible(true);
     }
@@ -31,6 +32,12 @@ public class GUICustomerHomePage extends JFrame {
         dispose();
         GUILoginWindow guiLoginWindow = new GUILoginWindow();
         guiLoginWindow.setVisible(true);
+    }
+
+    private void account(ActionEvent e) {
+        // TODO add your code here
+        dispose();
+        new GUICustomerAccountWindow(userAccounts).setVisible(true);
     }
 
     private void initComponents() {
@@ -55,6 +62,7 @@ public class GUICustomerHomePage extends JFrame {
 
         //---- accountButton ----
         accountButton.setText("Account Matters");
+        accountButton.addActionListener(e -> account(e));
         contentPane.add(accountButton);
 
         //---- moneyButton ----

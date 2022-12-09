@@ -18,4 +18,9 @@ public class AccountService {
         info.add(user.getPassword());
         return info;
     }
+    public List<Object> getAccountsForCustomer(User user) throws Exception {
+        Connection conn = connectDao.connectToDb();
+        List<Object> info = new ArrayList<>();
+        //TODO: get accounts
+    }
 }

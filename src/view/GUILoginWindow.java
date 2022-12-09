@@ -58,7 +58,8 @@ public class GUILoginWindow extends JFrame{
                 setVisible(false);
 
                 List userInfo = accountController.getAccountInfoForCustomer(userName);
-                new GUICustomerHomePage(userInfo, userName);
+                List userAccounts = accountController.getAccountsForCustomer(userName);
+                new GUICustomerHomePage(userInfo, userAccounts, userName);
             }
             else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username or Password!");

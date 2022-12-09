@@ -18,4 +18,8 @@ public class AccountController {
         User user = loginService.getCustomerInfo(userName);
         return accountService.getAccountInfoForCustomer(user);
     }
+    public List<Object> getAccountsForCustomer(String userName) throws Exception {
+        User user = loginService.getCustomerInfo(userName);
+        return accountService.getAccountsForCustomer(user);
+    }
 }

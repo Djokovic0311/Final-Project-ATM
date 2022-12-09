@@ -20,6 +20,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "accountButton"
 				"text": "Account Matters"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "account", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "moneyButton"
