@@ -18,8 +18,9 @@ import javax.swing.border.*;
 public class GUICustomerAccountWindow extends JFrame {
     private List userAccounts;
     private String username;
-    public GUICustomerAccountWindow(List userAccounts) {
+    public GUICustomerAccountWindow(List userAccounts,String username) {
         this.userAccounts = userAccounts;
+        this.username = username;
         initComponents();
         fillInfo(userAccounts);
     }
@@ -27,7 +28,7 @@ public class GUICustomerAccountWindow extends JFrame {
     private void openAccount(ActionEvent e) {
         // TODO add your code here
         dispose();
-
+        new GUICustomerOpenAccount(userAccounts, username).setVisible(true);
     }
 
     private void initComponents() {

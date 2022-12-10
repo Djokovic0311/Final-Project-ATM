@@ -4,8 +4,10 @@ import dao.AccountDao;
 import dao.ConnectDao;
 import model.*;
 import utils.ATMConstant;
+import utils.Utils;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +43,71 @@ public class AccountService {
             accounts.add(securityAccount);
         }
         return accounts;
+    }
+
+    public int createNewAccount(Customer customer,AccountType accountType,double balance,CurrencyType currencyType) throws Exception {
+        switch (accountType) {
+            case SAVINGS -> {
+                int accountID = Utils.getFixedLengthRandom(8);
+                while(accountDao.doesAccountExists(accountID)) {
+                    accountID = Utils.getFixedLengthRandom(8);
+                }
+                int status = accountDao.insertIntoCheckingOrSaving(accountID, AccountType.CHECKINGS, balance, currencyType);
+                if(status != 0) {
+                    // successfully create
+                    // pay fee to manager account
+                    accountDao.payBankFees(balance,atmConstant.getMANAGER_ACCOUNT_ID());
+                    return atmConstant.getSUCCESS();
+                }
+                else return atmConstant.getERROR();
+            }
+            case CHECKINGS -> {
+                int accountID = Utils.getFixedLengthRandom(8);
+                while(accountDao.doesAccountExists(accountID)) {
+                    accountID = Utils.getFixedLengthRandom(8);
+                }
+                int status = accountDao.insertIntoCheckingOrSaving(accountID, AccountType.SAVINGS, balance, currencyType);
+                if(status != 0) {
+                    // successfully create
+                    // pay fee to manager account
+                    accountDao.payBankFees(balance,atmConstant.getMANAGER_ACCOUNT_ID());
+                    return atmConstant.getSUCCESS();
+                }
+                else return atmConstant.getERROR();
+            }
+            case SECURITY -> {
+                return createNewSecuritiesAccount(customer, balance, currencyType);
+            }
+        }
+        return 0;
+    }
+
+    public int createNewSecuritiesAccount (Customer customer, double depositAmount, CurrencyType currencyType) throws Exception, SQLException {
+        int responseStatus = 0;
+
+        boolean accountExists = accountDao.doesSecuritiesAccountExist(customer.getID());
+
+        if(!accountExists && accountDao.doesSavingAccountExist(customer) ){
+            SavingAccount[] savingAccounts = accountDao.getSavingAccountInfoForCustomer(customer);
+            for(SavingAccount savingAccount : savingAccounts) {
+                if(savingAccount.getBalanceByCurrency(currencyType)>=5000 && savingAccount.getBalanceByCurrency(currencyType)-depositAmount >=2500) {
+                    savingAccount.setBalanceByCurrency(currencyType,savingAccount.getBalanceByCurrency(currencyType)-depositAmount);
+
+                    int accountID = Utils.getFixedLengthRandom(8);
+                    while(accountDao.doesAccountExists(accountID)) {
+                        accountID = Utils.getFixedLengthRandom(8);
+                    }
+                    accountDao.insertIntoSecurity(customer.getID(),AccountType.SECURITY,depositAmount,currencyType);
+                    responseStatus = atmConstant.getSUCCESS();
+                    break;
+                }
+                else {
+                    responseStatus = atmConstant.getERROR();
+                }
+            }
+        }else {
+            responseStatus = atmConstant.getERROR();
+        }
+        return responseStatus;
     }
 }

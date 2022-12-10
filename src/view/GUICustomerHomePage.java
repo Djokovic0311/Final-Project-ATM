@@ -40,7 +40,7 @@ public class GUICustomerHomePage extends JFrame {
         // TODO add your code here
         dispose();
         List userAccounts = accountController.getAccountsForCustomer(userName);
-        new GUICustomerAccountWindow(userAccounts).setVisible(true);
+        new GUICustomerAccountWindow(userAccounts, userName).setVisible(true);
     }
 
     private void initComponents() {

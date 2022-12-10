@@ -1,10 +1,13 @@
 package controller;
 
+import model.AccountType;
+import model.CurrencyType;
 import model.Customer;
 import model.User;
 import service.AccountService;
 import service.LoginService;
 import utils.ATMConstant;
+import utils.Utils;
 
 import java.util.List;
 
@@ -22,5 +25,19 @@ public class AccountController {
     public List<Object> getAccountsForCustomer(String userName) throws Exception {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         return accountService.getAccountsForCustomer(customer);
+    }
+
+    public int createNewCheckingOrSavingAccount(int customerID, AccountType accountType, double balance, CurrencyType currencyType) {
+        Customer customer = new Customer();
+        customer.setID(customerID);
+
+        return accountService.createNewAccount(customer,accountType,balance,currencyType);
+    }
+
+    public int createNewSecurityAccount(String userName, AccountType accountType, double balance, CurrencyType currencyType) {
+        Customer customer = (Customer) loginService.getCustomerInfo(userName);
+        if(customer==null)
+            return atmConstant.getNO_USER_FOUND();
+        return accountService.createNewAccount(customer,accountType,balance,currencyType);
     }
 }

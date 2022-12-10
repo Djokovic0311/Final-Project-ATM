@@ -9,6 +9,7 @@ public class ATMConstant {
     private String DBURL = "";
     private String DBUSERNAME = "";
     private String DBPWD = "";
+    private int MANAGER_ACCOUNT_ID = 0;
 
     public int getIdBits() {
         return idBits;
@@ -64,5 +65,13 @@ public class ATMConstant {
 
     public void setNO_USER_FOUND(int NO_USER_FOUND) {
         this.NO_USER_FOUND = NO_USER_FOUND;
+    }
+
+    public int getMANAGER_ACCOUNT_ID() {
+        return MANAGER_ACCOUNT_ID;
+    }
+
+    public void setMANAGER_ACCOUNT_ID(int MANAGER_ACCOUNT_ID) {
+        this.MANAGER_ACCOUNT_ID = MANAGER_ACCOUNT_ID;
     }
 }
