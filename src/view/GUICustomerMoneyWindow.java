@@ -44,9 +44,13 @@ public class GUICustomerMoneyWindow extends JFrame {
     }
 
     private void withdraw(ActionEvent e) {
-        // TODO add your code here
         dispose();
         new GUIWithdraw(userAccounts, userInfo, userName).setVisible(true);
+    }
+
+    private void deposit(ActionEvent e) {
+        dispose();
+        new GUIDeposit(userAccounts, userInfo, userName).setVisible(true);
     }
 
     private void initComponents() {
@@ -86,6 +90,7 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- depositButton ----
                 depositButton.setText("Deposit");
+                depositButton.addActionListener(e -> deposit(e));
                 contentPanel.add(depositButton);
 
                 //---- transferButton ----

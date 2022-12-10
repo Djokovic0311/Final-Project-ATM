@@ -26,4 +26,14 @@ public class TransactionController {
         }
         return status;
     }
+
+    public int deposit(int customerId, int accountId, double amount, CurrencyType currencyType) {
+        Account account = (Account) accountService.getAccountByID(accountId);
+        AccountType accountType = account.getType();
+        int status = transactionService.deposit(customerId,accountId,accountType,amount,currencyType);
+        if(status == atmConstant.getSUCCESS()) {
+            transactionService.insertTransaction(customerId,accountId,-1, amount, currencyType, TransactionType.DEPOSIT);
+        }
+        return status;
+    }
 }
