@@ -31,6 +31,12 @@ public class GUICustomerAccountWindow extends JFrame {
         new GUICustomerOpenAccount(userAccounts, username).setVisible(true);
     }
 
+    private void closeAccount(ActionEvent e) {
+        // TODO add your code here
+        dispose();
+        new GUICustomerCloseAccount(userAccounts,username).setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -177,6 +183,7 @@ public class GUICustomerAccountWindow extends JFrame {
 
                 //---- closeAccountButton ----
                 closeAccountButton.setText("Close an account");
+                closeAccountButton.addActionListener(e -> closeAccount(e));
                 buttonBar.add(closeAccountButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

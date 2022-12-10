@@ -33,4 +33,8 @@ public class AccountDao {
     public SavingAccount[] getSavingAccountInfoForCustomer(Customer customer) throws Exception {
         return null;
     }
+    // check and delete this customer's account
+    public int deleteAccount(int accountID, int customerID) {
+        return 0;
+    }
 }

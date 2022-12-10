@@ -25,10 +25,12 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "moneyButton"
 				"text": "Money Matters"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "backButton"
-				"text": "Back"
+				"text": "Log out"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {

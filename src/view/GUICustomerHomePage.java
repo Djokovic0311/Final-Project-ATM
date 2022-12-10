@@ -37,10 +37,16 @@ public class GUICustomerHomePage extends JFrame {
     }
 
     private void account(ActionEvent e) throws Exception {
-        // TODO add your code here
         dispose();
         List userAccounts = accountController.getAccountsForCustomer(userName);
         new GUICustomerAccountWindow(userAccounts, userName).setVisible(true);
+    }
+
+    private void money(ActionEvent e) throws Exception {
+        // TODO add your code here
+        dispose();
+        List userAccounts = accountController.getAccountsForCustomer(userName);
+
     }
 
     private void initComponents() {
@@ -76,10 +82,22 @@ public class GUICustomerHomePage extends JFrame {
 
         //---- moneyButton ----
         moneyButton.setText("Money Matters");
+        moneyButton.addActionListener(e -> {
+            try {
+                money(e);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            try {
+                money(e);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         contentPane.add(moneyButton);
 
         //---- backButton ----
-        backButton.setText("Back");
+        backButton.setText("Log out");
         backButton.addActionListener(e -> back(e));
         contentPane.add(backButton);
         pack();

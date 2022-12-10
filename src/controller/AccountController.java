@@ -27,17 +27,24 @@ public class AccountController {
         return accountService.getAccountsForCustomer(customer);
     }
 
-    public int createNewCheckingOrSavingAccount(int customerID, AccountType accountType, double balance, CurrencyType currencyType) {
+    public int createNewCheckingOrSavingAccount(int customerID, AccountType accountType, double balance, CurrencyType currencyType) throws Exception {
         Customer customer = new Customer();
         customer.setID(customerID);
 
         return accountService.createNewAccount(customer,accountType,balance,currencyType);
     }
 
-    public int createNewSecurityAccount(String userName, AccountType accountType, double balance, CurrencyType currencyType) {
+    public int createNewSecurityAccount(String userName, AccountType accountType, double balance, CurrencyType currencyType) throws Exception {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         if(customer==null)
             return atmConstant.getNO_USER_FOUND();
         return accountService.createNewAccount(customer,accountType,balance,currencyType);
+    }
+
+    public int closeAccount(String userName, int accountID) {
+        Customer customer = (Customer) loginService.getCustomerInfo(userName);
+        if(customer==null)
+            return atmConstant.getNO_USER_FOUND();
+        return accountService.closeAccount(customer, accountID);
     }
 }

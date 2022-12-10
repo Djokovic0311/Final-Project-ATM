@@ -110,4 +110,18 @@ public class AccountService {
         }
         return responseStatus;
     }
+
+    public int closeAccount(Customer customer, int accountID) {
+
+        int customerID = Utils.createHashCodeForPersonId(customer.getName());
+        boolean accountExists = accountDao.doesAccountExists(accountID);
+        int status = 0;
+        if(accountExists) {
+            status = accountDao.deleteAccount(accountID, customerID);
+        }
+        else {
+            return atmConstant.getERROR();
+        }
+        return status;
+    }
 }
