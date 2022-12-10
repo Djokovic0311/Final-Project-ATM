@@ -16,16 +16,16 @@ public class CheckingAccount extends Account {
         super(accountID, type, ownerName, pwd);
     }
 
-    public CheckingAccount(int accountID, String ownerName, String pwd, AccountType type, Map<Currency, Double> balance) {
+    public CheckingAccount(int accountID, String ownerName, String pwd, AccountType type, Map<CurrencyType, Double> balance) {
         this(accountID, ownerName, pwd, type);
         setBalance(balance);
     }
 
     @Override
-    public boolean transfer(Account to, Currency currency, double amount) {
-        boolean isValid = this.withdraw(currency, amount);
+    public boolean transfer(Account to, CurrencyType currencyType, double amount) {
+        boolean isValid = this.withdraw(currencyType, amount);
         if (isValid) {
-            to.deposit(currency, amount);
+            to.deposit(currencyType, amount);
             return true;
         }
         else return false;

@@ -6,6 +6,7 @@ package view;
 
 import model.CheckingAccount;
 import model.Currency;
+import model.CurrencyType;
 import model.SavingAccount;
 import java.util.List;
 import java.awt.*;
@@ -13,7 +14,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 /**
- * @author unknown
+ * @author Jiahang Li
  */
 public class GUICustomerAccountWindow extends JFrame {
     private List userAccounts;
@@ -148,8 +149,8 @@ public class GUICustomerAccountWindow extends JFrame {
                 oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((CheckingAccount) amount).getAccountID()));
                 oneAccount.setLayout(new GridLayout(((CheckingAccount) amount).getBalance().size(), 2, 0, 5));
                 checking.add(oneAccount);
-                for (Currency type : ((CheckingAccount) amount).getBalance().keySet()) {
-                    JLabel t = new JLabel(type.getCurrencyType().name());
+                for (CurrencyType type : ((CheckingAccount) amount).getBalance().keySet()) {
+                    JLabel t = new JLabel(type.name());
                     t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
                     JLabel b = new JLabel(String.valueOf(((CheckingAccount) amount).getBalanceByCurrency(type)));
                     b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
@@ -162,8 +163,8 @@ public class GUICustomerAccountWindow extends JFrame {
                 oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((SavingAccount) amount).getAccountID()));
                 oneAccount.setLayout(new GridLayout(((SavingAccount) amount).getBalance().size(), 2, 0, 5));
                 saving.add(oneAccount);
-                for (Currency type : ((SavingAccount) amount).getBalance().keySet()) {
-                    JLabel t = new JLabel(type.getCurrencyType().name());
+                for (CurrencyType type : ((SavingAccount) amount).getBalance().keySet()) {
+                    JLabel t = new JLabel(type.name());
                     t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
                     JLabel b = new JLabel(String.valueOf(((SavingAccount) amount).getBalance().get(type)));
                     b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));

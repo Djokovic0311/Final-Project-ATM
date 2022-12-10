@@ -16,12 +16,12 @@ public class ManagerAccount extends Account{
         super(accountID, type, ownerName, pwd);
     }
 
-    public ManagerAccount(int accountID, String ownerName, String pwd, AccountType type, Map<Currency, Double> balance) {
+    public ManagerAccount(int accountID, String ownerName, String pwd, AccountType type, Map<CurrencyType, Double> balance) {
         this(accountID, ownerName, pwd, type);
         setBalance(balance);
     }
     @Override
-    public boolean transfer(Account to, Currency currency, double amount) {
+    public boolean transfer(Account to, CurrencyType currencyType, double amount) {
         return false;
     }
 }

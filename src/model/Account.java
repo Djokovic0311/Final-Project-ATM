@@ -21,7 +21,7 @@ public abstract class Account {
     // account status, activated or not
     private boolean activated;
     // current balance
-    private Map<Currency, Double> balance;
+    private Map<CurrencyType, Double> balance;
 
     // default constructor
     public Account() {
@@ -40,40 +40,40 @@ public abstract class Account {
     }
 
     // construct an account with initial balance
-    public Account(int accountID, String ownerName, String pwd, AccountType type, Currency currency, double balance) {
+    public Account(int accountID, String ownerName, String pwd, AccountType type, CurrencyType currencyType, double balance) {
         this.accountID = accountID;
         this.ownerName = ownerName;
         this.password = pwd;
         this.type = type;
         this.activated = true;
         this.balance = new HashMap<>();
-        this.balance.put(currency, balance);
+        this.balance.put(currencyType, balance);
     }
 
     
     // transfer money from one account to another, 
     // return true if the transfer is valid
-    public abstract boolean transfer(Account to, Currency currency, double amount);
+    public abstract boolean transfer(Account to, CurrencyType currencyType, double amount);
 
     // set the balance of a given currency
-    public void setBalanceByCurrency(Currency currency, double amount)  {
-        this.balance.put(currency, amount);
+    public void setBalanceByCurrency(CurrencyType currencyType, double amount)  {
+        this.balance.put(currencyType, amount);
     }
 
     //get the balance of a given currency
-    public double getBalanceByCurrency(Currency currency) {
-        return this.balance.get(currency);
+    public double getBalanceByCurrency(CurrencyType currencyType) {
+        return this.balance.get(currencyType);
     }
 
     // deposit amount to a specific currency
-    public void deposit(Currency currency, double amount) {
-        this.balance.put(currency, this.balance.getOrDefault(currency,0.0) + amount);
+    public void deposit(CurrencyType currencyType, double amount) {
+        this.balance.put(currencyType, this.balance.getOrDefault(currencyType,0.0) + amount);
     }
 
     // withdraw amount to a specific currency, if not enough, return false
-    public boolean withdraw(Currency currency, double amount) {
-        if(this.balance.containsKey(currency) && this.balance.get(currency) >= amount) {
-            this.balance.put(currency, this.balance.getOrDefault(currency,0.0) - amount);
+    public boolean withdraw(CurrencyType currencyType, double amount) {
+        if(this.balance.containsKey(currencyType) && this.balance.get(currencyType) >= amount) {
+            this.balance.put(currencyType, this.balance.getOrDefault(currencyType,0.0) - amount);
             return true;
         }
         else return false;
@@ -108,11 +108,11 @@ public abstract class Account {
         return type;
     }
 
-    public Map<Currency, Double> getBalance() {
+    public Map<CurrencyType, Double> getBalance() {
         return balance;
     }
 
-    public void setBalance(Map<Currency, Double> balance) {
+    public void setBalance(Map<CurrencyType, Double> balance) {
         this.balance = balance;
     }
 

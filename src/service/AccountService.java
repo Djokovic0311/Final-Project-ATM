@@ -22,5 +22,6 @@ public class AccountService {
         Connection conn = connectDao.connectToDb();
         List<Object> info = new ArrayList<>();
         //TODO: get accounts
+        return info;
     }
 }

@@ -26,7 +26,7 @@ public class SavingAccount extends Account{
         this.interest = 0.0;
     }
 
-    public SavingAccount(int accountID, String ownerName, String pwd, AccountType type, Map<Currency, Double> balance) {
+    public SavingAccount(int accountID, String ownerName, String pwd, AccountType type, Map<CurrencyType, Double> balance) {
         this(accountID, ownerName, pwd, type);
         setBalance(balance);
         this.lastRedeemDate = new Date();
@@ -34,10 +34,10 @@ public class SavingAccount extends Account{
     }
 
     @Override
-    public boolean transfer(Account to, Currency currency, double amount) {
-        boolean isValid = this.withdraw(currency, amount);
+    public boolean transfer(Account to, CurrencyType currencyType, double amount) {
+        boolean isValid = this.withdraw(currencyType, amount);
         if (isValid) {
-            to.deposit(currency, amount);
+            to.deposit(currencyType, amount);
             return true;
         }
         else return false;
