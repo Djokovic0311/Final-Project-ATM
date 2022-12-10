@@ -4,10 +4,9 @@
 
 package view;
 
-import model.CheckingAccount;
-import model.Currency;
-import model.CurrencyType;
-import model.SavingAccount;
+import java.awt.event.*;
+import model.*;
+
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
@@ -25,15 +24,23 @@ public class GUICustomerAccountWindow extends JFrame {
         fillInfo(userAccounts);
     }
 
+    private void openAccount(ActionEvent e) {
+        // TODO add your code here
+        dispose();
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         checking = new JPanel();
         saving = new JPanel();
+        loan = new JPanel();
+        security = new JPanel();
         buttonBar = new JPanel();
-        okButton = new JButton();
-        cancelButton = new JButton();
+        openAccountButton = new JButton();
+        closeAccountButton = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -92,6 +99,50 @@ public class GUICustomerAccountWindow extends JFrame {
                 contentPanel.add(saving);
                 saving.setBounds(new Rectangle(new Point(85, 140), saving.getPreferredSize()));
 
+                //======== loan ========
+                {
+                    loan.setLayout(null);
+
+                    {
+                        // compute preferred size
+                        Dimension preferredSize = new Dimension();
+                        for(int i = 0; i < loan.getComponentCount(); i++) {
+                            Rectangle bounds = loan.getComponent(i).getBounds();
+                            preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                            preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                        }
+                        Insets insets = loan.getInsets();
+                        preferredSize.width += insets.right;
+                        preferredSize.height += insets.bottom;
+                        loan.setMinimumSize(preferredSize);
+                        loan.setPreferredSize(preferredSize);
+                    }
+                }
+                contentPanel.add(loan);
+                loan.setBounds(new Rectangle(new Point(120, 130), loan.getPreferredSize()));
+
+                //======== security ========
+                {
+                    security.setLayout(null);
+
+                    {
+                        // compute preferred size
+                        Dimension preferredSize = new Dimension();
+                        for(int i = 0; i < security.getComponentCount(); i++) {
+                            Rectangle bounds = security.getComponent(i).getBounds();
+                            preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                            preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                        }
+                        Insets insets = security.getInsets();
+                        preferredSize.width += insets.right;
+                        preferredSize.height += insets.bottom;
+                        security.setMinimumSize(preferredSize);
+                        security.setPreferredSize(preferredSize);
+                    }
+                }
+                contentPanel.add(security);
+                security.setBounds(new Rectangle(new Point(130, 165), security.getPreferredSize()));
+
                 {
                     // compute preferred size
                     Dimension preferredSize = new Dimension();
@@ -116,15 +167,16 @@ public class GUICustomerAccountWindow extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
-                //---- okButton ----
-                okButton.setText("OK");
-                buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                //---- openAccountButton ----
+                openAccountButton.setText("Open an account");
+                openAccountButton.addActionListener(e -> openAccount(e));
+                buttonBar.add(openAccountButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
-                //---- cancelButton ----
-                cancelButton.setText("Cancel");
-                buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                //---- closeAccountButton ----
+                closeAccountButton.setText("Close an account");
+                buttonBar.add(closeAccountButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));
             }
@@ -142,6 +194,8 @@ public class GUICustomerAccountWindow extends JFrame {
         saving.removeAll();
         int checkAccountNum = 0;
         int savingAccountNum = 0;
+        int loanAccountNum = 0;
+        int securityAccountNum = 0;
         for (Object amount : userAccounts) {
             if (amount instanceof CheckingAccount) {
                 checkAccountNum ++;
@@ -171,11 +225,42 @@ public class GUICustomerAccountWindow extends JFrame {
                     oneAccount.add(t);
                     oneAccount.add(b);
                 }
+            } else if (amount instanceof LoanAccount) {
+                loanAccountNum++;
+                JPanel oneAccount = new JPanel();
+                oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((LoanAccount) amount).getAccountID()));
+                oneAccount.setLayout(new GridLayout(((LoanAccount) amount).getBalance().size(), 2, 0, 5));
+                loan.add(oneAccount);
+                for (CurrencyType type : ((LoanAccount) amount).getBalance().keySet()) {
+                    JLabel t = new JLabel(type.name());
+                    t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
+                    JLabel b = new JLabel(String.valueOf(((LoanAccount) amount).getBalance().get(type)));
+                    b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
+                    oneAccount.add(t);
+                    oneAccount.add(b);
+                }
             }
-
+            else if (amount instanceof SecurityAccount) {
+                securityAccountNum++;
+                JPanel oneAccount = new JPanel();
+                oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((SecurityAccount) amount).getAccountID()));
+                oneAccount.setLayout(new GridLayout(((SecurityAccount) amount).getBalance().size(), 2, 0, 5));
+                security.add(oneAccount);
+                for (CurrencyType type : ((SecurityAccount) amount).getBalance().keySet()) {
+                    JLabel t = new JLabel(type.name());
+                    t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
+                    JLabel b = new JLabel(String.valueOf(((SecurityAccount) amount).getBalance().get(type)));
+                    b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
+                    oneAccount.add(t);
+                    oneAccount.add(b);
+                }
+            }
         }
         checking.setLayout(new GridLayout(checkAccountNum + 1, 1));
         saving.setLayout(new GridLayout(savingAccountNum + 1, 1));
+        loan.setLayout(new GridLayout(loanAccountNum + 1, 1));
+        security.setLayout(new GridLayout(loanAccountNum + 1, 1));
+
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
@@ -183,8 +268,10 @@ public class GUICustomerAccountWindow extends JFrame {
     private JPanel contentPanel;
     private JPanel checking;
     private JPanel saving;
+    private JPanel loan;
+    private JPanel security;
     private JPanel buttonBar;
-    private JButton okButton;
-    private JButton cancelButton;
+    private JButton openAccountButton;
+    private JButton closeAccountButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

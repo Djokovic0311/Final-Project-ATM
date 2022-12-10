@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 /**
- * @author unknown
+ * @author Jiahang Li
  */
 public class GUIMoneyMatterWindow extends JFrame {
     public GUIMoneyMatterWindow() {

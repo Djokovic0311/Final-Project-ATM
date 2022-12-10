@@ -1,5 +1,6 @@
 package controller;
 
+import model.Customer;
 import model.User;
 import service.AccountService;
 import service.LoginService;
@@ -19,7 +20,7 @@ public class AccountController {
         return accountService.getAccountInfoForCustomer(user);
     }
     public List<Object> getAccountsForCustomer(String userName) throws Exception {
-        User user = loginService.getCustomerInfo(userName);
-        return accountService.getAccountsForCustomer(user);
+        Customer customer = (Customer) loginService.getCustomerInfo(userName);
+        return accountService.getAccountsForCustomer(customer);
     }
 }

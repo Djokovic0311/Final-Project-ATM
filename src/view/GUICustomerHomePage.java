@@ -4,6 +4,8 @@
 
 package view;
 
+import controller.AccountController;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -14,12 +16,12 @@ import javax.swing.*;
  */
 public class GUICustomerHomePage extends JFrame {
     private List userInfo;
-    private List userAccounts;
+
+    private AccountController accountController = new AccountController();
     private String userName;
-    public GUICustomerHomePage(List userInfo, List userAccounts, String userName) {
+    public GUICustomerHomePage(List userInfo, String userName) {
         this.userInfo = userInfo;
         this.userName = userName;
-        this.userAccounts = userAccounts;
         initComponents();
     }
 
@@ -34,9 +36,10 @@ public class GUICustomerHomePage extends JFrame {
         guiLoginWindow.setVisible(true);
     }
 
-    private void account(ActionEvent e) {
+    private void account(ActionEvent e) throws Exception {
         // TODO add your code here
         dispose();
+        List userAccounts = accountController.getAccountsForCustomer(userName);
         new GUICustomerAccountWindow(userAccounts).setVisible(true);
     }
 
@@ -62,7 +65,13 @@ public class GUICustomerHomePage extends JFrame {
 
         //---- accountButton ----
         accountButton.setText("Account Matters");
-        accountButton.addActionListener(e -> account(e));
+        accountButton.addActionListener(e -> {
+            try {
+                account(e);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         contentPane.add(accountButton);
 
         //---- moneyButton ----

@@ -17,6 +17,7 @@ import javax.swing.*;
 public class GUIUserProfileWindow extends JFrame {
     private List userInfo;
     private String username;
+
     public GUIUserProfileWindow(List userInfo, String userName) {
         this.userInfo = userInfo;
         this.username = userName;
