@@ -1,18 +1,17 @@
 /*
- * Created by JFormDesigner on Fri Dec 09 20:57:08 EST 2022
+ * Created by JFormDesigner on Sat Dec 10 13:33:27 EST 2022
  */
 
 package view;
 
-import controller.AccountController;
-import model.AccountType;
+import controller.TransactionController;
 import model.CurrencyType;
+import sun.awt.UNIXToolkit;
 import utils.ATMConstant;
 import utils.Utils;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.*;
@@ -21,46 +20,41 @@ import javax.swing.border.*;
 /**
  * @author unknown
  */
-public class GUICustomerOpenAccount extends JFrame {
+public class GUIWithdraw extends JFrame {
     private List userAccounts;
-    private String username;
     private List userInfo;
-    private AccountController accountController = new AccountController();
+    private String userName;
+
+    private TransactionController transactionController = new TransactionController();
     ATMConstant atmConstant = new ATMConstant();
-    public GUICustomerOpenAccount(List userAccounts, List userInfo, String username) {
-        this.userAccounts = userAccounts;
-        this.username = username;
+
+    public GUIWithdraw(List userAccounts, List userInfo, String userName) {
+        this.userName = userName;
         this.userInfo = userInfo;
+        this.userAccounts = userAccounts;
         initComponents();
+    }
+
+    private void withdraw(ActionEvent e) {
+        CurrencyType currencyType = CurrencyType.valueOf(Objects.requireNonNull(currencyTypeComboBox.getSelectedItem()).toString());
+        double amount = Double.parseDouble(amountTextField.getText());
+        int accountID = Integer.parseInt(accountIDTextField.getText());
+        int customerID = Utils.createHashCodeForPersonId(userName);
+        int status = transactionController.withdraw(customerID,accountID,amount,currencyType);
+        if(status == atmConstant.getSUCCESS()) {
+            JOptionPane.showMessageDialog(null, "Success!!");
+            setVisible(false);
+            new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+        } else {
+            JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
+        }
 
     }
 
     private void cancel(ActionEvent e) {
         dispose();
-        new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
-    }
-
-    private void open(ActionEvent e) throws Exception {
-        // TODO add your code here
-        CurrencyType currencyType = CurrencyType.valueOf(Objects.requireNonNull(currencyTypeComboBox.getSelectedItem()).toString());
-        AccountType accountType = AccountType.valueOf(Objects.requireNonNull(accountTypeComboBox.getSelectedItem()).toString());
-        double balance = Double.parseDouble(balanceTextField.getText());
-        int customerID = Utils.createHashCodeForPersonId(username);
-        int status = 0;
-        if(accountType == AccountType.CHECKINGS || accountType == AccountType.SAVINGS) {
-            status = accountController.createNewCheckingOrSavingAccount(customerID,accountType,balance,currencyType);
-        }
-        else if(accountType == AccountType.SECURITY) {
-            status = accountController.createNewSecurityAccount(username,accountType,balance,currencyType);
-        }
-
-        if(status == atmConstant.getSUCCESS()) {
-            JOptionPane.showMessageDialog(null, "Success!!");
-            new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
-            setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Please try again!!");
-        }
+        setVisible(false);
+        new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
     }
 
     private void initComponents() {
@@ -68,17 +62,17 @@ public class GUICustomerOpenAccount extends JFrame {
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         label1 = new JLabel();
-        currencyTypeLabel = new JLabel();
-        balanceLabel = new JLabel();
-        accountTypeComboBox = new JComboBox<>();
+        label2 = new JLabel();
+        label3 = new JLabel();
+        accountIDTextField = new JTextField();
         currencyTypeComboBox = new JComboBox<>();
-        balanceTextField = new JTextField();
+        amountTextField = new JTextField();
         buttonBar = new JPanel();
-        okButton = new JButton();
+        withdrawButton = new JButton();
         cancelButton = new JButton();
 
         //======== this ========
-        setTitle("Open a new account!");
+        setTitle("Withdraw ");
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -92,28 +86,21 @@ public class GUICustomerOpenAccount extends JFrame {
                 contentPanel.setLayout(null);
 
                 //---- label1 ----
-                label1.setText("AccountType");
+                label1.setText("AccountID");
                 contentPanel.add(label1);
-                label1.setBounds(new Rectangle(new Point(45, 40), label1.getPreferredSize()));
+                label1.setBounds(new Rectangle(new Point(50, 35), label1.getPreferredSize()));
 
-                //---- currencyTypeLabel ----
-                currencyTypeLabel.setText("CurrencyType");
-                contentPanel.add(currencyTypeLabel);
-                currencyTypeLabel.setBounds(45, 80, 90, 16);
+                //---- label2 ----
+                label2.setText("Amount");
+                contentPanel.add(label2);
+                label2.setBounds(50, 130, 47, 16);
 
-                //---- balanceLabel ----
-                balanceLabel.setText("Initial balance");
-                contentPanel.add(balanceLabel);
-                balanceLabel.setBounds(45, 120, 90, 16);
-
-                //---- accountTypeComboBox ----
-                accountTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
-                    "CHECKINGS",
-                    "SAVINGS",
-                    "SECURITY"
-                }));
-                contentPanel.add(accountTypeComboBox);
-                accountTypeComboBox.setBounds(new Rectangle(new Point(165, 35), accountTypeComboBox.getPreferredSize()));
+                //---- label3 ----
+                label3.setText("CurrencyType");
+                contentPanel.add(label3);
+                label3.setBounds(50, 80, 120, 20);
+                contentPanel.add(accountIDTextField);
+                accountIDTextField.setBounds(160, 30, 120, accountIDTextField.getPreferredSize().height);
 
                 //---- currencyTypeComboBox ----
                 currencyTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
@@ -124,9 +111,9 @@ public class GUICustomerOpenAccount extends JFrame {
                     "HKD"
                 }));
                 contentPanel.add(currencyTypeComboBox);
-                currencyTypeComboBox.setBounds(165, 75, 84, 30);
-                contentPanel.add(balanceTextField);
-                balanceTextField.setBounds(165, 120, 85, balanceTextField.getPreferredSize().height);
+                currencyTypeComboBox.setBounds(160, 80, 84, 30);
+                contentPanel.add(amountTextField);
+                amountTextField.setBounds(160, 125, 85, 30);
 
                 {
                     // compute preferred size
@@ -143,7 +130,7 @@ public class GUICustomerOpenAccount extends JFrame {
                     contentPanel.setPreferredSize(preferredSize);
                 }
             }
-            dialogPane.add(contentPanel, BorderLayout.CENTER);
+            dialogPane.add(contentPanel, BorderLayout.WEST);
 
             //======== buttonBar ========
             {
@@ -152,16 +139,10 @@ public class GUICustomerOpenAccount extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
-                //---- okButton ----
-                okButton.setText("OK");
-                okButton.addActionListener(e -> {
-                    try {
-                        open(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
-                buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                //---- withdrawButton ----
+                withdrawButton.setText("Withdraw");
+                withdrawButton.addActionListener(e -> withdraw(e));
+                buttonBar.add(withdrawButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
@@ -184,13 +165,13 @@ public class GUICustomerOpenAccount extends JFrame {
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JLabel label1;
-    private JLabel currencyTypeLabel;
-    private JLabel balanceLabel;
-    private JComboBox<String> accountTypeComboBox;
+    private JLabel label2;
+    private JLabel label3;
+    private JTextField accountIDTextField;
     private JComboBox<String> currencyTypeComboBox;
-    private JTextField balanceTextField;
+    private JTextField amountTextField;
     private JPanel buttonBar;
-    private JButton okButton;
+    private JButton withdrawButton;
     private JButton cancelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

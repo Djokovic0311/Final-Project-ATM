@@ -39,14 +39,14 @@ public class GUICustomerHomePage extends JFrame {
     private void account(ActionEvent e) throws Exception {
         dispose();
         List userAccounts = accountController.getAccountsForCustomer(userName);
-        new GUICustomerAccountWindow(userAccounts, userName).setVisible(true);
+        new GUICustomerAccountWindow(userInfo, userAccounts, userName).setVisible(true);
     }
 
     private void money(ActionEvent e) throws Exception {
         // TODO add your code here
         dispose();
         List userAccounts = accountController.getAccountsForCustomer(userName);
-
+        new GUICustomerMoneyWindow(userInfo,userAccounts,userName).setVisible(true);
     }
 
     private void initComponents() {

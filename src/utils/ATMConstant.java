@@ -5,6 +5,7 @@ public class ATMConstant {
     private int SUCCESS = 1;
     private int ERROR = 0;
     private int NO_USER_FOUND = 2;
+    private int NO_ENOUGH_BALANCE = 3;
     // TODO: DB INFO
     private String DBURL = "";
     private String DBUSERNAME = "";
@@ -73,5 +74,13 @@ public class ATMConstant {
 
     public void setMANAGER_ACCOUNT_ID(int MANAGER_ACCOUNT_ID) {
         this.MANAGER_ACCOUNT_ID = MANAGER_ACCOUNT_ID;
+    }
+
+    public int getNO_ENOUGH_BALANCE() {
+        return NO_ENOUGH_BALANCE;
+    }
+
+    public void setNO_ENOUGH_BALANCE(int NO_ENOUGH_BALANCE) {
+        this.NO_ENOUGH_BALANCE = NO_ENOUGH_BALANCE;
     }
 }

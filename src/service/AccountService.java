@@ -124,4 +124,8 @@ public class AccountService {
         }
         return status;
     }
+
+    public Object getAccountByID(int accountID) {
+        return accountDao.selectAccountByID(accountID);
+    }
 }

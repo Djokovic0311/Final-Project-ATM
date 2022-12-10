@@ -10,7 +10,7 @@ public class Transaction {
 
     // transaction id
     private  String ID;
-    // time whenn transaction is made
+    // time when transaction is made
     private Date timestamp;
     // amount related to transaction
     private double amount;

@@ -5,6 +5,8 @@
 package view;
 
 import java.awt.event.*;
+
+import controller.AccountController;
 import model.*;
 
 import java.util.List;
@@ -17,9 +19,12 @@ import javax.swing.border.*;
  */
 public class GUICustomerAccountWindow extends JFrame {
     private List userAccounts;
+    private List userInfo;
     private String username;
-    public GUICustomerAccountWindow(List userAccounts,String username) {
+    private AccountController accountController = new AccountController();
+    public GUICustomerAccountWindow(List userInfo, List userAccounts,String username) {
         this.userAccounts = userAccounts;
+        this.userInfo = userInfo;
         this.username = username;
         initComponents();
         fillInfo(userAccounts);
@@ -28,13 +33,19 @@ public class GUICustomerAccountWindow extends JFrame {
     private void openAccount(ActionEvent e) {
         // TODO add your code here
         dispose();
-        new GUICustomerOpenAccount(userAccounts, username).setVisible(true);
+        new GUICustomerOpenAccount(userAccounts, userInfo, username).setVisible(true);
     }
 
     private void closeAccount(ActionEvent e) {
-        // TODO add your code here
+
         dispose();
         new GUICustomerCloseAccount(userAccounts,username).setVisible(true);
+    }
+
+    private void back(ActionEvent e) {
+        // TODO add your code here
+        dispose();
+        new GUICustomerHomePage(userInfo, username).setVisible(true);
     }
 
     private void initComponents() {
@@ -46,6 +57,7 @@ public class GUICustomerAccountWindow extends JFrame {
         loan = new JPanel();
         security = new JPanel();
         buttonBar = new JPanel();
+        backButton = new JButton();
         openAccountButton = new JButton();
         closeAccountButton = new JButton();
 
@@ -174,6 +186,13 @@ public class GUICustomerAccountWindow extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
+                //---- backButton ----
+                backButton.setText("back");
+                backButton.addActionListener(e -> back(e));
+                buttonBar.add(backButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 5), 0, 0));
+
                 //---- openAccountButton ----
                 openAccountButton.setText("Open an account");
                 openAccountButton.addActionListener(e -> openAccount(e));
@@ -279,6 +298,7 @@ public class GUICustomerAccountWindow extends JFrame {
     private JPanel loan;
     private JPanel security;
     private JPanel buttonBar;
+    private JButton backButton;
     private JButton openAccountButton;
     private JButton closeAccountButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

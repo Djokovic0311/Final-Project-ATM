@@ -9,6 +9,9 @@ public class AccountDao {
     public Account selectAccountByID(int accountID, int customerID) {
         return null;
     }
+    public Object selectAccountByID(int accountID) {
+        return null;
+    }
     public int insertIntoCheckingOrSaving(int customerID, AccountType accountType, double balance, CurrencyType currencyType){
         return 0;
     }
@@ -36,5 +39,13 @@ public class AccountDao {
     // check and delete this customer's account
     public int deleteAccount(int accountID, int customerID) {
         return 0;
+    }
+
+    public double getBalanceByCurrencyType(int accountID, int customerID, AccountType accountType, CurrencyType currencyType) {
+        return 0.0;
+    }
+
+    public void updateAccountBalance(int accountID, int customerID, AccountType accountType, CurrencyType currencyType, double amount) {
+
     }
 }

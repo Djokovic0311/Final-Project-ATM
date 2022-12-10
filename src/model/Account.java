@@ -14,6 +14,7 @@ public abstract class Account {
     private int accountID;
     // the owner's name of account
     private String ownerName;
+    private int userID;
     // account password
     private String password;
     // account type, ex: checking, saving...
@@ -128,6 +129,13 @@ public abstract class Account {
         this.type = type;
     }
 
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 
     // override the toString
     @Override
