@@ -17,7 +17,7 @@ public class TransferTransaction extends Transaction{
     private int toUserID;
 
     // constructor for transfer transaction
-    public TransferTransaction(String id, Date timestamp, double amount, String userID, TransactionType type,
+    public TransferTransaction(int id, long timestamp, double amount, int userID, TransactionType type,
                                int fromAccountID, int toAccountID, int toUserID) {
         super(id, timestamp, amount, userID, TransactionType.TRANSFER);
         this.fromAccountID = fromAccountID;

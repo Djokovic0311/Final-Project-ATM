@@ -39,7 +39,7 @@ public class GUICustomerAccountWindow extends JFrame {
     private void closeAccount(ActionEvent e) {
 
         dispose();
-        new GUICustomerCloseAccount(userAccounts,username).setVisible(true);
+        new GUICustomerCloseAccount(userAccounts,userInfo, username).setVisible(true);
     }
 
     private void back(ActionEvent e) {

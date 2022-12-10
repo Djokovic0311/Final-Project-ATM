@@ -5,7 +5,11 @@ import dao.TransactionDao;
 import model.AccountType;
 import model.CurrencyType;
 import model.TransactionType;
+import model.WithdrawTransaction;
 import utils.ATMConstant;
+import utils.Utils;
+
+import java.util.Date;
 
 public class TransactionService {
     AccountDao accountDao = new AccountDao();
@@ -19,6 +23,12 @@ public class TransactionService {
         }
         else {
             double remaining = balance - amount;
+            long timestamp = Utils.getTimestamp();
+            int transactionID = Utils.getFixedLengthRandom(10);
+            while(transactionDao.transactionExist(transactionID)) {
+                transactionID = Utils.getFixedLengthRandom(10);
+            }
+            WithdrawTransaction withdrawTransaction = new WithdrawTransaction(transactionID,timestamp,remaining,customerId);
             accountDao.updateAccountBalance(accountId,customerId,accountType,currencyType,remaining);
             accountDao.payBankFees(amount, atmConstant.getMANAGER_ACCOUNT_ID());
             System.out.println("withdrawn");

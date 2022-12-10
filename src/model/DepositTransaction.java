@@ -8,7 +8,7 @@ import java.util.Date;
     @version: 1.0
  */
 public class DepositTransaction extends Transaction {
-    public DepositTransaction(String ID, Date timestamp, double amount, String userID) {
+    public DepositTransaction(int ID, long timestamp, double amount, int userID) {
         super(ID, timestamp, amount, userID, TransactionType.DEPOSIT);
     }
 }

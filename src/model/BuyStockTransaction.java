@@ -12,7 +12,7 @@ public class BuyStockTransaction extends Transaction {
     // amount of each stock purchased
     private Map<String, Integer> stockMap;
 
-    public BuyStockTransaction(String id, Date timestamp, double amount, String userID, Map<String, Integer> buyInfo) {
+    public BuyStockTransaction(int id, long timestamp, double amount, int userID, Map<String, Integer> buyInfo) {
         super(id, timestamp, amount, userID, TransactionType.BUYSTOCK);
         this.stockMap = buyInfo;
     }

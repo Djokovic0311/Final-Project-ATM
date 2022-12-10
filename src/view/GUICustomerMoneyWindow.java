@@ -53,6 +53,11 @@ public class GUICustomerMoneyWindow extends JFrame {
         new GUIDeposit(userAccounts, userInfo, userName).setVisible(true);
     }
 
+    private void transfer(ActionEvent e) {
+        dispose();
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -95,6 +100,7 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- transferButton ----
                 transferButton.setText("Transfer");
+                transferButton.addActionListener(e -> transfer(e));
                 contentPanel.add(transferButton);
 
                 //---- TransactionButton ----

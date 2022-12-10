@@ -9,17 +9,17 @@ import java.util.Date;
 public class Transaction {
 
     // transaction id
-    private  String ID;
+    private  int ID;
     // time when transaction is made
-    private Date timestamp;
+    private long timestamp;
     // amount related to transaction
     private double amount;
     // person who made the transaction
-    private String userID;
+    private int userID;
     // transaction type chosen from enum
     private TransactionType type;
 
-    public Transaction(String id, Date timestamp, double amount, String userID, TransactionType type) {
+    public Transaction(int id, long timestamp, double amount, int userID, TransactionType type) {
         this.ID = id;
         this.timestamp = timestamp;
         this.amount = amount;
@@ -28,20 +28,28 @@ public class Transaction {
     }
     
     // getters and setters
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public double getAmount() {
@@ -52,11 +60,11 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getuserID() {
+    public int getuserID() {
         return userID;
     }
 
-    public void setuserID(String userID) {
+    public void setuserID(int userID) {
         this.userID = userID;
     }
 
@@ -71,7 +79,7 @@ public class Transaction {
     @Override
     public String toString() {
         return getID() + "\t" +
-                getTimestamp().toString() + "\t" +
+                getTimestamp() + "\t" +
                 getAmount() + "\t" +
                 getuserID() + "\t" +
                 getType();

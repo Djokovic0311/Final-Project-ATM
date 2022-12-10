@@ -36,4 +36,8 @@ public class TransactionController {
         }
         return status;
     }
+
+    public int transfer(int customerId, int fromAccountId, int toAccountId, double amount, CurrencyType currencyType) {
+        return 0;
+    }
 }

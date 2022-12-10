@@ -19,18 +19,20 @@ import javax.swing.border.*;
 public class GUICustomerCloseAccount extends JFrame {
     private List userAccounts;
     private String username;
+    private List userInfo;
     private AccountController accountController = new AccountController();
     ATMConstant atmConstant = new ATMConstant();
 
-    public GUICustomerCloseAccount(List userAccounts, String username) {
+    public GUICustomerCloseAccount(List userAccounts, List userinfo, String username) {
         this.userAccounts = userAccounts;
         this.username = username;
+        this.userInfo = userinfo;
         initComponents();
     }
 
     private void cancel(ActionEvent e) {
         dispose();
-        new GUICustomerAccountWindow(userAccounts, username).setVisible(true);
+        new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
     }
 
     private void confirm(ActionEvent e) {
@@ -39,7 +41,7 @@ public class GUICustomerCloseAccount extends JFrame {
 
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
-            new GUICustomerAccountWindow(userAccounts, username).setVisible(true);
+            new GUICustomerAccountWindow(userAccounts, userInfo,username).setVisible(true);
             setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Please try again!!");
