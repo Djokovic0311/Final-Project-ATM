@@ -55,7 +55,12 @@ public class GUICustomerMoneyWindow extends JFrame {
 
     private void transfer(ActionEvent e) {
         dispose();
+        new GUITransfer(userAccounts,userInfo,userName).setVisible(true);
+    }
 
+    private void Transaction(ActionEvent e) throws Exception {
+        dispose();
+        new GUITransactionHistory(userAccounts,userInfo,userName).setVisible(true);
     }
 
     private void initComponents() {
@@ -105,6 +110,13 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- TransactionButton ----
                 TransactionButton.setText("Transaction");
+                TransactionButton.addActionListener(e -> {
+                    try {
+                        Transaction(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(TransactionButton);
 
                 //---- stockButton ----
