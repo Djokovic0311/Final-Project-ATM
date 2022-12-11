@@ -11,9 +11,9 @@ import java.util.Map;
 public class SellStockTransaction extends Transaction{
     // amount of each stock purchased
     private Map<String, Integer> stockMap;
-
-    public SellStockTransaction(int id, long timestamp, double amount, int userID, Map<String, Integer> sellInfo) {
-        super(id, timestamp, amount, userID, TransactionType.SELLSTOCK);
+    private int stockID;
+    public SellStockTransaction(int id, long timestamp, double amount, int userID, Map<String, Integer> sellInfo,int fromAccountID, int toAccountID, CurrencyType currencyType) {
+        super(id, timestamp, amount, userID, TransactionType.SELLSTOCK,fromAccountID,toAccountID,currencyType );
         this.stockMap = sellInfo;
     }
 
@@ -25,6 +25,14 @@ public class SellStockTransaction extends Transaction{
 
     public void setstockMap(Map<String, Integer> stockMap) {
         this.stockMap = stockMap;
+    }
+
+    public int getStockID() {
+        return stockID;
+    }
+
+    public void setStockID(int stockID) {
+        this.stockID = stockID;
     }
 
     @Override

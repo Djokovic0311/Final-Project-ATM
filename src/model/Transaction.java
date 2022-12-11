@@ -16,14 +16,21 @@ public class Transaction {
     private double amount;
     // person who made the transaction
     private int userID;
+    private int fromAccountID;
+    private int toAccountID;
+    private CurrencyType currencyType;
     // transaction type chosen from enum
     private TransactionType type;
 
-    public Transaction(int id, long timestamp, double amount, int userID, TransactionType type) {
+    public Transaction(int id, long timestamp, double amount, int userID, TransactionType type, int fromAccountID, int toAccountID, CurrencyType currencyType) {
         this.ID = id;
         this.timestamp = timestamp;
         this.amount = amount;
         this.userID = userID;
+        this.currencyType = currencyType;
+        this.fromAccountID = fromAccountID;
+        this.toAccountID = toAccountID;
+
         this.type = type;
     }
     
@@ -74,6 +81,30 @@ public class Transaction {
 
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    public int getFromAccountID() {
+        return fromAccountID;
+    }
+
+    public void setFromAccountID(int fromAccountID) {
+        this.fromAccountID = fromAccountID;
+    }
+
+    public int getToAccountID() {
+        return toAccountID;
+    }
+
+    public void setToAccountID(int toAccountID) {
+        this.toAccountID = toAccountID;
+    }
+
+    public CurrencyType getCurrencyType() {
+        return currencyType;
+    }
+
+    public void setCurrencyType(CurrencyType currencyType) {
+        this.currencyType = currencyType;
     }
 
     @Override

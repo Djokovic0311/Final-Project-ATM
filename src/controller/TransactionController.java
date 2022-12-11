@@ -20,10 +20,6 @@ public class TransactionController {
         Account account = (Account) accountService.getAccountByID(accountId);
         AccountType accountType = account.getType();
         int status = transactionService.withdraw(customerId,accountId,accountType,amount,currencyType);
-        if(status == atmConstant.getSUCCESS()) {
-            transactionService.insertTransaction(customerId,accountId,-1, amount, currencyType, TransactionType.WITHDRAW);
-
-        }
         return status;
     }
 
@@ -31,13 +27,13 @@ public class TransactionController {
         Account account = (Account) accountService.getAccountByID(accountId);
         AccountType accountType = account.getType();
         int status = transactionService.deposit(customerId,accountId,accountType,amount,currencyType);
-        if(status == atmConstant.getSUCCESS()) {
-            transactionService.insertTransaction(customerId,accountId,-1, amount, currencyType, TransactionType.DEPOSIT);
-        }
         return status;
     }
 
     public int transfer(int customerId, int fromAccountId, int toAccountId, double amount, CurrencyType currencyType) {
-        return 0;
+        Account account = (Account) accountService.getAccountByID(fromAccountId);
+        AccountType accountType = account.getType();
+        int status = transactionService.transfer(customerId,fromAccountId, toAccountId,amount,currencyType,accountType);
+        return status;
     }
 }

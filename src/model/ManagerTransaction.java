@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class ManagerTransaction extends Transaction{
     // userID denotes to customer, since all managers see transactions
-    public ManagerTransaction(int id, long timestamp, double amount, int userID) {
-        super(id, timestamp, amount, userID, TransactionType.MANAGER);
+    public ManagerTransaction(int id, long timestamp, double amount, int userID,int fromAccountID, int toAccountID, CurrencyType currencyType) {
+        super(id, timestamp, amount, userID, TransactionType.MANAGER,fromAccountID,toAccountID,currencyType);
     }
 }

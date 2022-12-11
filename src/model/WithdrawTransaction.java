@@ -11,7 +11,8 @@ import java.util.Date;
  @version: 1.0
  */
 public class WithdrawTransaction extends Transaction {
-    public WithdrawTransaction(int ID, long timestamp, double amount, int userID) {
-        super(ID, timestamp, amount, userID, TransactionType.WITHDRAW);
+    public WithdrawTransaction(int ID, long timestamp, double amount, int userID,int fromAccountID, int toAccountID, CurrencyType currencyType) {
+        super(ID, timestamp, amount, userID, TransactionType.WITHDRAW,fromAccountID,toAccountID,currencyType);
     }
+
 }
