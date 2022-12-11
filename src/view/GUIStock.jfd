@@ -11,16 +11,18 @@ new FormModel {
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 					name: "contentPanel"
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button1"
+						name: "buyButton"
 						"text": "Buy stock"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1", true ) )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buy", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"x": 45
 						"y": 120
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button2"
+						name: "sellButton"
 						"text": "Sell stock"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "sell", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"width": 78
 						"height": 30
@@ -28,7 +30,7 @@ new FormModel {
 						"y": 120
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button3"
+						name: "checkHeldButton"
 						"text": "Check held stocks "
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"width": 140
@@ -37,7 +39,7 @@ new FormModel {
 						"y": 160
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "button4"
+						name: "checkMarketButton"
 						"text": "Check stock market"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"width": 145
@@ -65,6 +67,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "backButton"
 						"text": "back"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 1

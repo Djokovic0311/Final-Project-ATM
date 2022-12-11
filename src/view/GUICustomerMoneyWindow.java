@@ -25,9 +25,9 @@ public class GUICustomerMoneyWindow extends JFrame {
     private LoanController loanController = new LoanController();
     private TransactionController transactionController = new TransactionController();
     private AccountController accountController = new AccountController();
-    public GUICustomerMoneyWindow(List userInfo, List userAccounts, String userName) {
+    public GUICustomerMoneyWindow(List userInfo, List userAccounts, String userName) throws Exception {
         this.userInfo = userInfo;
-        this.userAccounts = userAccounts;
+        this.userAccounts = accountController.getAccountsForCustomer(userName);
         this.userName = userName;
         initComponents();
     }
@@ -63,7 +63,7 @@ public class GUICustomerMoneyWindow extends JFrame {
         new GUITransactionHistory(userAccounts,userInfo,userName).setVisible(true);
     }
 
-    private void stock(ActionEvent e) {
+    private void stock(ActionEvent e) throws Exception {
         dispose();
         new GUIStock(userAccounts,userInfo,userName).setVisible(true);
     }
@@ -126,7 +126,13 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- stockButton ----
                 stockButton.setText("Stock");
-                stockButton.addActionListener(e -> stock(e));
+                stockButton.addActionListener(e -> {
+                    try {
+                        stock(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(stockButton);
 
                 //---- loanButton ----

@@ -38,7 +38,7 @@ public class GUITransactionHistory extends JFrame {
         fillTable();
     }
 
-    private void back(ActionEvent e) {
+    private void back(ActionEvent e) throws Exception {
         dispose();
         setVisible(false);
         new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
@@ -137,7 +137,13 @@ public class GUITransactionHistory extends JFrame {
 
                 //---- backButton ----
                 backButton.setText("Back");
-                backButton.addActionListener(e -> back(e));
+                backButton.addActionListener(e -> {
+                    try {
+                        back(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

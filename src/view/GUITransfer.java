@@ -34,13 +34,13 @@ public class GUITransfer extends JFrame {
         initComponents();
     }
 
-    private void cancel(ActionEvent e) {
+    private void cancel(ActionEvent e) throws Exception {
         dispose();
         setVisible(false);
         new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
     }
 
-    private void transfer(ActionEvent e) {
+    private void transfer(ActionEvent e) throws Exception {
         CurrencyType currencyType = CurrencyType.valueOf(Objects.requireNonNull(currencyTypeComboBox.getSelectedItem()).toString());
         double amount = Double.parseDouble(amountTextField.getText());
         int fromAccountID = Integer.parseInt(fromAccountIDTextField.getText());
@@ -148,14 +148,26 @@ public class GUITransfer extends JFrame {
 
                 //---- transferButton ----
                 transferButton.setText("Transfer");
-                transferButton.addActionListener(e -> transfer(e));
+                transferButton.addActionListener(e -> {
+                    try {
+                        transfer(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(transferButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> cancel(e));
+                cancelButton.addActionListener(e -> {
+                    try {
+                        cancel(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

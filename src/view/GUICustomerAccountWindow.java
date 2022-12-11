@@ -31,7 +31,6 @@ public class GUICustomerAccountWindow extends JFrame {
     }
 
     private void openAccount(ActionEvent e) {
-        // TODO add your code here
         dispose();
         new GUICustomerOpenAccount(userAccounts, userInfo, username).setVisible(true);
     }

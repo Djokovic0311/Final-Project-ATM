@@ -4,6 +4,7 @@
 
 package view;
 
+import controller.AccountController;
 import controller.TransactionController;
 import model.CurrencyType;
 import model.SecurityAccount;
@@ -24,33 +25,46 @@ public class GUIStock extends JFrame {
     private String userName;
 
     private TransactionController transactionController = new TransactionController();
+    private AccountController accountController = new AccountController();
     ATMConstant atmConstant = new ATMConstant();
-    public GUIStock(List userAccounts, List userInfo, String userName) {
+    public GUIStock(List userAccounts, List userInfo, String userName) throws Exception {
         this.userName = userName;
         this.userInfo = userInfo;
-        this.userAccounts = userAccounts;
+        this.userAccounts = accountController.getAccountsForCustomer(userName);;
         initComponents();
         showSecurityAccount();
     }
 
-    private void back(ActionEvent e) {
+    private void back(ActionEvent e) throws Exception {
         dispose();
         setVisible(false);
         new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
     }
 
-    private void button1(ActionEvent e) {
+    private void buy(ActionEvent e) {
         dispose();
+        new GUIBuyOrSellStock(userAccounts, userInfo, userName,"buy");
+    }
+
+
+
+    private void sell(ActionEvent e) {
+        dispose();
+        new GUIBuyOrSellStock(userAccounts, userInfo, userName,"sell");
+    }
+
+    private void button1(ActionEvent e) {
+        // TODO add your code here
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        button1 = new JButton();
-        button2 = new JButton();
-        button3 = new JButton();
-        button4 = new JButton();
+        buyButton = new JButton();
+        sellButton = new JButton();
+        checkHeldButton = new JButton();
+        checkMarketButton = new JButton();
         security = new JPanel();
         buttonBar = new JPanel();
         backButton = new JButton();
@@ -69,26 +83,30 @@ public class GUIStock extends JFrame {
             {
                 contentPanel.setLayout(null);
 
-                //---- button1 ----
-                button1.setText("Buy stock");
-                button1.addActionListener(e -> button1(e));
-                contentPanel.add(button1);
-                button1.setBounds(new Rectangle(new Point(45, 120), button1.getPreferredSize()));
+                //---- buyButton ----
+                buyButton.setText("Buy stock");
+                buyButton.addActionListener(e -> {
+			button1(e);
+			buy(e);
+		});
+                contentPanel.add(buyButton);
+                buyButton.setBounds(new Rectangle(new Point(45, 120), buyButton.getPreferredSize()));
 
-                //---- button2 ----
-                button2.setText("Sell stock");
-                contentPanel.add(button2);
-                button2.setBounds(240, 120, 78, 30);
+                //---- sellButton ----
+                sellButton.setText("Sell stock");
+                sellButton.addActionListener(e -> sell(e));
+                contentPanel.add(sellButton);
+                sellButton.setBounds(240, 120, 78, 30);
 
-                //---- button3 ----
-                button3.setText("Check held stocks ");
-                contentPanel.add(button3);
-                button3.setBounds(25, 160, 140, 30);
+                //---- checkHeldButton ----
+                checkHeldButton.setText("Check held stocks ");
+                contentPanel.add(checkHeldButton);
+                checkHeldButton.setBounds(25, 160, 140, 30);
 
-                //---- button4 ----
-                button4.setText("Check stock market");
-                contentPanel.add(button4);
-                button4.setBounds(215, 160, 145, 30);
+                //---- checkMarketButton ----
+                checkMarketButton.setText("Check stock market");
+                contentPanel.add(checkMarketButton);
+                checkMarketButton.setBounds(215, 160, 145, 30);
 
                 //======== security ========
                 {
@@ -138,7 +156,10 @@ public class GUIStock extends JFrame {
 
                 //---- backButton ----
                 backButton.setText("back");
-                backButton.addActionListener(e -> back(e));
+                backButton.addActionListener(e -> {
+			back(e);
+			back(e);
+		});
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
@@ -178,10 +199,10 @@ public class GUIStock extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
+    private JButton buyButton;
+    private JButton sellButton;
+    private JButton checkHeldButton;
+    private JButton checkMarketButton;
     private JPanel security;
     private JPanel buttonBar;
     private JButton backButton;
