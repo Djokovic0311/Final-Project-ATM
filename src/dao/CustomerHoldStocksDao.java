@@ -1,5 +1,9 @@
 package dao;
 
+import model.customerHeldStock;
+
+import java.util.ArrayList;
+
 public class CustomerHoldStocksDao {
     public boolean checkCustomerHolds(int stockID) {
         return false;
@@ -17,4 +21,8 @@ public class CustomerHoldStocksDao {
     public void removeCustomerHeldStock(int stockID, int customerID){
 
     }
+    public ArrayList<customerHeldStock>  getStocks(int customerID) {
+        return null;
+    }
+
 }

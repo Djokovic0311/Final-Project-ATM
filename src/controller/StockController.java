@@ -1,13 +1,12 @@
 package controller;
 
-import model.CurrencyType;
-import model.Customer;
-import model.SecurityAccount;
+import model.*;
 import service.AccountService;
 import service.LoginService;
 import service.StockService;
 import utils.ATMConstant;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class StockController {
@@ -25,5 +24,16 @@ public class StockController {
         } else {
             return stockService.sellStock(customer,securityAccount,stockID,quantity);
         }
+    }
+
+    public ArrayList<customerHeldStock> showHeldStocks(String userName) {
+        Customer customer = (Customer) loginService.getCustomerInfo(userName);
+        int accountID = customer.getSecurityAccount();
+        SecurityAccount securityAccount = (SecurityAccount) accountService.getAccountByID(accountID);
+        return stockService.getCustomerHeldStocks(customer);
+    }
+
+    public ArrayList<marketStock> showMarketStocks(){
+        return stockService.getMarketStocks();
     }
 }

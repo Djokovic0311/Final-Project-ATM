@@ -5,13 +5,16 @@
 package view;
 
 import controller.AccountController;
+import controller.StockController;
 import controller.TransactionController;
 import model.CurrencyType;
 import model.SecurityAccount;
+import model.customerHeldStock;
 import utils.ATMConstant;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -26,11 +29,12 @@ public class GUIStock extends JFrame {
 
     private TransactionController transactionController = new TransactionController();
     private AccountController accountController = new AccountController();
+    private StockController stockController = new StockController();
     ATMConstant atmConstant = new ATMConstant();
     public GUIStock(List userAccounts, List userInfo, String userName) throws Exception {
         this.userName = userName;
         this.userInfo = userInfo;
-        this.userAccounts = accountController.getAccountsForCustomer(userName);;
+        this.userAccounts = accountController.getAccountsForCustomer(userName);
         initComponents();
         showSecurityAccount();
     }
@@ -53,9 +57,21 @@ public class GUIStock extends JFrame {
         new GUIBuyOrSellStock(userAccounts, userInfo, userName,"sell");
     }
 
+    private void checkHeld(ActionEvent e) throws Exception {
+        dispose();
+        new GUIDisplayStock(userAccounts,userInfo,userName,"held").setVisible(true);
+    }
+
+
+    private void checkMarket(ActionEvent e) throws Exception {
+        dispose();
+        new GUIDisplayStock(userAccounts,userInfo,userName,"market").setVisible(true);
+    }
+
     private void button1(ActionEvent e) {
         // TODO add your code here
     }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -100,11 +116,13 @@ public class GUIStock extends JFrame {
 
                 //---- checkHeldButton ----
                 checkHeldButton.setText("Check held stocks ");
+                checkHeldButton.addActionListener(e -> checkHeld(e));
                 contentPanel.add(checkHeldButton);
                 checkHeldButton.setBounds(25, 160, 140, 30);
 
                 //---- checkMarketButton ----
                 checkMarketButton.setText("Check stock market");
+                checkMarketButton.addActionListener(e -> checkMarket(e));
                 contentPanel.add(checkMarketButton);
                 checkMarketButton.setBounds(215, 160, 145, 30);
 

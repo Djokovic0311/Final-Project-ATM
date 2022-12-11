@@ -3,12 +3,11 @@ package service;
 import dao.AccountDao;
 import dao.CustomerHoldStocksDao;
 import dao.StockDao;
-import model.AccountType;
-import model.CurrencyType;
-import model.Customer;
-import model.SecurityAccount;
+import model.*;
 import utils.ATMConstant;
 import utils.Utils;
+
+import java.util.ArrayList;
 
 public class StockService {
     private StockDao stockDao = new StockDao();
@@ -54,5 +53,15 @@ public class StockService {
         else {
             return atmConstant.getERROR();
         }
+    }
+
+    public ArrayList<customerHeldStock> getCustomerHeldStocks(Customer customer) {
+        ArrayList<customerHeldStock> customerOwnedStock = new ArrayList<customerHeldStock>();
+        customerOwnedStock = customerHoldStocksDao.getStocks(customer.getID());
+        return customerOwnedStock;
+    }
+
+    public ArrayList<marketStock> getMarketStocks(){
+        return null;
     }
 }
