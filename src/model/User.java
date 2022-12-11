@@ -1,11 +1,24 @@
+package model;
+
+import java.sql.*;
 public class User {
-    private String name;
-    private int ID;
+    protected String name;
+    protected int ID;
     public enum Type {
         Manager, Customer
     }
+
     private Type type;
     private int password;
+
+
+    void createConnection(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch(ClassNotFoundException ex){
+            System.out.println("Driver not found");
+        }
+    }
 
     public User(String name, int ID, String type, int password) {
         this.name = name;
@@ -36,4 +49,6 @@ public class User {
         }
         return false;
     }
+
+
 }
