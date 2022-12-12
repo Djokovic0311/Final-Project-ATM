@@ -16,17 +16,19 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class GUIBuyOrSellStock extends JFrame {
+public class GUIAddStock extends JFrame {
     private List userAccounts;
     private List userInfo;
     private String userName;
+
     protected int StockID;
     protected int price;
     protected int quantity;
+    
     private StockController stockController = new StockController();
     private String tradeType;
-    ATMConstant atmConstant = new ATMConstant(); 
-    public GUIBuyOrSellStock(List userAccounts, List userInfo, String userName, int stockID, int price, int quantity) {
+    ATMConstant atmConstant = new ATMConstant();
+    public GUIAddStock(List userAccounts, List userInfo, String userName, int stockID, int price, int quantity) {
         this.userName = userName;
         this.userInfo = userInfo;
         this.userAccounts = userAccounts;
@@ -39,17 +41,9 @@ public class GUIBuyOrSellStock extends JFrame {
         new GUIStock(userAccounts, userInfo, userName).setVisible(true);
     }
 
-    private void trade(ActionEvent e) {
+    private void add(ActionEvent e) {
         int stockID = Integer.parseInt(stockTextField.getText());
         int quantity = Integer.parseInt(quantityTextField.getText());
-
-        int status = stockController.trade(userName,stockID,quantity,tradeType);
-        if(status == atmConstant.getSUCCESS()) {
-            JOptionPane.showMessageDialog(null, "Success!!");
-            setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
-        }
         
     }
 
@@ -66,7 +60,7 @@ public class GUIBuyOrSellStock extends JFrame {
         cancelButton = new JButton();
 
         //======== this ========
-        setTitle("Trade Stocks");
+        setTitle("Add Stocks");
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -118,8 +112,8 @@ public class GUIBuyOrSellStock extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
                 //---- tradeButton ----
-                tradeButton.setText("Trade");
-                tradeButton.addActionListener(e -> trade(e));
+                tradeButton.setText("Add");
+                tradeButton.addActionListener(e -> add(e));
                 buttonBar.add(tradeButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));

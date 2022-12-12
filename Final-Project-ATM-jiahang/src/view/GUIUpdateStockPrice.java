@@ -1,12 +1,8 @@
-/*
- * Created by JFormDesigner on Sun Dec 11 01:17:26 EST 2022
- */
 
 package view;
 
 import controller.StockController;
 import controller.TransactionController;
-import model.Stock;
 import utils.ATMConstant;
 import utils.Utils;
 
@@ -16,21 +12,19 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class GUIBuyOrSellStock extends JFrame {
+public class GUIUpdateStockPrice extends JFrame {
     private List userAccounts;
     private List userInfo;
     private String userName;
-    protected int StockID;
-    protected int price;
-    protected int quantity;
+    private int stockID;
     private StockController stockController = new StockController();
     private String tradeType;
-    ATMConstant atmConstant = new ATMConstant(); 
-    public GUIBuyOrSellStock(List userAccounts, List userInfo, String userName, int stockID, int price, int quantity) {
+    ATMConstant atmConstant = new ATMConstant();
+    public GUIUpdateStockPrice(List userAccounts, List userInfo, String userName,int stockID) {
         this.userName = userName;
         this.userInfo = userInfo;
         this.userAccounts = userAccounts;
-        Stock stock = new Stock(stockID, price, quantity);
+        this.stockID = stockID;
         initComponents();
     }
     
@@ -39,11 +33,11 @@ public class GUIBuyOrSellStock extends JFrame {
         new GUIStock(userAccounts, userInfo, userName).setVisible(true);
     }
 
-    private void trade(ActionEvent e) {
+    private void update(ActionEvent e) {
         int stockID = Integer.parseInt(stockTextField.getText());
-        int quantity = Integer.parseInt(quantityTextField.getText());
-
-        int status = stockController.trade(userName,stockID,quantity,tradeType);
+        int nprice = Integer.parseInt(priceTextField.getText());
+        
+        int status = stock.setPrice(nprice);
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
             setVisible(false);
@@ -59,14 +53,14 @@ public class GUIBuyOrSellStock extends JFrame {
         contentPanel = new JPanel();
         stockLabel = new JLabel();
         stockTextField = new JTextField();
-        quantityLabel = new JLabel();
-        quantityTextField = new JTextField();
+        priceLabel = new JLabel();
+        priceTextField = new JTextField();
         buttonBar = new JPanel();
-        tradeButton = new JButton();
+        updateButton = new JButton();
         cancelButton = new JButton();
 
         //======== this ========
-        setTitle("Trade Stocks");
+        setTitle("Update Stock Pirce");
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
@@ -86,12 +80,12 @@ public class GUIBuyOrSellStock extends JFrame {
                 contentPanel.add(stockTextField);
                 stockTextField.setBounds(170, 40, 105, stockTextField.getPreferredSize().height);
 
-                //---- quantityLabel ----
-                quantityLabel.setText("quantity");
-                contentPanel.add(quantityLabel);
-                quantityLabel.setBounds(new Rectangle(new Point(85, 100), quantityLabel.getPreferredSize()));
-                contentPanel.add(quantityTextField);
-                quantityTextField.setBounds(170, 95, 105, 30);
+                //---- priceLabel ----
+                priceLabel.setText("new price");
+                contentPanel.add(priceLabel);
+                priceLabel.setBounds(new Rectangle(new Point(85, 100), priceLabel.getPreferredSize()));
+                contentPanel.add(priceTextField);
+                priceTextField.setBounds(170, 95, 105, 30);
 
                 {
                     // compute preferred size
@@ -117,10 +111,10 @@ public class GUIBuyOrSellStock extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
-                //---- tradeButton ----
-                tradeButton.setText("Trade");
-                tradeButton.addActionListener(e -> trade(e));
-                buttonBar.add(tradeButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                //---- updateButton ----
+                updateButton.setText("Update");
+                updateButton.addActionListener(e -> update(e));
+                buttonBar.add(updateButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
@@ -150,10 +144,10 @@ public class GUIBuyOrSellStock extends JFrame {
     private JPanel contentPanel;
     private JLabel stockLabel;
     private JTextField stockTextField;
-    private JLabel quantityLabel;
-    private JTextField quantityTextField;
+    private JLabel priceLabel;
+    private JTextField priceTextField;
     private JPanel buttonBar;
-    private JButton tradeButton;
+    private JButton updateButton;
     private JButton cancelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

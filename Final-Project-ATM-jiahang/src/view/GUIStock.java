@@ -50,8 +50,7 @@ public class GUIStock extends JFrame {
         new GUIBuyOrSellStock(userAccounts, userInfo, userName,"buy");
     }
 
-
-
+    
     private void sell(ActionEvent e) {
         dispose();
         new GUIBuyOrSellStock(userAccounts, userInfo, userName,"sell");
@@ -116,13 +115,27 @@ public class GUIStock extends JFrame {
 
                 //---- checkHeldButton ----
                 checkHeldButton.setText("Check held stocks ");
-                checkHeldButton.addActionListener(e -> checkHeld(e));
+                checkHeldButton.addActionListener(e -> {
+					try {
+						checkHeld(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				});
                 contentPanel.add(checkHeldButton);
                 checkHeldButton.setBounds(25, 160, 140, 30);
 
                 //---- checkMarketButton ----
                 checkMarketButton.setText("Check stock market");
-                checkMarketButton.addActionListener(e -> checkMarket(e));
+                checkMarketButton.addActionListener(e -> {
+					try {
+						checkMarket(e);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				});
                 contentPanel.add(checkMarketButton);
                 checkMarketButton.setBounds(215, 160, 145, 30);
 
@@ -175,8 +188,18 @@ public class GUIStock extends JFrame {
                 //---- backButton ----
                 backButton.setText("back");
                 backButton.addActionListener(e -> {
-			back(e);
-			back(e);
+			try {
+				back(e);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				back(e);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		});
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
