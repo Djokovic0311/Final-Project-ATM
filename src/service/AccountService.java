@@ -131,4 +131,9 @@ public class AccountService {
         accountDao.updateAccountBalance(account.getAccountID(),account.getUserID(),account.getType(),from,
                 account.getBalanceByCurrency(to)+amount*from.getValue()/to.getValue());
     }
+
+    public void redeem(int accountID){
+        long timestamp = Utils.getTimestamp();
+        accountDao.redeemForSavingAccount(accountID,timestamp);
+    }
 }

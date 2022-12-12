@@ -70,7 +70,7 @@ public class AccountController {
         List accounts = getAccountsForCustomer(userName);
         for(Object account : accounts){
             if(account instanceof SavingAccount){
-                ((SavingAccount) account).gainInterest();
+                accountService.redeem(((SavingAccount) account).getAccountID());
             }
         }
     }

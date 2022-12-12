@@ -48,4 +48,8 @@ public class AccountDao {
     public void updateAccountBalance(int accountID, int customerID, AccountType accountType, CurrencyType currencyType, double amount) {
 
     }
+
+    public void redeemForSavingAccount(int accountID, long timestamp){
+
+    }
 }
