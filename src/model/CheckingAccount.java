@@ -1,13 +1,13 @@
 package model;
 
+import model.Account;
+import model.AccountType;
 
-
-import java.util.Date;
 import java.util.Map;
 /**
     This is the class for Checking model.Account
-    @author: Jiahang Li
-    @version: 1.0
+    @author: Jiahang Li, Chen, Zhu
+    @version: 2.0
 */
 public class CheckingAccount extends Account {
 
@@ -21,13 +21,12 @@ public class CheckingAccount extends Account {
         setBalance(balance);
     }
 
-    public CheckingAccount(int accountID, int userID, AccountType type, double balance) {
+    public CheckingAccount(int accountID, int userID, AccountType type, CurrencyType t, double balance) {
         this(accountID, userID, type);
-        this.balance.put(CurrencyType.USD, balance);
+        this.balance.put(t, balance);
     }
 
     public Map<CurrencyType, Double> getBalance() {
         return balance;
     }
-
 }
