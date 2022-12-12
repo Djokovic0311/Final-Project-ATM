@@ -116,13 +116,25 @@ public class GUIStock extends JFrame {
 
                 //---- checkHeldButton ----
                 checkHeldButton.setText("Check held stocks ");
-                checkHeldButton.addActionListener(e -> checkHeld(e));
+                checkHeldButton.addActionListener(e -> {
+                    try {
+                        checkHeld(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(checkHeldButton);
                 checkHeldButton.setBounds(25, 160, 140, 30);
 
                 //---- checkMarketButton ----
                 checkMarketButton.setText("Check stock market");
-                checkMarketButton.addActionListener(e -> checkMarket(e));
+                checkMarketButton.addActionListener(e -> {
+                    try {
+                        checkMarket(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(checkMarketButton);
                 checkMarketButton.setBounds(215, 160, 145, 30);
 
@@ -175,9 +187,12 @@ public class GUIStock extends JFrame {
                 //---- backButton ----
                 backButton.setText("back");
                 backButton.addActionListener(e -> {
-			back(e);
-			back(e);
-		});
+                    try {
+                        back(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));

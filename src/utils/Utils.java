@@ -23,11 +23,11 @@ public class Utils {
     public static String getFixedLengthRandomString(int len) {
 
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random r = new Random();//创建random对象
+        Random r = new Random();
         StringBuffer buff = new StringBuffer();//StringBuffer
         for (int i = 0; i < len; i++) {
-            int it = r.nextInt(62);//使用random生成[0,62)之间的随机数,不包括62
-            buff.append(str.charAt(it));// 把int下标 转为 str中随机字符(数字，大写字母或者小写字母)
+            int it = r.nextInt(62);
+            buff.append(str.charAt(it));
 
         }
         return buff.toString();

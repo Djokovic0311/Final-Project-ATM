@@ -68,6 +68,10 @@ public class GUICustomerMoneyWindow extends JFrame {
         new GUIStock(userAccounts,userInfo,userName).setVisible(true);
     }
 
+    private void loan(ActionEvent e) {
+        dispose();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -137,6 +141,7 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- loanButton ----
                 loanButton.setText("Loan");
+                loanButton.addActionListener(e -> loan(e));
                 contentPanel.add(loanButton);
 
                 //---- transcurrencyButton ----

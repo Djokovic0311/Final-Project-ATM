@@ -1,71 +1,65 @@
+/*
+ * Created by JFormDesigner on Sun Dec 11 22:57:42 EST 2022
+ */
+
 package view;
 
-import controller.LoginController;
+import java.awt.event.*;
+import controller.AccountController;
+import controller.LoanController;
+import controller.TransactionController;
 import utils.ATMConstant;
-import utils.Utils;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;
-/*
- * Created by JFormDesigner on Wed Dec 07 20:07:57 EST 2022
- */
-
-
 
 /**
- * @author Jiahang Li
- * @version 1.0
+ * @author unknown
  */
-public class GUIRegistry extends JFrame {
-    private LoginController loginController = new LoginController();
-    private ATMConstant atmConstant = new ATMConstant();
-    public GUIRegistry() {
+public class GUIPayForLoan extends JFrame {
+    private List userInfo;
+    private String userName;
+
+    private TransactionController transactionController = new TransactionController();
+    private AccountController accountController = new AccountController();
+    private LoanController loanController = new LoanController();
+    ATMConstant atmConstant = new ATMConstant();
+
+    public GUIPayForLoan(List userInfo, String userName) {
+        this.userInfo = userInfo;
+        this.userName = userName;
         initComponents();
     }
 
-    private void register(ActionEvent e) throws Exception {
-        String userName = this.userNameTextField.getText();
-        String password = String.valueOf(this.passwordTextField.getPassword());
-        int i = loginController.signUpCustomer(userName,password);
-        if(Utils.isEmpty(userName)) {
-            JOptionPane.showMessageDialog(null, "Username cannot be empty");
-            return;
-        }
-        if(Utils.isEmpty(password)) {
-            JOptionPane.showMessageDialog(null, "Password cannot be empty");
-            return;
-        }
-        if(i == atmConstant.getSUCCESS()) {
-            // succeed to register, go back to login page
-            JOptionPane.showMessageDialog(null, "Registration Success!!!");
-            dispose();
-            new GUILoginWindow().setVisible(true);
+    private void pay(ActionEvent e) throws Exception {
+        int accountID = Integer.parseInt(accountField.getText());
+        int loanID = Integer.parseInt(loanIDTextField.getText());
+        double amount = Double.parseDouble(amountField.getText());
+        int status = loanController.payForLoan(userName,amount,accountID,loanID);
+        if(status == atmConstant.getSUCCESS()){
+            JOptionPane.showMessageDialog(null, "Success!!");
+            setVisible(false);
+            new GUILoan(userInfo,userName).setVisible(true);
         } else {
-            //TODO: fail to register
-            JOptionPane.showMessageDialog(null, "Fail to register");
+            JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
         }
-    }
 
-    private void cancel(ActionEvent e) {
-        
-        dispose();
-        GUILoginWindow loginWindow = new GUILoginWindow();
-        loginWindow.setVisible(true);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        label1 = new JLabel();
-        usernameLabel = new JLabel();
-        passwordLabel = new JLabel();
-        userNameTextField = new JTextField();
-        passwordTextField = new JPasswordField();
+        amountField = new JTextField();
+        amountLabel = new JLabel();
+        accountLabel = new JLabel();
+        accountField = new JTextField();
+        loanIDLabel = new JLabel();
+        loanIDTextField = new JTextField();
         buttonBar = new JPanel();
-        registerButton = new JButton();
+        payButton = new JButton();
         cancelButton = new JButton();
 
         //======== this ========
@@ -80,26 +74,27 @@ public class GUIRegistry extends JFrame {
             //======== contentPanel ========
             {
                 contentPanel.setLayout(null);
+                contentPanel.add(amountField);
+                amountField.setBounds(175, 60, 90, 30);
 
-                //---- label1 ----
-                label1.setText("New Customer Register");
-                label1.setHorizontalAlignment(SwingConstants.CENTER);
-                contentPanel.add(label1);
-                label1.setBounds(0, 0, 374, label1.getPreferredSize().height);
+                //---- amountLabel ----
+                amountLabel.setText("Amount");
+                contentPanel.add(amountLabel);
+                amountLabel.setBounds(70, 65, 47, 16);
 
-                //---- usernameLabel ----
-                usernameLabel.setText("UserName");
-                contentPanel.add(usernameLabel);
-                usernameLabel.setBounds(80, 35, 80, 45);
+                //---- accountLabel ----
+                accountLabel.setText("AccountID");
+                contentPanel.add(accountLabel);
+                accountLabel.setBounds(70, 15, 70, 16);
+                contentPanel.add(accountField);
+                accountField.setBounds(175, 10, 90, 30);
 
-                //---- passwordLabel ----
-                passwordLabel.setText("Password");
-                contentPanel.add(passwordLabel);
-                passwordLabel.setBounds(80, 85, 80, 45);
-                contentPanel.add(userNameTextField);
-                userNameTextField.setBounds(165, 45, 130, 30);
-                contentPanel.add(passwordTextField);
-                passwordTextField.setBounds(165, 100, 130, 30);
+                //---- loanIDLabel ----
+                loanIDLabel.setText("LoanID");
+                contentPanel.add(loanIDLabel);
+                loanIDLabel.setBounds(70, 110, 47, 16);
+                contentPanel.add(loanIDTextField);
+                loanIDTextField.setBounds(175, 105, 90, 30);
 
                 {
                     // compute preferred size
@@ -125,22 +120,21 @@ public class GUIRegistry extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
-                //---- registerButton ----
-                registerButton.setText("Register");
-                registerButton.addActionListener(e -> {
+                //---- payButton ----
+                payButton.setText("Pay");
+                payButton.addActionListener(e -> {
                     try {
-                        register(e);
+                        pay(e);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
                 });
-                buttonBar.add(registerButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                buttonBar.add(payButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));
@@ -156,14 +150,14 @@ public class GUIRegistry extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
-    private JLabel label1;
-    private JLabel usernameLabel;
-    private JLabel passwordLabel;
-    private JTextField userNameTextField;
-    private JPasswordField passwordTextField;
+    private JTextField amountField;
+    private JLabel amountLabel;
+    private JLabel accountLabel;
+    private JTextField accountField;
+    private JLabel loanIDLabel;
+    private JTextField loanIDTextField;
     private JPanel buttonBar;
-    private JButton registerButton;
+    private JButton payButton;
     private JButton cancelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-
 }

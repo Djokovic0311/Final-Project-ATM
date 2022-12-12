@@ -10,6 +10,7 @@ public class ATMConstant {
     private String DBURL = "";
     private String DBUSERNAME = "";
     private String DBPWD = "";
+    private double LOAN_INTEREST = 0.05;
     private int MANAGER_ACCOUNT_ID = 0;
 
     public int getIdBits() {
@@ -82,5 +83,13 @@ public class ATMConstant {
 
     public void setNO_ENOUGH_BALANCE(int NO_ENOUGH_BALANCE) {
         this.NO_ENOUGH_BALANCE = NO_ENOUGH_BALANCE;
+    }
+
+    public double getLOAN_INTEREST() {
+        return LOAN_INTEREST;
+    }
+
+    public void setLOAN_INTEREST(double LOAN_INTEREST) {
+        this.LOAN_INTEREST = LOAN_INTEREST;
     }
 }

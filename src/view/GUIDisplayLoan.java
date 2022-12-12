@@ -1,93 +1,78 @@
 /*
- * Created by JFormDesigner on Sun Dec 11 14:37:26 EST 2022
+ * Created by JFormDesigner on Sun Dec 11 21:42:18 EST 2022
  */
 
 package view;
 
-import javax.swing.table.*;
 import controller.AccountController;
+import controller.LoanController;
 import controller.StockController;
 import controller.TransactionController;
-import model.*;
-import utils.ATMConstant;
+import model.CurrencyType;
+import model.Loan;
+import model.Transaction;
+import model.TransactionType;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.table.*;
 
 /**
  * @author unknown
  */
-public class GUIDisplayStock extends JFrame {
-    private ArrayList stocks;
+public class GUIDisplayLoan extends JFrame {
     private List userAccounts;
     private List userInfo;
+    private List<Loan> loans;
     private String userName;
 
     private TransactionController transactionController = new TransactionController();
     private AccountController accountController = new AccountController();
     private StockController stockController = new StockController();
-    ATMConstant atmConstant = new ATMConstant();
-    public GUIDisplayStock(List userAccounts, List userInfo, String userName, String type) throws Exception {
-        this.userName = userName;
+    private LoanController loanController = new LoanController();
+    public GUIDisplayLoan(List userInfo, String userName) throws Exception {
         this.userInfo = userInfo;
-        this.userAccounts = accountController.getAccountsForCustomer(userName);
-        if(Objects.equals(type, "held")) {
-            this.stocks = new ArrayList<customerHeldStock>();
-            this.stocks = stockController.showHeldStocks(userName);
-        }
-        else {
-            this.stocks = new ArrayList<marketStock>();
-            this.stocks = stockController.showMarketStocks();
-        }
+        this.userName = userName;
         initComponents();
         fillTable();
     }
 
-    private void back(ActionEvent e) throws Exception {
-        dispose();
-        new GUIStock(userAccounts, userInfo, userName).setVisible(true);
+    private void back(ActionEvent e) {
+        // TODO add your code here
     }
-
     private void fillTable() throws Exception {
-        
-        DefaultTableModel defaultModel = (DefaultTableModel) stockTable.getModel();
-        for(Object stock : stocks) {
-            Vector v = new Vector();
-            if(stock instanceof customerHeldStock){
-                int stockID = ((customerHeldStock) stock).getStockID();
-                long timestamp = ((customerHeldStock) stock).getBuyTime();
-                int quantity = ((customerHeldStock) stock).getQuantity();
-                double price = ((customerHeldStock) stock).getPrice();
+        this.loans = loanController.getLoansForCustomer(userName);
+        DefaultTableModel defaultModel = (DefaultTableModel) loanTable.getModel();
+        for(Loan loan : loans) {
 
-                v.addElement(stockID);
-                v.addElement(price);
-                v.addElement(timestamp);
-                v.addElement(quantity);
-            }
-            else {
-                int stockID = ((marketStock) stock).getStockID();
-                double price = ((marketStock) stock).getPrice();
-                v.addElement(stockID);
-                v.addElement(price);
-            }
-            
+            double amount = loan.getPrincipalAmount();
+            int loanID = loan.getLoanID();
+            CurrencyType currencyType = loan.getCurrency();
+            double interestRate = loan.getRateOfInterest();
+
+            Vector v = new Vector();
+
+
+            v.addElement(amount);
+            v.addElement(loanID);
+            v.addElement(currencyType);
+            v.addElement(interestRate);
+
+
             defaultModel.addRow(v);
-            stockTable.setModel(defaultModel);
+            loanTable.setModel(defaultModel);
         }
     }
-
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         scrollPane1 = new JScrollPane();
-        stockTable = new JTable();
+        loanTable = new JTable();
         buttonBar = new JPanel();
         backButton = new JButton();
 
@@ -107,15 +92,15 @@ public class GUIDisplayStock extends JFrame {
                 //======== scrollPane1 ========
                 {
 
-                    //---- stockTable ----
-                    stockTable.setModel(new DefaultTableModel(
+                    //---- loanTable ----
+                    loanTable.setModel(new DefaultTableModel(
                         new Object[][] {
                         },
                         new String[] {
                             null, null, null, null
                         }
                     ));
-                    scrollPane1.setViewportView(stockTable);
+                    scrollPane1.setViewportView(loanTable);
                 }
                 contentPanel.add(scrollPane1);
                 scrollPane1.setBounds(0, 0, 375, 200);
@@ -146,13 +131,7 @@ public class GUIDisplayStock extends JFrame {
 
                 //---- backButton ----
                 backButton.setText("Back");
-                backButton.addActionListener(e -> {
-                    try {
-                        back(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                backButton.addActionListener(e -> back(e));
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));
@@ -169,7 +148,7 @@ public class GUIDisplayStock extends JFrame {
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JScrollPane scrollPane1;
-    private JTable stockTable;
+    private JTable loanTable;
     private JPanel buttonBar;
     private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

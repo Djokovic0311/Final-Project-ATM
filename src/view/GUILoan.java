@@ -1,30 +1,24 @@
 /*
- * Created by JFormDesigner on Sun Dec 11 14:37:26 EST 2022
+ * Created by JFormDesigner on Sun Dec 11 15:09:51 EST 2022
  */
 
 package view;
 
-import javax.swing.table.*;
 import controller.AccountController;
 import controller.StockController;
 import controller.TransactionController;
-import model.*;
 import utils.ATMConstant;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.*;
 
 /**
  * @author unknown
  */
-public class GUIDisplayStock extends JFrame {
-    private ArrayList stocks;
+public class GUILoan extends JFrame {
     private List userAccounts;
     private List userInfo;
     private String userName;
@@ -33,61 +27,40 @@ public class GUIDisplayStock extends JFrame {
     private AccountController accountController = new AccountController();
     private StockController stockController = new StockController();
     ATMConstant atmConstant = new ATMConstant();
-    public GUIDisplayStock(List userAccounts, List userInfo, String userName, String type) throws Exception {
-        this.userName = userName;
-        this.userInfo = userInfo;
+    public GUILoan(List userInfo, String userName) throws Exception {
         this.userAccounts = accountController.getAccountsForCustomer(userName);
-        if(Objects.equals(type, "held")) {
-            this.stocks = new ArrayList<customerHeldStock>();
-            this.stocks = stockController.showHeldStocks(userName);
-        }
-        else {
-            this.stocks = new ArrayList<marketStock>();
-            this.stocks = stockController.showMarketStocks();
-        }
+        this.userInfo = userInfo;
+        this.userName = userName;
         initComponents();
-        fillTable();
     }
 
     private void back(ActionEvent e) throws Exception {
         dispose();
-        new GUIStock(userAccounts, userInfo, userName).setVisible(true);
+        new GUICustomerMoneyWindow(userInfo,userAccounts,userName).setVisible(true);
     }
 
-    private void fillTable() throws Exception {
-        
-        DefaultTableModel defaultModel = (DefaultTableModel) stockTable.getModel();
-        for(Object stock : stocks) {
-            Vector v = new Vector();
-            if(stock instanceof customerHeldStock){
-                int stockID = ((customerHeldStock) stock).getStockID();
-                long timestamp = ((customerHeldStock) stock).getBuyTime();
-                int quantity = ((customerHeldStock) stock).getQuantity();
-                double price = ((customerHeldStock) stock).getPrice();
+    private void display(ActionEvent e) throws Exception {
+        dispose();
+        new GUIDisplayLoan(userInfo,userName).setVisible(true);
+    }
 
-                v.addElement(stockID);
-                v.addElement(price);
-                v.addElement(timestamp);
-                v.addElement(quantity);
-            }
-            else {
-                int stockID = ((marketStock) stock).getStockID();
-                double price = ((marketStock) stock).getPrice();
-                v.addElement(stockID);
-                v.addElement(price);
-            }
-            
-            defaultModel.addRow(v);
-            stockTable.setModel(defaultModel);
-        }
+    private void require(ActionEvent e) {
+        dispose();
+        new GUIRequireLoan(userInfo,userName).setVisible(true);
+    }
+
+    private void pay(ActionEvent e) {
+        dispose();
+        new GUIPayForLoan(userInfo,userName).setVisible(true);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        scrollPane1 = new JScrollPane();
-        stockTable = new JTable();
+        displayButton = new JButton();
+        requireButton = new JButton();
+        payButton = new JButton();
         buttonBar = new JPanel();
         backButton = new JButton();
 
@@ -104,21 +77,29 @@ public class GUIDisplayStock extends JFrame {
             {
                 contentPanel.setLayout(null);
 
-                //======== scrollPane1 ========
-                {
+                //---- displayButton ----
+                displayButton.setText("Display Loan");
+                displayButton.addActionListener(e -> {
+                    try {
+                        display(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                contentPanel.add(displayButton);
+                displayButton.setBounds(new Rectangle(new Point(80, 35), displayButton.getPreferredSize()));
 
-                    //---- stockTable ----
-                    stockTable.setModel(new DefaultTableModel(
-                        new Object[][] {
-                        },
-                        new String[] {
-                            null, null, null, null
-                        }
-                    ));
-                    scrollPane1.setViewportView(stockTable);
-                }
-                contentPanel.add(scrollPane1);
-                scrollPane1.setBounds(0, 0, 375, 200);
+                //---- requireButton ----
+                requireButton.setText("Require Loan");
+                requireButton.addActionListener(e -> require(e));
+                contentPanel.add(requireButton);
+                requireButton.setBounds(80, 95, 111, 30);
+
+                //---- payButton ----
+                payButton.setText("Pay for Loan");
+                payButton.addActionListener(e -> pay(e));
+                contentPanel.add(payButton);
+                payButton.setBounds(80, 155, 111, 30);
 
                 {
                     // compute preferred size
@@ -168,8 +149,9 @@ public class GUIDisplayStock extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
-    private JScrollPane scrollPane1;
-    private JTable stockTable;
+    private JButton displayButton;
+    private JButton requireButton;
+    private JButton payButton;
     private JPanel buttonBar;
     private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

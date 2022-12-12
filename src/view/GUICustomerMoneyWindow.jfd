@@ -44,6 +44,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "loanButton"
 						"text": "Loan"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loan", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "transcurrencyButton"
