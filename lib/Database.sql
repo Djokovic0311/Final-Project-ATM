@@ -10,7 +10,6 @@ create table Person (
 create table SavingAccount (
 	ID int,
     customerID int,
-    accountType varchar(255),
     balanceUSD double,
     balanceEUR double,
     balanceCNY double,
@@ -20,7 +19,6 @@ create table SavingAccount (
 create table CheckingAccount (
 	ID int,
     customerID int,
-    accountType varchar(255),
     balanceUSD double,
     balanceEUR double,
     balanceCNY double
