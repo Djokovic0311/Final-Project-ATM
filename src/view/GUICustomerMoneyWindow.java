@@ -130,27 +130,57 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- TransactionButton ----
                 TransactionButton.setText("Transaction");
-                TransactionButton.addActionListener(e -> Transaction(e));
+                TransactionButton.addActionListener(e -> {
+                    try {
+                        Transaction(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(TransactionButton);
 
                 //---- stockButton ----
                 stockButton.setText("Stock");
-                stockButton.addActionListener(e -> stock(e));
+                stockButton.addActionListener(e -> {
+                    try {
+                        stock(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(stockButton);
 
                 //---- loanButton ----
                 loanButton.setText("Loan");
-                loanButton.addActionListener(e -> loan(e));
+                loanButton.addActionListener(e -> {
+                    try {
+                        loan(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(loanButton);
 
                 //---- transcurrencyButton ----
                 transcurrencyButton.setText("Transcurrency");
-                transcurrencyButton.addActionListener(e -> transcurrency(e));
+                transcurrencyButton.addActionListener(e -> {
+                    try {
+                        transcurrency(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(transcurrencyButton);
 
                 //---- redeemButton ----
                 redeemButton.setText("Redeem");
-                redeemButton.addActionListener(e -> redeem(e));
+                redeemButton.addActionListener(e -> {
+                    try {
+                        redeem(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(redeemButton);
             }
             dialogPane.add(contentPanel);
