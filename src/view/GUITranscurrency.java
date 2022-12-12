@@ -39,6 +39,7 @@ public class GUITranscurrency extends JFrame {
         initComponents();
     }
 
+
     private void ok(ActionEvent e) throws Exception {
         double amount = Double.parseDouble(amountTextField.getText());
         CurrencyType from = CurrencyType.valueOf(fromCurrencyComboBox.getSelectedItem().toString());
@@ -161,14 +162,26 @@ public class GUITranscurrency extends JFrame {
 
                 //---- okButton ----
                 okButton.setText("OK");
-                okButton.addActionListener(e -> ok(e));
+                okButton.addActionListener(e -> {
+                    try {
+                        ok(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> cancel(e));
+                cancelButton.addActionListener(e -> {
+                    try {
+                        cancel(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

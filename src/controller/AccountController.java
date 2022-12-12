@@ -65,4 +65,13 @@ public class AccountController {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         return (Account) accountService.getAccountByID(accountID);
     }
+
+    public void redeem(String userName) throws Exception {
+        List accounts = getAccountsForCustomer(userName);
+        for(Object account : accounts){
+            if(account instanceof SavingAccount){
+                ((SavingAccount) account).gainInterest();
+            }
+        }
+    }
 }

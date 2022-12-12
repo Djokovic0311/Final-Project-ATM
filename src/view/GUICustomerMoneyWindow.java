@@ -73,8 +73,14 @@ public class GUICustomerMoneyWindow extends JFrame {
         new GUILoan(userInfo,userName).setVisible(true);
     }
 
-    private void transcurrency(ActionEvent e) {
+    private void transcurrency(ActionEvent e) throws Exception {
         dispose();
+        new GUITranscurrency().setVisible(true);
+    }
+
+    private void redeem(ActionEvent e) throws Exception {
+        accountController.redeem(userName);
+        JOptionPane.showMessageDialog(null, "Success!!");
     }
 
     private void initComponents() {
@@ -144,6 +150,7 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- redeemButton ----
                 redeemButton.setText("Redeem");
+                redeemButton.addActionListener(e -> redeem(e));
                 contentPanel.add(redeemButton);
             }
             dialogPane.add(contentPanel);
