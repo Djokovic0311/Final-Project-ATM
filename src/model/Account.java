@@ -16,7 +16,6 @@ public abstract class Account {
     private String ownerName;
     private int userID;
     // account password
-    private String password;
     // account type, ex: checking, saving...
     private AccountType type;
     // account status, activated or not
@@ -31,20 +30,18 @@ public abstract class Account {
     }
 
     // construct an account with parameters, no initial balance
-    public Account(int accountID, AccountType type, String ownerName, String pwd) {
+    public Account(int accountID, AccountType type, String ownerName) {
         this.accountID = accountID;
         this.ownerName = ownerName;
-        this.password = pwd;
         this.type = type;
         this.activated = true;
         this.balance = new HashMap<>();
     }
 
     // construct an account with initial balance
-    public Account(int accountID, String ownerName, String pwd, AccountType type, CurrencyType currencyType, double balance) {
+    public Account(int accountID, String ownerName, AccountType type, CurrencyType currencyType, double balance) {
         this.accountID = accountID;
         this.ownerName = ownerName;
-        this.password = pwd;
         this.type = type;
         this.activated = true;
         this.balance = new HashMap<>();
@@ -97,13 +94,6 @@ public abstract class Account {
         this.activated = activated;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public AccountType getType() {
         return type;

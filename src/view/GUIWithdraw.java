@@ -106,9 +106,7 @@ public class GUIWithdraw extends JFrame {
                 currencyTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(currencyTypeComboBox);
                 currencyTypeComboBox.setBounds(160, 80, 84, 30);
@@ -141,26 +139,14 @@ public class GUIWithdraw extends JFrame {
 
                 //---- withdrawButton ----
                 withdrawButton.setText("Withdraw");
-                withdrawButton.addActionListener(e -> {
-                    try {
-                        withdraw(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                withdrawButton.addActionListener(e -> withdraw(e));
                 buttonBar.add(withdrawButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> {
-                    try {
-                        cancel(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

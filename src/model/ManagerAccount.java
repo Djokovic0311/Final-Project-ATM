@@ -12,12 +12,12 @@ import java.util.Map;
 */
 public class ManagerAccount extends Account{
     // constructor with currency
-    public ManagerAccount(int accountID, String ownerName, String pwd, AccountType type) {
-        super(accountID, type, ownerName, pwd);
+    public ManagerAccount(int accountID, String ownerName, AccountType type) {
+        super(accountID, type, ownerName);
     }
 
-    public ManagerAccount(int accountID, String ownerName, String pwd, AccountType type, Map<CurrencyType, Double> balance) {
-        this(accountID, ownerName, pwd, type);
+    public ManagerAccount(int accountID, String ownerName, AccountType type, Map<CurrencyType, Double> balance) {
+        this(accountID, ownerName, type);
         setBalance(balance);
     }
     @Override

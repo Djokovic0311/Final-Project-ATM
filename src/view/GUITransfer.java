@@ -94,9 +94,7 @@ public class GUITransfer extends JFrame {
                 currencyTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(currencyTypeComboBox);
                 currencyTypeComboBox.setBounds(195, 100, 84, 30);
@@ -148,26 +146,14 @@ public class GUITransfer extends JFrame {
 
                 //---- transferButton ----
                 transferButton.setText("Transfer");
-                transferButton.addActionListener(e -> {
-                    try {
-                        transfer(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                transferButton.addActionListener(e -> transfer(e));
                 buttonBar.add(transferButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> {
-                    try {
-                        cancel(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

@@ -60,7 +60,7 @@ public class GUIUserProfileWindow extends JFrame {
         //---- passwordContent ----
         passwordContent.setText("default");
         contentPane.add(passwordContent);
-        passwordContent.setBounds(new Rectangle(new Point(180, 110), passwordContent.getPreferredSize()));
+        passwordContent.setBounds(new Rectangle(new Point(185, 110), passwordContent.getPreferredSize()));
 
         //---- passwordChangeButton ----
         passwordChangeButton.setText("change");

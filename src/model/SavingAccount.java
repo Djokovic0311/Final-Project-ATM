@@ -20,14 +20,14 @@ public class SavingAccount extends Account{
     private double interest;
     // lastest redeem record
     private Date lastRedeemDate;
-    public SavingAccount(int accountID, String ownerName, String pwd, AccountType type) {
-        super(accountID, type, ownerName, pwd);
+    public SavingAccount(int accountID, String ownerName, AccountType type) {
+        super(accountID, type, ownerName);
         this.lastRedeemDate = new Date();
         this.interest = 0.0;
     }
 
-    public SavingAccount(int accountID, String ownerName, String pwd, AccountType type, Map<CurrencyType, Double> balance) {
-        this(accountID, ownerName, pwd, type);
+    public SavingAccount(int accountID, String ownerName, AccountType type, Map<CurrencyType, Double> balance) {
+        this(accountID, ownerName, type);
         setBalance(balance);
         this.lastRedeemDate = new Date();
         this.interest = 0.0;

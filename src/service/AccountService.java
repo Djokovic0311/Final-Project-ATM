@@ -34,10 +34,6 @@ public class AccountService {
             SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(customer.getSavingAccounts()[i], customer.getID());
             accounts.add(savingAccount);
         }
-        if(customer.getLoanAccount() != -1) {
-            LoanAccount loanAccount = (LoanAccount) accountDao.selectAccountByID(customer.getLoanAccount(), customer.getID());
-            accounts.add(loanAccount);
-        }
         if(customer.getSecurityAccount() != -1) {
             SecurityAccount securityAccount = (SecurityAccount) accountDao.selectAccountByID(customer.getSecurityAccount(), customer.getID());
             accounts.add(securityAccount);

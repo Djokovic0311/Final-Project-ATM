@@ -53,7 +53,6 @@ public class GUICustomerAccountWindow extends JFrame {
         contentPanel = new JPanel();
         checking = new JPanel();
         saving = new JPanel();
-        loan = new JPanel();
         security = new JPanel();
         buttonBar = new JPanel();
         backButton = new JButton();
@@ -116,28 +115,6 @@ public class GUICustomerAccountWindow extends JFrame {
                 }
                 contentPanel.add(saving);
                 saving.setBounds(new Rectangle(new Point(85, 140), saving.getPreferredSize()));
-
-                //======== loan ========
-                {
-                    loan.setLayout(null);
-
-                    {
-                        // compute preferred size
-                        Dimension preferredSize = new Dimension();
-                        for(int i = 0; i < loan.getComponentCount(); i++) {
-                            Rectangle bounds = loan.getComponent(i).getBounds();
-                            preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                            preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-                        }
-                        Insets insets = loan.getInsets();
-                        preferredSize.width += insets.right;
-                        preferredSize.height += insets.bottom;
-                        loan.setMinimumSize(preferredSize);
-                        loan.setPreferredSize(preferredSize);
-                    }
-                }
-                contentPanel.add(loan);
-                loan.setBounds(new Rectangle(new Point(120, 130), loan.getPreferredSize()));
 
                 //======== security ========
                 {
@@ -220,7 +197,6 @@ public class GUICustomerAccountWindow extends JFrame {
         saving.removeAll();
         int checkAccountNum = 0;
         int savingAccountNum = 0;
-        int loanAccountNum = 0;
         int securityAccountNum = 0;
         for (Object amount : userAccounts) {
             if (amount instanceof CheckingAccount) {
@@ -251,22 +227,7 @@ public class GUICustomerAccountWindow extends JFrame {
                     oneAccount.add(t);
                     oneAccount.add(b);
                 }
-            } else if (amount instanceof LoanAccount) {
-                loanAccountNum++;
-                JPanel oneAccount = new JPanel();
-                oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((LoanAccount) amount).getAccountID()));
-                oneAccount.setLayout(new GridLayout(((LoanAccount) amount).getBalance().size(), 2, 0, 5));
-                loan.add(oneAccount);
-                for (CurrencyType type : ((LoanAccount) amount).getBalance().keySet()) {
-                    JLabel t = new JLabel(type.name());
-                    t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    JLabel b = new JLabel(String.valueOf(((LoanAccount) amount).getBalance().get(type)));
-                    b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    oneAccount.add(t);
-                    oneAccount.add(b);
-                }
-            }
-            else if (amount instanceof SecurityAccount) {
+            } else if (amount instanceof SecurityAccount) {
                 securityAccountNum++;
                 JPanel oneAccount = new JPanel();
                 oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((SecurityAccount) amount).getAccountID()));
@@ -284,8 +245,7 @@ public class GUICustomerAccountWindow extends JFrame {
         }
         checking.setLayout(new GridLayout(checkAccountNum + 1, 1));
         saving.setLayout(new GridLayout(savingAccountNum + 1, 1));
-        loan.setLayout(new GridLayout(loanAccountNum + 1, 1));
-        security.setLayout(new GridLayout(loanAccountNum + 1, 1));
+        security.setLayout(new GridLayout(securityAccountNum + 1, 1));
 
     }
 
@@ -294,7 +254,6 @@ public class GUICustomerAccountWindow extends JFrame {
     private JPanel contentPanel;
     private JPanel checking;
     private JPanel saving;
-    private JPanel loan;
     private JPanel security;
     private JPanel buttonBar;
     private JButton backButton;

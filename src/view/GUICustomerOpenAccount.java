@@ -119,9 +119,7 @@ public class GUICustomerOpenAccount extends JFrame {
                 currencyTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(currencyTypeComboBox);
                 currencyTypeComboBox.setBounds(165, 75, 84, 30);
@@ -154,13 +152,7 @@ public class GUICustomerOpenAccount extends JFrame {
 
                 //---- okButton ----
                 okButton.setText("OK");
-                okButton.addActionListener(e -> {
-                    try {
-                        open(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                okButton.addActionListener(e -> open(e));
                 buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));

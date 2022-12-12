@@ -33,7 +33,7 @@ new FormModel {
 				name: "passwordContent"
 				"text": "default"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 180
+				"x": 185
 				"y": 110
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {

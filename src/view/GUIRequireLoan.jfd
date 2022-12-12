@@ -31,9 +31,7 @@ new FormModel {
 							selectedItem: "USD"
 							addElement( "USD" )
 							addElement( "EUR" )
-							addElement( "GBP" )
 							addElement( "CNY" )
-							addElement( "HKD" )
 						}
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"width": 84

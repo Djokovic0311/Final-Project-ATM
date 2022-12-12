@@ -104,9 +104,7 @@ public class GUITranscurrency extends JFrame {
                 fromCurrencyComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(fromCurrencyComboBox);
                 fromCurrencyComboBox.setBounds(170, 60, 84, 30);
@@ -115,9 +113,7 @@ public class GUITranscurrency extends JFrame {
                 toCurrencyComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(toCurrencyComboBox);
                 toCurrencyComboBox.setBounds(170, 100, 84, 30);
@@ -162,26 +158,14 @@ public class GUITranscurrency extends JFrame {
 
                 //---- okButton ----
                 okButton.setText("OK");
-                okButton.addActionListener(e -> {
-                    try {
-                        ok(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                okButton.addActionListener(e -> ok(e));
                 buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> {
-                    try {
-                        cancel(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

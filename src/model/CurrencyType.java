@@ -3,9 +3,7 @@ package model;
 public enum CurrencyType {
     USD(1F),
     EUR(0.82780F),
-    GBP(0.71954F),
-    CNY(0.14234F),
-    HKD(0.11526F);
+    CNY(0.14234F);
 
     private final float value;
 
