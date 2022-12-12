@@ -128,4 +128,11 @@ public class AccountService {
     public Object getAccountByID(int accountID) {
         return accountDao.selectAccountByID(accountID);
     }
+
+    public void transcurrency(Account account, CurrencyType from,CurrencyType to, double amount){
+        accountDao.updateAccountBalance(account.getAccountID(),account.getUserID(),account.getType(),from,
+                account.getBalanceByCurrency(from)-amount);
+        accountDao.updateAccountBalance(account.getAccountID(),account.getUserID(),account.getType(),from,
+                account.getBalanceByCurrency(to)+amount*from.getValue()/to.getValue());
+    }
 }

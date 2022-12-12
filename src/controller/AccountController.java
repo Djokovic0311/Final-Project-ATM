@@ -1,9 +1,6 @@
 package controller;
 
-import model.AccountType;
-import model.CurrencyType;
-import model.Customer;
-import model.User;
+import model.*;
 import service.AccountService;
 import service.LoginService;
 import utils.ATMConstant;
@@ -46,5 +43,26 @@ public class AccountController {
         if(customer==null)
             return atmConstant.getNO_USER_FOUND();
         return accountService.closeAccount(customer, accountID);
+    }
+    public int transcurrency(String userName, int accountID, CurrencyType from,CurrencyType to, double amount) throws Exception {
+        Customer customer = (Customer) loginService.getCustomerInfo(userName);
+        Account account = getAccountsForCustomerByID(userName,accountID);
+        if(account == null) {
+            return atmConstant.getERROR();
+        }
+        else {
+            if(account.getBalance().get(from) < amount) {
+                System.out.println("No enough money to transcurrency");
+                return atmConstant.getERROR();
+            }
+            else {
+                accountService.transcurrency(account,from,to,amount);
+                return atmConstant.getSUCCESS();
+            }
+        }
+    }
+    public Account getAccountsForCustomerByID(String userName, int accountID) throws Exception {
+        Customer customer = (Customer) loginService.getCustomerInfo(userName);
+        return (Account) accountService.getAccountByID(accountID);
     }
 }

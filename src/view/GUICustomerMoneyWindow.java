@@ -68,7 +68,12 @@ public class GUICustomerMoneyWindow extends JFrame {
         new GUIStock(userAccounts,userInfo,userName).setVisible(true);
     }
 
-    private void loan(ActionEvent e) {
+    private void loan(ActionEvent e) throws Exception {
+        dispose();
+        new GUILoan(userInfo,userName).setVisible(true);
+    }
+
+    private void transcurrency(ActionEvent e) {
         dispose();
     }
 
@@ -119,24 +124,12 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- TransactionButton ----
                 TransactionButton.setText("Transaction");
-                TransactionButton.addActionListener(e -> {
-                    try {
-                        Transaction(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                TransactionButton.addActionListener(e -> Transaction(e));
                 contentPanel.add(TransactionButton);
 
                 //---- stockButton ----
                 stockButton.setText("Stock");
-                stockButton.addActionListener(e -> {
-                    try {
-                        stock(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                stockButton.addActionListener(e -> stock(e));
                 contentPanel.add(stockButton);
 
                 //---- loanButton ----
@@ -146,6 +139,7 @@ public class GUICustomerMoneyWindow extends JFrame {
 
                 //---- transcurrencyButton ----
                 transcurrencyButton.setText("Transcurrency");
+                transcurrencyButton.addActionListener(e -> transcurrency(e));
                 contentPanel.add(transcurrencyButton);
 
                 //---- redeemButton ----

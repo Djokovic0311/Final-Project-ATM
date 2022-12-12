@@ -49,6 +49,7 @@ new FormModel {
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "transcurrencyButton"
 						"text": "Transcurrency"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "transcurrency", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "redeemButton"
