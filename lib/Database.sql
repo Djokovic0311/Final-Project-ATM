@@ -52,6 +52,16 @@ CREATE TABLE Transactionas (
     trasactionDate DATE # YYYY-MM-DD
 );
 
+CREATE TABLE StockTransactionas (
+	ID int,
+    customerID int,
+    StockID int,
+    numStock int,
+    Balance double,
+    Transactiontype varchar(255),
+    trasactionDate DATE # YYYY-MM-DD
+);
+
 CREATE TABLE CustomerHoldStocks (
 	stockID int,
     customerID int,
