@@ -26,10 +26,10 @@ create table CheckingAccount (
 
 create table SecurityAccount (
 	ID int,
-    userID int,
+    customerID int,
     balanceUSD double,
     realizePprofit double,
-    unrealizeProfit double # YYYY-MM-DD
+    unrealizeProfit double
 );
 
 CREATE TABLE LOANS (
