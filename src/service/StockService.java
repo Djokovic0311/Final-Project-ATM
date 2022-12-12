@@ -3,6 +3,7 @@ package service;
 import dao.AccountDao;
 import dao.CustomerHoldStocksDao;
 import dao.StockDao;
+import dao.StockTransactionDao;
 import model.*;
 import utils.ATMConstant;
 import utils.Utils;
@@ -10,8 +11,10 @@ import utils.Utils;
 import java.util.ArrayList;
 
 public class StockService {
-    private StockDao stockDao = new StockDao();
+    private StockTransactionDao stockTransactionDao = new StockTransactionDao();
+
     private CustomerHoldStocksDao customerHoldStocksDao = new CustomerHoldStocksDao();
+    private StockDao stockDao = new StockDao();
     private AccountDao accountDao = new AccountDao();
     ATMConstant atmConstant = new ATMConstant();
     public int buyStock(Customer customer, SecurityAccount securityAccount, int stockID, int quantity) {
@@ -25,6 +28,7 @@ public class StockService {
             else {
                 customerHoldStocksDao.insertNewHeldStock(stockID,customer.getID(),price,quantity,timestamp);
             }
+            stockTransactionDao.insertTransaction(stockID,quantity,timestamp,customer.getID(),quantity * price, TransactionType.BUYSTOCK);
             accountDao.updateAccountBalance(securityAccount.getAccountId(), customer.getID(), AccountType.SECURITY, CurrencyType.USD,
                     securityAccount.getInvestmentAmount()-price * quantity);
             return atmConstant.getSUCCESS();
@@ -42,12 +46,14 @@ public class StockService {
             customerHoldStocksDao.updateCustomerHeldStocks(stockID,customer.getID(),price,heldStocks-quantity,timestamp);
             accountDao.updateAccountBalance(securityAccount.getAccountId(), customer.getID(), AccountType.SECURITY, CurrencyType.USD,
                     securityAccount.getInvestmentAmount()+price * quantity);
+            stockTransactionDao.insertTransaction(stockID,quantity,timestamp,customer.getID(),quantity * price,TransactionType.SELLSTOCK);
             return atmConstant.getSUCCESS();
         }
         else if(heldStocks == quantity){
             customerHoldStocksDao.removeCustomerHeldStock(stockID, customer.getID());
             accountDao.updateAccountBalance(securityAccount.getAccountId(), customer.getID(), AccountType.SECURITY, CurrencyType.USD,
                     securityAccount.getInvestmentAmount()+price * quantity);
+            stockTransactionDao.insertTransaction(stockID,quantity,timestamp,customer.getID(),quantity * price,TransactionType.SELLSTOCK);
             return atmConstant.getSUCCESS();
         }
         else {
@@ -62,6 +68,7 @@ public class StockService {
     }
 
     public ArrayList<marketStock> getMarketStocks(){
-        return null;
+        ArrayList<marketStock> marketStocks = stockDao.getMarketStocks();
+        return marketStocks;
     }
 }
