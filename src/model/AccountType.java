@@ -10,21 +10,4 @@ public enum AccountType {
     LOAN,
     SECURITY,
     MANAGER
-
-    public static AccountType convertStrToType(String s) {
-        switch (s) {
-            case "Saving" -> {
-                return SAVINGS;
-            }
-            case "Checking" -> {
-                return CHECKINGS;
-            }
-            case "Loan" -> {
-                return LOAN;
-            }
-            case "Security" -> {
-                return SECURITY;
-            }
-        }
-    }
 }

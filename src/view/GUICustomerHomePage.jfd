@@ -1,0 +1,41 @@
+JFDML JFormDesigner: "8.0.0.0.194" Java: "17.0.4" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.GridLayout ) {
+			"columns": 2
+			"rows": 2
+			"hgap": 10
+			"vgap": 10
+		} ) {
+			name: "this"
+			"title": "Hello Customer!"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "profileButton"
+				"text": "Manage Profile"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "profile", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "profile", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "accountButton"
+				"text": "Account Matters"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "account", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "moneyButton"
+				"text": "Money Matters"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "backButton"
+				"text": "Log out"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 435, 335 )
+		} )
+	}
+}

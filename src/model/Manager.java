@@ -19,7 +19,7 @@ public class Manager {
 //            if(Stocks[i].StockID = id){
 //                Stocks[i].updateStockPrice(1333);
 //            }
-//        
+//        }
 //    }
 
     private Stock[] checkStock(){

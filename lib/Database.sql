@@ -16,6 +16,7 @@ create table SavingAccount (
     lastDateRedeam DATE # YYYY-MM-DD
 );
 
+# Treat back account as a checking account
 create table CheckingAccount (
 	ID int,
     customerID int,

@@ -4,7 +4,6 @@ import model.Account;
 import model.AccountType;
 import model.Currency;
 
-import java.util.Hashtable;
 import java.util.Map;
 /*
     This is the class for Manager's model.Account
@@ -13,25 +12,14 @@ import java.util.Map;
 */
 public class ManagerAccount extends Account{
     // constructor with currency
-    public ManagerAccount(int accountID, int userID, AccountType type) {
-        super(accountID, userID, type);
-        this.balance = initialBalance();
+    public ManagerAccount(int accountID, String ownerName, String pwd, AccountType type) {
+        super(accountID, type, ownerName, pwd);
     }
 
-    public ManagerAccount(int accountID, int userID, AccountType type, Map<CurrencyType, Double> balance) {
-        this(accountID, userID, type);
+    public ManagerAccount(int accountID, String ownerName, String pwd, AccountType type, Map<CurrencyType, Double> balance) {
+        this(accountID, ownerName, pwd, type);
         setBalance(balance);
     }
-    @Override
-    protected Map<CurrencyType, Double> initialBalance() {
-        Map<CurrencyType, Double> balance = new Hashtable<>();
-        balance.put(CurrencyType.USD, 1000000.0);
-        balance.put(CurrencyType.EUR, 1000000.0);
-        balance.put(CurrencyType.CNY, 1000000.0);
-        return balance;
-    }
-
-
     @Override
     public boolean transfer(Account to, CurrencyType currencyType, double amount) {
         return false;

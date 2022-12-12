@@ -1,0 +1,98 @@
+JFDML JFormDesigner: "8.0.0.0.194" Java: "17.0.4" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"title": "Welcome to Business Center!"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "dialogPane"
+				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+					"columns": 3
+					"rows": 3
+					"hgap": 10
+					"vgap": 10
+				} ) {
+					name: "contentPanel"
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "withdrawButton"
+						"text": "Withdraw"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "withdraw", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "depositButton"
+						"text": "Deposit"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deposit", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "transferButton"
+						"text": "Transfer"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "transfer", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "TransactionButton"
+						"text": "Transaction"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "Transaction", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "stockButton"
+						"text": "Stock"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "stock", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "loanButton"
+						"text": "Loan"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loan", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "transcurrencyButton"
+						"text": "Transcurrency"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "transcurrency", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "redeemButton"
+						"text": "Redeem"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "redeem", true ) )
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 12
+					"y": 12
+					"width": 373
+					"height": 198
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+					"$columnSpecs": "0:1.0, 80, 80"
+					"$rowSpecs": "0, 0"
+					"$hGap": 5
+					"$vGap": 5
+				} ) {
+					name: "buttonBar"
+					"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "backButton"
+						"text": "back"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 1
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "logoutButton"
+						"text": "Log out"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "logout", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 2
+					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 374
+					"x": 15
+					"y": 210
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}
