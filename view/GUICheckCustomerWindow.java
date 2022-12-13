@@ -1,9 +1,15 @@
+package view;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import org.jdesktop.layout.GroupLayout;
 import org.jdesktop.layout.LayoutStyle;
+
+import utils.ATMConstant;
+import utils.Utils;
 /*
  * Created by JFormDesigner on Mon Dec 12 12:53:53 EST 2022
  */
@@ -14,27 +20,20 @@ import org.jdesktop.layout.LayoutStyle;
  * @author Mingxin Li
  */
 public class GUICheckCustomerWindow extends JFrame {
+	ATMConstant atmConstant = new ATMConstant();
     public GUICheckCustomerWindow() {
         initComponents();
     }
 
     private void check(ActionEvent e) throws Exception{
         String userName = userNameTextField.getText().toString();
+        List userInfo;//get from database 
         if(Utils.isEmpty(userName)) {
             JOptionPane.showMessageDialog(this,"UserName cannot be empty");
             return;
         }
-        // check
-        JOptionPane.showMessageDialog(null,"Input the user name to check their status:");
-        if(statusCode == atmConstant.getSUCCESS()) {
-            //TODO: SET PROFILE PAGE VISIBLE
-            setVisible(false);
-            List userInfo = accountController.getAccountInfoForCustomer(userName);
-            new GUICustomerHomePage(userInfo, userName);
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Incorrect Username!");
-        }
+        GUIUserProfileWindow upw = new GUIUserProfileWindow(userInfo, userName);
+        upw.setVisible(true);
     }
 
 
