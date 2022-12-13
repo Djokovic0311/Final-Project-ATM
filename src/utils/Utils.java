@@ -56,4 +56,13 @@ public class Utils {
     public static long getLongFormatDate(double doubleFormatDate) {
         return (long) doubleFormatDate;
     }
+
+    public static double redeem(double balance, int dayPass) {
+        double new_balance = balance;
+        ATMConstant a = new ATMConstant();
+        for (int i = 0; i < dayPass; i ++) {
+            new_balance *= a.getREDEEM_INTEREST();
+        }
+        return new_balance;
+    }
 }
