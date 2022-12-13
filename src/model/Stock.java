@@ -1,14 +1,20 @@
 package model;
 public class Stock {
     protected int StockID;
-    protected int price;
+    protected double price;
     protected int quantity;
+
+    public Stock (int stockID, double price, int quantity) {
+        this.StockID = stockID;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     public int getStockID(){
         return this.StockID;
     }
 
-    public int getPrice(){
+    public double getPrice(){
         return this.price;
     }
 

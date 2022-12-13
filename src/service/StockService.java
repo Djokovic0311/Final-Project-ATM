@@ -55,8 +55,8 @@ public class StockService {
         }
     }
 
-    public ArrayList<customerHeldStock> getCustomerHeldStocks(Customer customer) {
-        ArrayList<customerHeldStock> customerOwnedStock = new ArrayList<customerHeldStock>();
+    public ArrayList<CustomerHeldStock> getCustomerHeldStocks(Customer customer) {
+        ArrayList<CustomerHeldStock> customerOwnedStock = new ArrayList<CustomerHeldStock>();
         customerOwnedStock = customerHoldStocksDao.getStocks(customer.getID());
         return customerOwnedStock;
     }

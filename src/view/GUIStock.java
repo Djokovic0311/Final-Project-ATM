@@ -9,12 +9,10 @@ import controller.StockController;
 import controller.TransactionController;
 import model.CurrencyType;
 import model.SecurityAccount;
-import model.customerHeldStock;
 import utils.ATMConstant;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.*;

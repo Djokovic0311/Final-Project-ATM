@@ -38,7 +38,7 @@ public class GUIDisplayStock extends JFrame {
         this.userInfo = userInfo;
         this.userAccounts = accountController.getAccountsForCustomer(userName);
         if(Objects.equals(type, "held")) {
-            this.stocks = new ArrayList<customerHeldStock>();
+            this.stocks = new ArrayList<CustomerHeldStock>();
             this.stocks = stockController.showHeldStocks(userName);
         }
         else {
@@ -59,11 +59,11 @@ public class GUIDisplayStock extends JFrame {
         DefaultTableModel defaultModel = (DefaultTableModel) stockTable.getModel();
         for(Object stock : stocks) {
             Vector v = new Vector();
-            if(stock instanceof customerHeldStock){
-                int stockID = ((customerHeldStock) stock).getStockID();
-                long timestamp = ((customerHeldStock) stock).getBuyTime();
-                int quantity = ((customerHeldStock) stock).getQuantity();
-                double price = ((customerHeldStock) stock).getPrice();
+            if(stock instanceof CustomerHeldStock){
+                int stockID = ((CustomerHeldStock) stock).getStockID();
+                long timestamp = ((CustomerHeldStock) stock).getBuyTime();
+                int quantity = ((CustomerHeldStock) stock).getQuantity();
+                double price = ((CustomerHeldStock) stock).getPrice();
 
                 v.addElement(stockID);
                 v.addElement(price);

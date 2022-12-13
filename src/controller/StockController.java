@@ -26,7 +26,7 @@ public class StockController {
         }
     }
 
-    public ArrayList<customerHeldStock> showHeldStocks(String userName) {
+    public ArrayList<CustomerHeldStock> showHeldStocks(String userName) {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         int accountID = customer.getSecurityAccount();
         SecurityAccount securityAccount = (SecurityAccount) accountService.getAccountByID(accountID);
