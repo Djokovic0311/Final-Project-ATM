@@ -3,9 +3,7 @@ package model;
 public enum CurrencyType {
     USD(1F),
     EUR(0.82780F),
-    GBP(0.71954F),
-    CNY(0.14234F),
-    HKD(0.11526F);
+    CNY(0.14234F);
 
     private final float value;
 
@@ -16,4 +14,14 @@ public enum CurrencyType {
     public float getValue() {
         return value;
     }
+
+    public static CurrencyType getTypeFromString(String s) {
+        switch (s) {
+            case "USD" -> { return USD; }
+            case "EUR" -> { return EUR; }
+            case "CNY" -> { return CNY; }
+        }
+        return null;
+    }
+
 }
