@@ -1,4 +1,5 @@
-package service;/*
+package service;
+/*
     This is the class for login service
     @author: Jiahang Li
     @version: 1.0
@@ -6,6 +7,7 @@ package service;/*
 
 import dao.UserDao;
 import model.Customer;
+import model.Manager;
 import model.User;
 import utils.ATMConstant;
 import utils.Utils;
@@ -19,33 +21,53 @@ public class LoginService {
 
     ATMConstant atmConstant = new ATMConstant();
 
-    public int signIn(String userName,String password) {
-        Customer customer = new Customer();
-        customer.setName(userName);
-        int customerId = Utils.createHashCodeForPersonId(userName);
-        customer.setID(customerId);
-        customer.setPassword(password);
+    public int signIn(String userName,String password, String userType) {
+        if(Objects.equals(userType, "Customer")){
+            Customer customer = new Customer();
+            customer.setName(userName);
+            int customerId = Utils.createHashCodeForPersonId(userName);
+            customer.setID(customerId);
+            customer.setPassword(password);
 
-        Customer existingUser = (Customer) userDao.selectUserById(customerId);
-        if(existingUser == null) {
-            return atmConstant.getNO_USER_FOUND();
-        }
-        else {
-            if(Objects.equals(existingUser.getPassword(), password)) {
-                System.out.println("Success Login");
-                return atmConstant.getSUCCESS();
+            Customer existingUser = (Customer) userDao.selectUserById(customerId,userType);
+            if(existingUser == null) {
+                return atmConstant.getNO_USER_FOUND();
             }
             else {
-                System.out.println("Incorrect pwd");
-                return atmConstant.getERROR();
+                if(Objects.equals(existingUser.getPassword(), password)) {
+                    System.out.println("Success Login");
+                    return atmConstant.getSUCCESS();
+                }
+                else {
+                    System.out.println("Incorrect pwd");
+                    return atmConstant.getERROR();
+                }
             }
         }
+        else {
+            int managerID = atmConstant.getMANAGER_ACCOUNT_ID();
+            Manager manager = (Manager) userDao.selectUserById(managerID,userType);
+            if(manager == null) {
+                return atmConstant.getNO_USER_FOUND();
+            }
+            else {
+                if(Objects.equals(manager.getPassword(), password)) {
+                    System.out.println("Success Login");
+                    return atmConstant.getSUCCESS();
+                }
+                else {
+                    System.out.println("Incorrect pwd");
+                    return atmConstant.getERROR();
+                }
+            }
+        }
+
     }
 
     public int signUp(Customer customer, String pwd) {
         int id = customer.getID();
         String userName = customer.getName();
-        Customer existingUser = (Customer) userDao.selectUserById(id);
+        Customer existingUser = (Customer) userDao.selectUserById(id, "customer");
         if(existingUser == null) {
             boolean status = userDao.insertIntoUser(id, userName, pwd);
             if(status) {
@@ -58,7 +80,7 @@ public class LoginService {
 
     public User getCustomerInfo(String userName) {
         int customerID = Utils.createHashCodeForPersonId(userName);
-        User user = userDao.selectUserById(customerID);
+        User user = userDao.selectUserById(customerID,"customer");
         return user;
     }
 }

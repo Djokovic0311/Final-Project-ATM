@@ -8,7 +8,7 @@ public class UserDao {
 
 
     // select user by id
-    public User selectUserById(int id) {
+    public User selectUserById(int id, String userType) {
         // TODO:
         return null;
     }

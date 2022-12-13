@@ -102,4 +102,5 @@ public class ATMConstant {
     public void setREDEEM_INTEREST(double REDEEM_INTEREST) {
         this.REDEEM_INTEREST = REDEEM_INTEREST;
     }
+
 }

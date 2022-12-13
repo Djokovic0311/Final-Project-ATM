@@ -9,8 +9,8 @@ public class LoginController {
 
     LoginService loginService = new LoginService();
     ATMConstant atmConstant = new ATMConstant();
-    public int signIn(String userName, String password) throws Exception {
-        return loginService.signIn(userName,password);
+    public int signIn(String userName, String password, String userType) throws Exception {
+        return loginService.signIn(userName,password,userType);
     }
 
     public int signUpCustomer(String name, String pwd) throws Exception {

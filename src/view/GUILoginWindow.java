@@ -52,7 +52,7 @@ public class GUILoginWindow extends JFrame{
         if("Customer".equals(role)) {
             // customer login
             JOptionPane.showMessageDialog(null,"Hello customer!");
-            int statusCode = loginController.signIn(userName, password);
+            int statusCode = loginController.signIn(userName, password,role);
             if(statusCode == atmConstant.getSUCCESS()) {
                 //TODO: SET CUSTOMER HOMEPAGE VISIBLE
                 setVisible(false);
@@ -68,7 +68,7 @@ public class GUILoginWindow extends JFrame{
         else if("Manager".equals(role)) {
             // manager login
             JOptionPane.showMessageDialog(null,"Hello manager!");
-            int statusCode = loginController.signIn(userName, password);
+            int statusCode = loginController.signIn(userName, password,role);
             if(statusCode == atmConstant.getSUCCESS()) {
                 //TODO: SET MANAGER HOMEPAGE VISIBLE
                 setVisible(false);
