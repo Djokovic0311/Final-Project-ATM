@@ -61,7 +61,7 @@ public class GUICustomerAccountWindow extends JFrame {
         closeAccountButton = new JButton();
 
         //======== this ========
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
@@ -247,20 +247,6 @@ public class GUICustomerAccountWindow extends JFrame {
                     JLabel t = new JLabel(type.name());
                     t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
                     JLabel b = new JLabel(String.valueOf(((SavingAccount) amount).getBalance().get(type)));
-                    b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    oneAccount.add(t);
-                    oneAccount.add(b);
-                }
-            } else if (amount instanceof LoanAccount) {
-                loanAccountNum++;
-                JPanel oneAccount = new JPanel();
-                oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((LoanAccount) amount).getAccountID()));
-                oneAccount.setLayout(new GridLayout(((LoanAccount) amount).getBalance().size(), 2, 0, 5));
-                loan.add(oneAccount);
-                for (CurrencyType type : ((LoanAccount) amount).getBalance().keySet()) {
-                    JLabel t = new JLabel(type.name());
-                    t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    JLabel b = new JLabel(String.valueOf(((LoanAccount) amount).getBalance().get(type)));
                     b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
                     oneAccount.add(t);
                     oneAccount.add(b);

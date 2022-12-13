@@ -43,13 +43,15 @@ public class AccountService {
     }
 
     public int createNewAccount(Customer customer,AccountType accountType,double balance,CurrencyType currencyType) throws Exception {
+        int accountID;
+        int status;
         switch (accountType) {
-            case SAVINGS -> {
-                int accountID = Utils.getFixedLengthRandom(8);
+            case SAVINGS:
+                accountID = Utils.getFixedLengthRandom(8);
                 while(accountDao.doesAccountExists(accountID)) {
                     accountID = Utils.getFixedLengthRandom(8);
                 }
-                int status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance, currencyType);
+                status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance, currencyType);
                 if(status != 0) {
                     // successfully create
                     // pay fee to manager account
@@ -57,13 +59,13 @@ public class AccountService {
                     return atmConstant.getSUCCESS();
                 }
                 else return atmConstant.getERROR();
-            }
-            case CHECKINGS -> {
-                int accountID = Utils.getFixedLengthRandom(8);
+
+        case CHECKINGS:
+                accountID = Utils.getFixedLengthRandom(8);
                 while(accountDao.doesAccountExists(accountID)) {
                     accountID = Utils.getFixedLengthRandom(8);
                 }
-                int status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.SAVINGS, balance, currencyType);
+                status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.SAVINGS, balance, currencyType);
                 if(status != 0) {
                     // successfully create
                     // pay fee to manager account
@@ -71,10 +73,9 @@ public class AccountService {
                     return atmConstant.getSUCCESS();
                 }
                 else return atmConstant.getERROR();
-            }
-            case SECURITY -> {
+
+            case SECURITY:
                 return createNewSecuritiesAccount(customer, balance, currencyType);
-            }
         }
         return 0;
     }

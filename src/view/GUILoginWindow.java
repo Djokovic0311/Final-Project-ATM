@@ -101,7 +101,7 @@ public class GUILoginWindow extends JFrame{
         resetButton = new JButton();
 
         //======== this ========
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

@@ -19,18 +19,18 @@ public class AccountDao {
             Statement stmt = con.createStatement();
             ResultSet rs;
             switch (type) {
-                case SAVINGS -> {
+                case SAVINGS :
                     rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE accountID = " + accountID + ";");
-                }
-                case CHECKINGS -> {
+                    break;
+                case CHECKINGS :
                     rs = stmt.executeQuery("SELECT * FROM CheckingAccount WHERE accountID = " + accountID + ";");
-                }
-                case SECURITY -> {
+                    break;
+                case SECURITY :
                     rs = stmt.executeQuery("SELECT * FROM SecurityAccount WHERE accountID = " + accountID + ";");
-                }
-                default -> {
+                    break;
+                default :
                     return null;
-                }
+
             }
             if (rs.next()) {
                 int customerID = rs.getInt(1);
@@ -43,11 +43,13 @@ public class AccountDao {
                     balance.put(CurrencyType.EUR, balance_eur);
                     balance.put(CurrencyType.CNY, balance_cny);
                     switch (type) {
-                        case SAVINGS -> {
+                        case SAVINGS:
                             // Date
                             return new SavingAccount(accountID, customerID, type, balance);
-                        }
-                        case CHECKINGS -> { return new CheckingAccount(accountID, customerID, type, balance); }
+
+                        case CHECKINGS:
+                            return new CheckingAccount(accountID, customerID, type, balance);
+
                     }
                 } else {
                     double realizedProfit = rs.getDouble(3);
@@ -80,20 +82,19 @@ public class AccountDao {
             Statement stmt = con.createStatement();
             ResultSet rs;
             switch (type) {
-                case SAVINGS -> {
+                case SAVINGS:
                     rs = stmt.executeQuery("SELECT * FROM SavingAccount " + queryWhere + ";");
-                }
-                case CHECKINGS -> {
+                    return rs.next();
+                case CHECKINGS :
                     rs = stmt.executeQuery("SELECT * FROM CheckingAccount " + queryWhere + ";");
-                }
-                case SECURITY -> {
+                    return rs.next();
+                case SECURITY :
                     rs = stmt.executeQuery("SELECT * FROM SecurityAccount " + queryWhere + ";");
-                }
-                default -> {
+                    return rs.next();
+                default :
                     return false;
-                }
+
             }
-            return rs.next();
         } catch (Exception e) { return false; }
     }
 
@@ -102,26 +103,29 @@ public class AccountDao {
         double balanceEUR = 0;
         double balanceCNY = 0;
         switch (currencyType) {
-            case USD -> { balanceUSD = balance; }
-            case EUR -> { balanceEUR = balance; }
-            case CNY -> { balanceCNY = balance; }
+            case USD:
+                balanceUSD = balance;
+            case EUR:
+                balanceEUR = balance;
+            case CNY :
+                balanceCNY = balance;
         }
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
             Statement stmt = con.createStatement();
             switch (accountType) {
-                case SAVINGS -> {
+                case SAVINGS:
                     // How to process Date?
 //                    stmt.executeQuery("INSERT INTO SavingAccount ( accountID, customerID, balanceUSD, balanceEUR, balanceCNY )" +
 //                            "VALUES ( " + accountID + ", " + customerID + ", " + balanceUSD + ", " + balanceEUR + ", " + balanceCNY +  ");");
-                    return 1;
-                }
-                case CHECKINGS -> {
+                    return 0;
+                case CHECKINGS:
                     stmt.executeQuery("INSERT INTO CheckingAccount ( accountID, customerID, balanceUSD, balanceEUR, balanceCNY )" +
                             "VALUES ( " + accountID + ", " + customerID + ", " + balanceUSD + ", " + balanceEUR + ", " + balanceCNY +  ");");
                     return 1;
-                }
-                default -> { return 0; }
+
+                default:
+                    return 0;
             }
         } catch (Exception e) { return 0; }
     }
@@ -199,26 +203,32 @@ public class AccountDao {
     }
 
     public void updateAccountBalance(int accountID, AccountType accountType, CurrencyType currencyType, double amount) {
-        String querySet;
+        String querySet = null;
         switch (currencyType) {
-            case USD -> { querySet = "SET balanceUSD = " + amount; }
-            case EUR -> { querySet = "SET balanceEUR = " + amount; }
-            case CNY -> { querySet = "SET balanceCNY = " + amount; }
-            default -> { return; }
+            case USD:
+                querySet = "SET balanceUSD = " + amount;
+                break;
+            case EUR:
+                querySet = "SET balanceEUR = " + amount;
+                break;
+            case CNY:
+                querySet = "SET balanceCNY = " + amount;
+                break;
+
         }
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
             Statement stmt = con.createStatement();
             switch (accountType) {
-                case SAVINGS -> {
+                case SAVINGS:
                     stmt.executeQuery("UPDATE SavingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
-                }
-                case CHECKINGS -> {
+
+                case CHECKINGS:
                     stmt.executeQuery("UPDATE CheckingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
-                }
-                case SECURITY -> {
+
+                case SECURITY:
                     stmt.executeQuery("UPDATE SecurityAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
-                }
+
             }
         } catch (Exception ignored) {
         }

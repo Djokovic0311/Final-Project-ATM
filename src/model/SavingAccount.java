@@ -33,6 +33,7 @@ public class SavingAccount extends Account{ // Warning: Date part is not complet
         this.lastRedeemDate = Utils.getTimestamp();
     }
 
+
     public long getLastRedeemDate() {
         return lastRedeemDate;
     }

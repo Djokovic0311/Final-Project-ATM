@@ -79,7 +79,7 @@ public class GUICustomerOpenAccount extends JFrame {
 
         //======== this ========
         setTitle("Open a new account!");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

@@ -73,7 +73,7 @@ public class GUIWithdraw extends JFrame {
 
         //======== this ========
         setTitle("Withdraw ");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
