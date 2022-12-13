@@ -211,16 +211,20 @@ public class AccountDao {
             Statement stmt = con.createStatement();
             switch (accountType) {
                 case SAVINGS -> {
-                    stmt.executeQuery("UPDATE SavingAccount " + querySet + " WHERE accountID = " + accountID + ";");
+                    stmt.executeQuery("UPDATE SavingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
                 }
                 case CHECKINGS -> {
-                    stmt.executeQuery("UPDATE CheckingAccount " + querySet + " WHERE accountID = " + accountID + ";");
+                    stmt.executeQuery("UPDATE CheckingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
                 }
                 case SECURITY -> {
-                    stmt.executeQuery("UPDATE SecurityAccount " + querySet + " WHERE accountID = " + accountID + ";");
+                    stmt.executeQuery("UPDATE SecurityAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
                 }
             }
         } catch (Exception ignored) {
         }
+    }
+
+    public void redeemForSavingAccount(int accountID, long timestamp){
+
     }
 }

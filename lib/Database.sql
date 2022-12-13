@@ -1,3 +1,4 @@
+drop database Bank;
 create database Bank;
 use Bank;
 
