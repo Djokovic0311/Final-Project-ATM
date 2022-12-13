@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerHoldStocksDao {
-    public boolean checkCustomerHolds(int stockID) { // What is this doing? If checking whether this customer have the stock then should provide customerID
+    public boolean checkCustomerHolds(int stockID) {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
             Statement stmt = con.createStatement();
@@ -23,11 +23,12 @@ public class CustomerHoldStocksDao {
     }
 
     public void updateCustomerHeldStocks(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) { // Problem: buy same stock with different price
+        int original_amount = getCustomerHeldStocksByID(stockID, customerID);
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
             Statement stmt = con.createStatement();
             stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, stockNumber, priceBought, timeBought)" +
-                    "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + (double) timestamp + ")" +
+                    "VALUES (" + stockID + ", " + customerID + ", " + original_amount + quantity + " ," + purchasedPrice + ", " + (double) timestamp + ")" +
                     "ON DUPLICATE KEY UPDATE stockNumber = " + quantity + ";");
         } catch (Exception ignored) {}
     }
@@ -69,8 +70,8 @@ public class CustomerHoldStocksDao {
                 int stockID = rs.getInt(0);
                 int quantity = rs.getInt(2);
                 double price = rs.getDouble(3);
-                // What about the date?
-                CustomerHeldStock chs = new CustomerHeldStock(stockID, price, quantity);
+                long date = (long) rs.getDouble(4);
+                CustomerHeldStock chs = new CustomerHeldStock(stockID, price, quantity, date);
                 result.add(chs);
             }
         } catch (Exception e) { return null; }
