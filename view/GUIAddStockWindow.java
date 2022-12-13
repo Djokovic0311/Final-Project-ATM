@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import org.jdesktop.layout.GroupLayout;
 import controller.StockController;
+import dao.StockDao;
 import utils.ATMConstant;
 /*
  * Created by JFormDesigner on Mon Dec 12 22:41:18 EST 2022
@@ -30,14 +31,8 @@ public class GUIAddStockWindow extends JFrame {
         int stockID = Integer.parseInt(stockTextField.getText());
         int quantity = Integer.parseInt(quantityTextField.getText());
         int price = Integer.parseInt(priceTextField.getText());
-        // add to database. only a demo.
-        int status = stockController.trade(userName,stockID,quantity,tradeType);
-        if(status == atmConstant.getSUCCESS()) {
-            JOptionPane.showMessageDialog(null, "Success!!");
-            setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
-        }
+        StockDao stock = new StockDao();
+        stock.insertIntoStock(stockID, price);
     }
 
     private void cancel(ActionEvent e) {
