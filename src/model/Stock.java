@@ -1,8 +1,26 @@
 package model;
+import java.util.List;
+import java.util.ArrayList;
+
 public class Stock {
     protected int StockID;
     protected int price;
-    protected int quantity;
+
+    protected List<Stock> Stock_list = new ArrayList<>();
+
+    public List<Stock> Get_All_Stocks(){
+        return this.Stock_list;
+    }
+
+    public Stock(){
+        //Constructor used to get all the stocks
+    }
+
+    public Stock(int price){
+        int created_id = Stock_list.size() + 1;
+        this.StockID = created_id;
+        this.price = price;
+    }
 
     public int getStockID(){
         return this.StockID;
@@ -12,11 +30,7 @@ public class Stock {
         return this.price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void updateStockPrice(int price) {
+        this.price = price;
     }
 }

@@ -2,10 +2,14 @@ package model;
 import java.util.Date;
 
 public class customerHeldStock extends Stock {
-    private long buyTime;
+    private Date buyTime;
     private int buyPrice;
 
-    public long getBuyTime(){
+    public customerHeldStock(int price){
+        super(price);
+    }
+
+    public Date getBuyTime(){
         return this.buyTime;
     }
 
