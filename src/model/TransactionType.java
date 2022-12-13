@@ -11,5 +11,27 @@ public enum TransactionType {
     SELLSTOCK,
     TRANSFER,
     WITHDRAW,
-    MANAGER, DEPOSIT
+    MANAGER,
+
+    DEPOSIT;
+
+    public static TransactionType getTypeFromString(String s) {
+        switch (s) {
+            case "BUYSTOCK" :
+                return BUYSTOCK;
+            case "SELLSTOCK":
+                return SELLSTOCK;
+            case "TRANSFER" :
+                return TRANSFER;
+            case "WITHDRAM" :
+                return WITHDRAW;
+            case "MANAGER":
+                return MANAGER;
+            case "DEPOSIT":
+                return DEPOSIT;
+        }
+        return null;
+    }
 }
+
+
