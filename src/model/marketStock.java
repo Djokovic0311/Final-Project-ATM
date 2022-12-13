@@ -1,3 +1,5 @@
+package model;
+
 public class marketStock extends Stock{
     private int marketPrice;
 
