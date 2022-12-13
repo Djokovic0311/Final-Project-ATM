@@ -5,6 +5,7 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -16,14 +17,33 @@ public class GUIManagerHomepage extends JFrame {
         initComponents();
     }
 
+    private void logOut(ActionEvent e) {
+        dispose();
+        GUILoginWindow guiLoginWindow = new GUILoginWindow();
+        guiLoginWindow.setVisible(true);
+    }
+
+    private void dailyReport(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void checkCustomer(ActionEvent e) {
+        dispose();
+        new GUIManagerCheckCustomer().setVisible(true);
+    }
+
+    private void stockManagement(ActionEvent e) {
+        // TODO add your code here
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        button1 = new JButton();
-        button3 = new JButton();
-        button2 = new JButton();
-        button4 = new JButton();
+        checkCustomerButton = new JButton();
+        dailyReportButton = new JButton();
+        stockManagementButton = new JButton();
+        logOutButton = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -38,21 +58,25 @@ public class GUIManagerHomepage extends JFrame {
             {
                 contentPanel.setLayout(new GridLayout(2, 2));
 
-                //---- button1 ----
-                button1.setText("Check customer");
-                contentPanel.add(button1);
+                //---- checkCustomerButton ----
+                checkCustomerButton.setText("Check customer");
+                checkCustomerButton.addActionListener(e -> checkCustomer(e));
+                contentPanel.add(checkCustomerButton);
 
-                //---- button3 ----
-                button3.setText("text");
-                contentPanel.add(button3);
+                //---- dailyReportButton ----
+                dailyReportButton.setText("Daily Report");
+                dailyReportButton.addActionListener(e -> dailyReport(e));
+                contentPanel.add(dailyReportButton);
 
-                //---- button2 ----
-                button2.setText("text");
-                contentPanel.add(button2);
+                //---- stockManagementButton ----
+                stockManagementButton.setText("Stock Management");
+                stockManagementButton.addActionListener(e -> stockManagement(e));
+                contentPanel.add(stockManagementButton);
 
-                //---- button4 ----
-                button4.setText("Log out");
-                contentPanel.add(button4);
+                //---- logOutButton ----
+                logOutButton.setText("Log out");
+                logOutButton.addActionListener(e -> logOut(e));
+                contentPanel.add(logOutButton);
             }
             dialogPane.add(contentPanel, BorderLayout.CENTER);
         }
@@ -65,9 +89,9 @@ public class GUIManagerHomepage extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
-    private JButton button1;
-    private JButton button3;
-    private JButton button2;
-    private JButton button4;
+    private JButton checkCustomerButton;
+    private JButton dailyReportButton;
+    private JButton stockManagementButton;
+    private JButton logOutButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

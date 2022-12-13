@@ -17,10 +17,5 @@ public class UserDao {
         return true;
     }
 
-    private User parseRS(ResultSet rs) {
-
-        // TODO:
-        return new User();
-    }
 
 }
