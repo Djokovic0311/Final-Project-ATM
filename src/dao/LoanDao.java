@@ -55,8 +55,7 @@ public class LoanDao {
                 CurrencyType t = CurrencyType.getTypeFromString(currencyType);
                 int amount = rs.getInt(3);
                 long date = (long) rs.getDouble(4);
-                Loan l = new Loan(loanID, customerID, amount, t, date);
-                return l;
+                return new Loan(loanID, customerID, amount, t, date);
             }
             return null;
         } catch (Exception e) { return null; }
