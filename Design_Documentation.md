@@ -7,9 +7,76 @@ Apart from the 5 layers above, the program also contains a model layer storing t
 
 The detail description of each layers is as follows:
 
-The GUI Layer in the Package "View":
-  1. GUIBuyOrSellStock: The interface for user having activated security account to buy or sell stocks.
-  2. GUICustomerAccountWindow: The interface for users to view, open and close their accounts. ?? need double check
-  3. GUICustomerCloseAccount: ?????
-  4. GUICustomerHomePage: The homepage of customer, where customer can choose to managing user information, account information or taking actions related to money.
-  5. GUICustomerMoneyWindow: 
+The GUI Layer in the Package "view":
+  1. GUIRegistry: The interface to register a new user.
+  2. GUILoginInWindow: The interface for user to log in.
+  3. GUICustomerHomePage: The homepage of customer, where customer can choose to managing user information, account information or taking actions related to money.
+  4. GUICustomerAccountWindow: The interface for customer to view, open and close their accounts. ?? need double check
+  5. GUICustomerCloseAccount: The interface for customer to close an account.
+  6. GUICustomerOpenAccount: The interface for user to open a new account.
+  7. GUICustomerMoneyWindow: ?????
+  8. GUIUserProfileWindow: The interface to display user profile.
+  9. GUIMoneyMatterWindow: The interface for user to choose action related to money.
+  10. GUIDeposit: The interface for user to make deposit.
+  11. GUITransfer: The interface for user to transfer monsy to another account.
+  12. GUIWithdraw: The interface for customer to withdraw money.
+  13. GUIWithdrawWindow: ?????
+  14. GUILoan: The interface for user to take actions related to loan.
+  15. GUIDisplayLoan: The interface displaying all the loans that user have.
+  16. GUIRequireLoan: The interface for user to require a loan.
+  17. GUIPayForLoan: The interface for user to pay for loan.
+  18. GUIStock: The interface for user to take actions related to stock.
+  19. GUIDisplayStock: The interface displaying all the stocks that user hold.
+  20. GUIBuyOrSellStock: The interface for user having activated security account to buy or sell stocks.
+  21. GUITransactionHistory: The interface to display transactions.
+  22. GUITranscurrency: The interface for user to buy oyher currency.
+  23. GUIManagerHomePage: The interface for manager to choose action.
+  
+The Controller Layer in the Package "controller":
+  1. LoginController: Handling all input when user log in.
+  2. AccountController: Handling all input when taking actions related to account management.
+  3. LoanController: Handling all input when taking actions related to loan.
+  4. StockController: Handling all input when taking actions related to stock.
+  5. TransactionController: Handling all input when taking actions related to transaction.
+
+The Service Layer in the Package "service":
+  1. AccountService: The service layer to execute the actions related to account.
+  2. DbService: ?????
+  3. LoanService: The service layer to execute the actions related to loan.
+  4. LoginService: The service layer to execute the actions related to user log in.
+  5. StockService: The service layer to execute the actions related to stock.
+  6. TransactionService: The service layer to generate transactions.
+
+The DAO Layer in the Package "dao":
+  1. AccountDao: The DAO layer access to database to retrieve information related to accounts.
+  2. ConnectDao: ?????
+  3. CustomerHoldStocksDao: The DAO layer access to database to retrieve information related the the stocks hold by customer.
+  4. LoanDao: the DAO layer access to database to retrieve information about loans.
+  5. StockDao: the DAO layer access to database to retrieve information about loans.
+  6. TransactionDao: the DAO layer access to database to retrieve information about transactions.
+  7. UserDao: the DAO layer access to database to retrieve information about user information.
+
+The Model Layer in the package "model":
+  1. User: The class contains the basic information of a user.
+  2. Customer: Extends from user, contains some additional information of customer.
+  3. Manager: Extends from user, contsins some additional information of manager.
+  4. Currency: ?????
+  5. CurrencyType: The enumration of type of currency.
+  6. Account: The abstract class contains attributes and information getters of account object.
+  7. AccountType: The enumration of type of accounts.
+  8. CheckingAccout: Extends from Account, contains some additional information of Checking Account.
+  9. SavingAccount: Extends from Account, contains some additional information of Saving Account.
+  10. SecurityAccount: Extends from Account, contains some additional information of Security Account.
+  11. ManagerAccount: Extends from Account, contains some additional information of Manager Account.
+  12. Stock: The class contains the basic information of a stock.
+  13. marketStock: Extends frm stock, contains additional information of stocks in stock market.
+  14. CustomerHoldStock: Extends from stock, contains additional information of stocks hold by customer.
+  15. Transaction: The class contains the basic information of a transaction.
+  16. TransactionType: The enumration of type of transaction.
+  17. TransferTransaction: Extends from Transaction, contains some additional information of transaction recording a transfer.
+  18. SellStockTransaction: Extends from Transaction, contains some additional information of transaction recording selling a stock.
+  19. BuyStockTransaction: Extends from Transaction, contains some additional information of transaction recording buying a stock.
+  20. DepositTransaction: Extends from Transaction, contains some additional information of transaction recording making deposit.
+  21. WithdrawTransaction: Extends from Transaction, contains some additional information of transaction recording withdrawing money.
+  22. ManagerTransaction: ?????
+  23. Loan: The class contains the basic information of a loan.
