@@ -16,11 +16,6 @@ import org.jdesktop.layout.LayoutStyle;
 public class GUICheckCustomerWindow extends JFrame {
     public GUICheckCustomerWindow() {
         initComponents();
-        new GUIUserProfileWindow
-    }
-
-    private void ok(ActionEvent e) {
-        // TODO add your code here
     }
 
     private void check(ActionEvent e) throws Exception{
@@ -42,9 +37,6 @@ public class GUICheckCustomerWindow extends JFrame {
         }
     }
 
-    private void login(ActionEvent e) {
-        // TODO add your code here
-    }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -54,7 +46,6 @@ public class GUICheckCustomerWindow extends JFrame {
         usernameLabel = new JLabel();
         userNameTextField = new JTextField();
         buttonBar = new JPanel();
-        okButton = new JButton();
         cancelButton = new JButton();
         checkButton = new JButton();
 
@@ -66,12 +57,13 @@ public class GUICheckCustomerWindow extends JFrame {
         //======== dialogPane ========
         {
             dialogPane.setBorder(new EmptyBorder(12, 12, 12, 12));
-            dialogPane.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border
-            . EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border. TitledBorder. CENTER, javax
-            . swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog" ,java .awt .Font .BOLD ,
-            12 ), java. awt. Color. red) ,dialogPane. getBorder( )) ); dialogPane. addPropertyChangeListener (new java. beans
-            . PropertyChangeListener( ){  public void propertyChange (java .beans .PropertyChangeEvent e) {if ("bor\u0064er" .equals (e .
-            getPropertyName () )) throw new RuntimeException( ); }} );
+            dialogPane.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax.
+            swing. border. EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax. swing. border
+            . TitledBorder. CENTER, javax. swing. border. TitledBorder. BOTTOM, new java .awt .Font ("D\u0069alog"
+            ,java .awt .Font .BOLD ,12 ), java. awt. Color. red) ,dialogPane. getBorder
+            ( )) ); dialogPane. addPropertyChangeListener (new java. beans. PropertyChangeListener( ){  public void propertyChange (java
+            .beans .PropertyChangeEvent e) {if ("bor\u0064er" .equals (e .getPropertyName () )) throw new RuntimeException
+            ( ); }} );
             dialogPane.setLayout(new BorderLayout());
 
             //======== contentPanel ========
@@ -110,17 +102,6 @@ public class GUICheckCustomerWindow extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
-                //---- okButton ----
-                okButton.setText("OK");
-                okButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        ok(e);
-                    }
-                });
-                buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 5, 5), 0, 0));
-
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
@@ -153,7 +134,6 @@ public class GUICheckCustomerWindow extends JFrame {
     private JLabel usernameLabel;
     private JTextField userNameTextField;
     private JPanel buttonBar;
-    private JButton okButton;
     private JButton cancelButton;
     private JButton checkButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
