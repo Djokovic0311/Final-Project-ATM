@@ -135,4 +135,17 @@ public class AccountService {
         accountDao.updateAccountBalance(account.getAccountID(),account.getType(),from,
                 account.getBalanceByCurrency(to)+amount*from.getValue()/to.getValue());
     }
+
+    public void redeem(int accountID){
+        long timestamp = Utils.getTimestamp();
+        accountDao.redeemForSavingAccount(accountID,timestamp);
+        SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(accountID);
+        for(CurrencyType currencyType : CurrencyType.values()){
+            double interest = savingAccount.getLastRedeemDate() * atmConstant.getREDEEM_INTEREST();
+            accountDao.updateAccountBalance(savingAccount.getAccountID(),AccountType.SAVINGS,currencyType,
+                    savingAccount.getBalanceByCurrency(currencyType)+interest);
+        }
+
+    }
+
 }

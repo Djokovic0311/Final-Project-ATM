@@ -223,4 +223,8 @@ public class AccountDao {
         } catch (Exception ignored) {
         }
     }
+
+    public void redeemForSavingAccount(int accountID, long timestamp){
+
+    }
 }

@@ -13,6 +13,8 @@ public class ATMConstant {
     private double LOAN_INTEREST = 0.05;
     private int MANAGER_ACCOUNT_ID = 0;
 
+    private double REDEEM_INTEREST = 0.1;
+
     public int getIdBits() {
         return idBits;
     }
@@ -91,5 +93,13 @@ public class ATMConstant {
 
     public void setLOAN_INTEREST(double LOAN_INTEREST) {
         this.LOAN_INTEREST = LOAN_INTEREST;
+    }
+
+    public double getREDEEM_INTEREST() {
+        return REDEEM_INTEREST;
+    }
+
+    public void setREDEEM_INTEREST(double REDEEM_INTEREST) {
+        this.REDEEM_INTEREST = REDEEM_INTEREST;
     }
 }
