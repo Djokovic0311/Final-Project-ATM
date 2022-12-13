@@ -18,7 +18,7 @@ create table SavingAccount (
 
 # Treat back account as a checking account
 create table CheckingAccount (
-	ID int,
+	accountID int,
     customerID int,
     balanceUSD double,
     balanceEUR double,
@@ -26,45 +26,46 @@ create table CheckingAccount (
 );
 
 create table SecurityAccount (
-	ID int,
+	accountID int,
     customerID int,
-    balanceUSD double,
-    realizePprofit double,
-    unrealizeProfit double
+    currentBalance double,
+    investedAmount double,
+    realizedProfit double,
+    unrealizedProfit double
 );
 
-CREATE TABLE LOANS (
-	ID int,
+CREATE TABLE Loans (
+	accountID int,
     customerID int,
     balance double,
     loanDate DATE # YYYY-MM-DD
 );
 
-CREATE TABLE Transactionas (
-	ID int,
+CREATE TABLE Transactions (
+	transactionID int,
     customerID int,
-    AccountID1 int,
-    AccountID2 int,
+    accountID1 int,
+    accountID2 int,
     currencyType varchar(255),
-    Balance double,
-    Transactiontype varchar(255),
+    balance double,
+    transactionType varchar(255),
     trasactionDate DATE # YYYY-MM-DD
 );
 
-CREATE TABLE StockTransactionas (
-	ID int,
+CREATE TABLE StockTransactions (
+	transactionID int,
     customerID int,
-    StockID int,
-    numStock int,
-    Balance double,
-    Transactiontype varchar(255),
+    stockID int,
+    quantity int,
+    totalPrice double,
+    transactionType varchar(255),
     trasactionDate DATE # YYYY-MM-DD
 );
 
 CREATE TABLE CustomerHoldStocks (
 	stockID int,
     customerID int,
-    stockNumber int,
+    quantity int,
     priceBought double,
     dateBought DATE # YYYY-MM-DD
 );

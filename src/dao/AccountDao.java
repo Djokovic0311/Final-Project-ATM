@@ -20,13 +20,13 @@ public class AccountDao {
             ResultSet rs;
             switch (type) {
                 case SAVINGS -> {
-                    rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE ID = " + accountID + ";");
+                    rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE accountID = " + accountID + ";");
                 }
                 case CHECKINGS -> {
-                    rs = stmt.executeQuery("SELECT * FROM CheckingAccount WHERE ID = " + accountID + ";");
+                    rs = stmt.executeQuery("SELECT * FROM CheckingAccount WHERE accountID = " + accountID + ";");
                 }
                 case SECURITY -> {
-                    rs = stmt.executeQuery("SELECT * FROM SecurityAccount WHERE ID = " + accountID + ";");
+                    rs = stmt.executeQuery("SELECT * FROM SecurityAccount WHERE accountID = " + accountID + ";");
                 }
                 default -> {
                     return null;
@@ -50,9 +50,9 @@ public class AccountDao {
                         case CHECKINGS -> { return new CheckingAccount(accountID, customerID, type, balance); }
                     }
                 } else {
-                    double realize_profit = rs.getDouble(3);
-                    double unrealize_profit = rs.getDouble(4);
-                    return new SecurityAccount(accountID, customerID, type, balance_usd, realize_profit, unrealize_profit);
+                    double realizedProfit = rs.getDouble(3);
+                    double unrealizedProfit = rs.getDouble(4);
+                    return new SecurityAccount(accountID, customerID, type, balance_usd, realizedProfit, unrealizedProfit);
                 }
             }
         } catch (Exception e) { return null; }
@@ -68,10 +68,10 @@ public class AccountDao {
         return se;
     }
 
-    public boolean checkAccountExistByID(int ID, AccountType type, String basedOn) { // remove customer here, add account type
+    public boolean checkAccountExistByID(int ID, AccountType type, String basedOn) {
         String queryWhere;
         if (basedOn.equals("accountID")) {
-            queryWhere = "WHERE ID = " + ID;
+            queryWhere = "WHERE accountID = " + ID;
         } else if (basedOn.equals("customerID"))  {
             queryWhere = "WHERE customerID = " + ID;
         } else { return false; }
@@ -211,13 +211,13 @@ public class AccountDao {
             Statement stmt = con.createStatement();
             switch (accountType) {
                 case SAVINGS -> {
-                    stmt.executeQuery("UPDATE SavingAccount " + querySet + " WHERE ID = " + accountID+ ";");
+                    stmt.executeQuery("UPDATE SavingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
                 }
                 case CHECKINGS -> {
-                    stmt.executeQuery("UPDATE CheckingAccount " + querySet + " WHERE ID = " + accountID+ ";");
+                    stmt.executeQuery("UPDATE CheckingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
                 }
                 case SECURITY -> {
-                    stmt.executeQuery("UPDATE SecurityAccount " + querySet + " WHERE ID = " + accountID+ ";");
+                    stmt.executeQuery("UPDATE SecurityAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
                 }
             }
         } catch (Exception ignored) {
