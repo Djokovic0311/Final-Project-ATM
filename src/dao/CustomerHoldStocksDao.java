@@ -46,7 +46,7 @@ public class CustomerHoldStocksDao {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE stockID = " + stockID + " customerID = " + customerID + ";");
             if (rs.next()) {
-                return 1;
+                return rs.getInt(2);
             }
             return 0;
         } catch (Exception e) { return 0; }
