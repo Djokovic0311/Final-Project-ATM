@@ -38,6 +38,10 @@ public class StockController {
     }
 
     public int updateStock(int stockID, double newPrice){
+        return stockService.updateStockPrice(stockID,newPrice);
+    }
 
+    public int addStock(int stockID, double price){
+        return stockService.addStock(stockID,price);
     }
 }

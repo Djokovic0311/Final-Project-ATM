@@ -33,9 +33,9 @@ new FormModel {
 					} )
 					add( new FormComponent( "javax.swing.JLabel" ) {
 						name: "priceLabel"
-						"text": "New Price"
+						"text": "Price"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"x": 75
+						"x": 80
 						"y": 115
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {

@@ -1,49 +1,19 @@
 /*
- * Created by JFormDesigner on Tue Dec 13 16:12:19 EST 2022
+ * Created by JFormDesigner on Tue Dec 13 16:42:43 EST 2022
  */
 
 package view;
 
-import controller.StockController;
-import utils.ATMConstant;
-
 import java.awt.*;
-import java.awt.event.*;
-import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
 
 /**
  * @author unknown
  */
-public class GUIUpdateStockPrice extends JFrame {
-    StockController stockController = new StockController();
-    ATMConstant atmConstant = new ATMConstant();
-    private String type;
-    public GUIUpdateStockPrice(String type) {
-        this.type = type;
+public class GUIAddStock extends JFrame {
+    public GUIAddStock() {
         initComponents();
-    }
-
-    private void ok(ActionEvent e) {
-        double price = Double.parseDouble(priceTextField.getText());
-        int stockID = Integer.parseInt(stockIDTextField.getText());
-        int status;
-        if(Objects.equals(type, "update")){
-            status = stockController.updateStock(stockID,price);
-        }
-
-        else {
-            status = stockController.addStock(stockID,price);
-        }
-        if(status == atmConstant.getSUCCESS()){
-            JOptionPane.showMessageDialog(null, "Success!!");
-            setVisible(false);
-            new GUIStockManagement().setVisible(true);
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Fail to update!");
-        }
     }
 
     private void initComponents() {
@@ -51,9 +21,6 @@ public class GUIUpdateStockPrice extends JFrame {
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         stockIDLabel = new JLabel();
-        stockIDTextField = new JTextField();
-        priceTextField = new JTextField();
-        priceLabel = new JLabel();
         buttonBar = new JPanel();
         okButton = new JButton();
         cancelButton = new JButton();
@@ -74,16 +41,7 @@ public class GUIUpdateStockPrice extends JFrame {
                 //---- stockIDLabel ----
                 stockIDLabel.setText("StockID");
                 contentPanel.add(stockIDLabel);
-                stockIDLabel.setBounds(new Rectangle(new Point(80, 55), stockIDLabel.getPreferredSize()));
-                contentPanel.add(stockIDTextField);
-                stockIDTextField.setBounds(180, 55, 120, stockIDTextField.getPreferredSize().height);
-                contentPanel.add(priceTextField);
-                priceTextField.setBounds(185, 110, 110, priceTextField.getPreferredSize().height);
-
-                //---- priceLabel ----
-                priceLabel.setText("Price");
-                contentPanel.add(priceLabel);
-                priceLabel.setBounds(new Rectangle(new Point(80, 115), priceLabel.getPreferredSize()));
+                stockIDLabel.setBounds(85, 60, 47, 16);
 
                 {
                     // compute preferred size
@@ -111,7 +69,6 @@ public class GUIUpdateStockPrice extends JFrame {
 
                 //---- okButton ----
                 okButton.setText("OK");
-                okButton.addActionListener(e -> ok(e));
                 buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
@@ -134,9 +91,6 @@ public class GUIUpdateStockPrice extends JFrame {
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JLabel stockIDLabel;
-    private JTextField stockIDTextField;
-    private JTextField priceTextField;
-    private JLabel priceLabel;
     private JPanel buttonBar;
     private JButton okButton;
     private JButton cancelButton;

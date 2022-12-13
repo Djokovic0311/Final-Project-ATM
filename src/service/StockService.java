@@ -66,6 +66,16 @@ public class StockService {
     }
 
     public int updateStockPrice(int stockID, double newPrice){
-        if(stockDao.updatePriceByID(stockID,))
+        if(stockDao.updatePriceByID(stockID,newPrice)){
+            return atmConstant.getSUCCESS();
+        }
+        else return atmConstant.getERROR();
+    }
+
+    public int addStock(int stockID, double newPrice){
+        if(stockDao.insertIntoStock(stockID,newPrice)){
+            return atmConstant.getSUCCESS();
+        }
+        else return atmConstant.getERROR();
     }
 }

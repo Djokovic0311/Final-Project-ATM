@@ -23,8 +23,18 @@ public class GUIStockManagement extends JFrame {
     }
 
     private void updatePrice(ActionEvent e) {
+        dispose();
+        new GUIUpdateStockPrice("update").setVisible(true);
+    }
 
+    private void addStock(ActionEvent e) {
+        dispose();
+        new GUIUpdateStockPrice("add").setVisible(true);
+    }
 
+    private void back(ActionEvent e) {
+        dispose();
+        new GUIManagerHomepage().setVisible(true);
     }
 
     private void initComponents() {
@@ -33,9 +43,9 @@ public class GUIStockManagement extends JFrame {
         contentPanel = new JPanel();
         updatePriceButton = new JButton();
         checkStockButton = new JButton();
-        button3 = new JButton();
+        addStockButton = new JButton();
         buttonBar = new JPanel();
-        bakButton = new JButton();
+        backButton = new JButton();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -62,10 +72,11 @@ public class GUIStockManagement extends JFrame {
                 contentPanel.add(checkStockButton);
                 checkStockButton.setBounds(75, 75, 140, 30);
 
-                //---- button3 ----
-                button3.setText("Add a stock");
-                contentPanel.add(button3);
-                button3.setBounds(80, 120, 78, 30);
+                //---- addStockButton ----
+                addStockButton.setText("Add a stock");
+                addStockButton.addActionListener(e -> addStock(e));
+                contentPanel.add(addStockButton);
+                addStockButton.setBounds(80, 120, 105, 30);
 
                 {
                     // compute preferred size
@@ -91,9 +102,10 @@ public class GUIStockManagement extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0};
 
-                //---- bakButton ----
-                bakButton.setText("back");
-                buttonBar.add(bakButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                //---- backButton ----
+                backButton.setText("back");
+                backButton.addActionListener(e -> back(e));
+                buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));
             }
@@ -110,8 +122,8 @@ public class GUIStockManagement extends JFrame {
     private JPanel contentPanel;
     private JButton updatePriceButton;
     private JButton checkStockButton;
-    private JButton button3;
+    private JButton addStockButton;
     private JPanel buttonBar;
-    private JButton bakButton;
+    private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
