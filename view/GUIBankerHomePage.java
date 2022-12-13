@@ -49,6 +49,7 @@ public class GUIBankerHomePage extends JFrame {
         // TODO add your code here
     }
 
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - Mingxin Li
@@ -61,7 +62,7 @@ public class GUIBankerHomePage extends JFrame {
         //======== this ========
         setTitle("Hello Manager!");
         Container contentPane = getContentPane();
-        contentPane.setLayout(new GridLayout());
+        contentPane.setLayout(new BorderLayout());
 
         //---- managerInfoButton ----
         managerInfoButton.setText("Manager Profile");
@@ -70,7 +71,7 @@ public class GUIBankerHomePage extends JFrame {
                 profile(e);
             }
         });
-        contentPane.add(managerInfoButton);
+        contentPane.add(managerInfoButton, BorderLayout.CENTER);
 
         //---- checkCustomerButton ----
         checkCustomerButton.setText("Check Customer");
@@ -79,7 +80,7 @@ public class GUIBankerHomePage extends JFrame {
                 checkCustomer(e);
             }
         });
-        contentPane.add(checkCustomerButton);
+        contentPane.add(checkCustomerButton, BorderLayout.NORTH);
 
         //---- dailyReportButton ----
         dailyReportButton.setText("Daily Report");
@@ -88,16 +89,16 @@ public class GUIBankerHomePage extends JFrame {
                 dailyReport(e);
             }
         });
-        contentPane.add(dailyReportButton);
+        contentPane.add(dailyReportButton, BorderLayout.SOUTH);
 
         //---- stockButton ----
         stockButton.setText("Stock");
         stockButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {//show the whole stock market
-            stock(e);
+            public void actionPerformed(ActionEvent e) {
+                stock(e);
             }
         });
-        contentPane.add(stockButton);
+        contentPane.add(stockButton, BorderLayout.WEST);
 
         //---- backButton ----
         backButton.setText("Log out");
@@ -106,7 +107,7 @@ public class GUIBankerHomePage extends JFrame {
                 back(e);
             }
         });
-        contentPane.add(backButton);
+        contentPane.add(backButton, BorderLayout.EAST);
         setSize(400, 260);
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on

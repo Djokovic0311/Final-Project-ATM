@@ -3,7 +3,7 @@ JFDML JFormDesigner: "8.0.0.0.194" Java: "17.0.5" encoding: "UTF-8"
 new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
-		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.GridLayout ) ) {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
 			name: "this"
 			"$sizePolicy": 1
 			"title": "Hello Manager!"
@@ -12,28 +12,38 @@ new FormModel {
 				"text": "Manager Profile"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "profile", true ) )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "profile", true ) )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "checkCustomerButton"
 				"text": "Check Customer"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "account", true ) )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "North"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "dailyReportButton"
 				"text": "Daily Report"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "South"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "stockButton"
 				"text": "Stock"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "money", true ) )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "West"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "backButton"
 				"text": "Log out"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "East"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
