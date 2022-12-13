@@ -1,5 +1,9 @@
+package view;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.*;
 import org.jdesktop.layout.GroupLayout;
@@ -7,6 +11,10 @@ import org.jdesktop.layout.LayoutStyle;
 /*
  * Created by JFormDesigner on Mon Dec 12 12:30:59 EST 2022
  */
+
+import controller.AccountController;
+import controller.StockController;
+import model.marketStock;
 
 
 
@@ -17,6 +25,7 @@ public class GUIBankerHomePage extends JFrame {
     private List userInfo;
     private AccountController accountController = new AccountController();
     private String userName;
+    private StockController stockController = new StockController();
     public GUIBankerHomePage(List userInfo, String userName) {
         this.userInfo = userInfo;
         this.userName = userName;
@@ -30,13 +39,14 @@ public class GUIBankerHomePage extends JFrame {
 
     private void checkCustomer(ActionEvent e) {
         dispose();
-        new GUICheckCustomerWindow(userName).setVisible(true);
+        new GUICheckCustomerWindow().setVisible(true);
     }
 
-    private void stock(ActionEvent e){//
+    private void stock(ActionEvent e) throws Exception{//
         dispose();
         List managerAccounts = accountController.getAccountsForCustomer(userName);
-        new GUIDisplayStock(managerAccounts, userInfo, userName, "manager");
+        ArrayList<marketStock>  stockList = stockController.showMarketStocks();
+        new GUIDisplayStock(managerAccounts,userInfo,userName,"market").setVisible(true);
     }
 
     private void back(ActionEvent e) {
@@ -95,7 +105,12 @@ public class GUIBankerHomePage extends JFrame {
         stockButton.setText("Stock");
         stockButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                stock(e);
+                try {
+					stock(e);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         contentPane.add(stockButton, BorderLayout.WEST);

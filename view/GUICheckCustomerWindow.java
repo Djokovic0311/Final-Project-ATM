@@ -68,7 +68,6 @@ public class GUICheckCustomerWindow extends JFrame {
 
             //======== contentPanel ========
             {
-
                 //---- usernameLabel ----
                 usernameLabel.setText("UserName");
 
