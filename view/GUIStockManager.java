@@ -16,29 +16,9 @@ public class GUIStockManager extends JFrame {
         initComponents();
     }
 
-    private void withdraw(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void deposit(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void transfer(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void Transaction(ActionEvent e) {
-        // TODO add your code here
-    }
-
-    private void stock(ActionEvent e) {
-        // TODO add your code here
-    }
-
     private void updatePrice(ActionEvent e){
         dispose();
-
+        GUIUpdateStockPrice usp = new GUIUpdateStockPrice();
     }
 
     private void back(ActionEvent e) {
@@ -48,7 +28,9 @@ public class GUIStockManager extends JFrame {
     }
 
     private void logout(ActionEvent e) {
-        // TODO add your code here
+        dispose();
+        GUILoginWindow lw = new GUILoginWindow();
+        bhp.setVisible(true);
     }
 
     private void addStock(ActionEvent e) {
