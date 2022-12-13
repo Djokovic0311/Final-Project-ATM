@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerHoldStocksDao {
+
+    // Check whether this account exist
     public boolean checkCustomerHolds(int stockID) {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
@@ -22,6 +24,8 @@ public class CustomerHoldStocksDao {
         } catch (Exception e) { return false; }
     }
 
+
+    // Update the information of a stock hold by customer, called when the customer buy or sell stock
     public void updateCustomerHeldStocks(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) { // Problem: buy same stock with different price
         int original_amount = getCustomerHeldStocksByID(stockID, customerID);
         try {
@@ -33,6 +37,8 @@ public class CustomerHoldStocksDao {
         } catch (Exception ignored) {}
     }
 
+
+    // Insert a new stock inside the database of customer hold stocks
     public void insertNewHeldStock(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
@@ -41,6 +47,8 @@ public class CustomerHoldStocksDao {
                     "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + (double) timestamp + ");");
         } catch (Exception ignored) {}
     }
+
+    // get the customer hold stock based on customerID and stockID
     public int getCustomerHeldStocksByID(int stockID, int customerID){ // Why return int?
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
@@ -53,6 +61,7 @@ public class CustomerHoldStocksDao {
         } catch (Exception e) { return 0; }
     }
 
+    // Remove a customer hold stock when the customer sell it out totally
     public void removeCustomerHeldStock(int stockID, int customerID){
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");

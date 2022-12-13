@@ -11,6 +11,7 @@ import java.util.*;
 
 public class AccountDao {
 
+    // This function returns the account that match the input id and type
     public Account selectAccountByID(int accountID, AccountType type) { // remove customer here, add account type
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
@@ -57,6 +58,8 @@ public class AccountDao {
         return null;
     }
 
+
+    // This function returns the account that match the input id
     public Account selectAccountByID(int accountID) {
         SavingAccount sa = (SavingAccount) selectAccountByID(accountID, AccountType.SAVINGS);
         if (sa != null) { return sa; }
@@ -66,6 +69,7 @@ public class AccountDao {
         return se;
     }
 
+    // This function returns the whether the corresponding account exist based on accountID or customerID
     public boolean checkAccountExistByID(int ID, AccountType type, String basedOn) {
         String queryWhere;
         if (basedOn.equals("accountID")) {
@@ -94,6 +98,7 @@ public class AccountDao {
         } catch (Exception e) { return false; }
     }
 
+    // This function insert a new saving/checking account into database, return 1 is success, 0 if fail.
     public int insertIntoCheckingOrSaving(int accountID, int customerID, AccountType accountType, double balance, CurrencyType currencyType){
         double balanceUSD = 0;
         double balanceEUR = 0;
@@ -126,25 +131,35 @@ public class AccountDao {
             }
         } catch (Exception e) { return 0; }
     }
+
+    // This function returns the whether the corresponding account exist based on accountID
     public boolean doesAccountExists(int accountID) {
         boolean saving = checkAccountExistByID(accountID, AccountType.SAVINGS, "accountID");
         boolean checking = checkAccountExistByID(accountID, AccountType.CHECKINGS, "accountID");
         boolean security = checkAccountExistByID(accountID, AccountType.SECURITY, "accountID");
         return saving && checking && security;
     }
+
+    // This function returns the whether the corresponding saving account exist based on customerID
     public boolean doesSavingAccountExist(int customerID){
         return checkAccountExistByID(customerID, AccountType.SAVINGS, "customerID");
     }
+
+    // This function returns the whether the corresponding security account exist based on customerID
     public boolean doesSecuritiesAccountExist(int accountID) {
         return checkAccountExistByID(accountID, AccountType.SECURITY, "accountID");
     }
-    public void payBankFees(double amount, int bankId) { // No currency type！
+
+    // This function pays the fee to banker
+    public void payBankFees(double amount, int bankId) {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
             Statement stmt = con.createStatement();
             stmt.executeQuery("UPDATE CheckingAccount SET balanceUSD = " + amount + " WHERE ID = " + bankId + ";");
         } catch (Exception ignored) {}
     }
+
+    // This function add a new security account into database
     public void insertIntoSecurity(int accountID, int customerID, AccountType accountType, double balance){
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
@@ -154,6 +169,8 @@ public class AccountDao {
         } catch (Exception ignored) {
         }
     }
+
+    // This function returns a list contains all saving account of this customer
     public SavingAccount[] getSavingAccountInfoForCustomer(int customerID) throws Exception {
         List<SavingAccount> savingAccountList = new ArrayList<>();
         try {
@@ -183,7 +200,8 @@ public class AccountDao {
             return s;
         }
     }
-    // check and delete this customer's account
+
+    // Delete this customer's account
     public int deleteAccount(int accountID, int customerID) {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
@@ -195,11 +213,14 @@ public class AccountDao {
         } catch (Exception e) { return 0; }
     }
 
+    // Get the balance of the corresponding account in specified currency
     public double getBalanceByCurrencyType(int accountID, int customerID, AccountType accountType, CurrencyType currencyType) {
         Account a = selectAccountByID(accountID, accountType);
         return a.getBalanceByCurrency(currencyType);
     }
 
+
+    // Update the balance of an account
     public void updateAccountBalance(int accountID, AccountType accountType, CurrencyType currencyType, double amount) {
         String querySet;
         switch (currencyType) {
@@ -232,6 +253,8 @@ public class AccountDao {
         }
     }
 
+
+    // Redeem the interest of saving account
     public void redeemForSavingAccount(int accountID, long timestamp){
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
