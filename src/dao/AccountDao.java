@@ -21,7 +21,7 @@ public class AccountDao {
             ResultSet rs;
             switch (type) {
                 case SAVINGS :
-                    rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE accountID = " + accountID + ";");
+                    rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE ID = " + accountID + ";");
                     break;
                 case CHECKINGS :
                     rs = stmt.executeQuery("SELECT * FROM CheckingAccount WHERE accountID = " + accountID + ";");
@@ -146,14 +146,14 @@ public class AccountDao {
         try {
             Connection con = DriverManager.getConnection(atmConstant.getDBURL(), atmConstant.getDBUSERNAME(), atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
-            stmt.executeQuery("UPDATE CheckingAccount SET balanceUSD = " + amount + " WHERE ID = " + bankId + ";");
+            stmt.executeQuery("UPDATE CheckingAccount SET balanceUSD = " + amount + " WHERE accountID = " + bankId + ";");
         } catch (Exception ignored) {}
     }
     public void insertIntoSecurity(int accountID, int customerID, AccountType accountType, double balance){
         try {
             Connection con = DriverManager.getConnection(atmConstant.getDBURL(), atmConstant.getDBUSERNAME(), atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO SecurityAccount ( accountID, customerID, balanceUSD, realizedProfit, unrealizedProfit )" +
+            stmt.executeQuery("INSERT INTO SecurityAccount ( accountID, customerID, currentBalance, realizedProfit, unrealizedProfit )" +
                     "VALUES ( " + accountID + ", " + customerID + ", " + balance + ", " + 0 + ", " + 0 +  ");");
         } catch (Exception ignored) {
         }
@@ -191,9 +191,9 @@ public class AccountDao {
         try {
             Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
-            stmt.executeQuery("DELETE FROM SavingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
-            stmt.executeQuery("DELETE FROM CheckingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
-            stmt.executeQuery("DELETE FROM SecurityAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM SavingAccount WHERE ID = " + accountID + " AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM CheckingAccount WHERE accountID = " + accountID + " AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM SecurityAccount WHERE accountID = " + accountID + " AND customerID = " + customerID + ";");
             return 1;
         } catch (Exception e) { return 0; }
     }
@@ -215,7 +215,6 @@ public class AccountDao {
             case CNY:
                 querySet = "SET balanceCNY = " + amount;
                 break;
-
         }
         try {
             Connection con = ConnectDao.connectToDb();

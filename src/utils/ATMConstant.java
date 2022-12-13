@@ -7,9 +7,9 @@ public class ATMConstant {
     private int NO_USER_FOUND = 2;
     private int NO_ENOUGH_BALANCE = 3;
     // TODO: DB INFO
-    private String DBURL = "jdbc:mysql://localhost:3306/test_demo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    private String DBURL = "jdbc:mysql://localhost:3306/Bank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     private String DBUSERNAME = "root";
-    private String DBPWD = "";
+    private String DBPWD = "123456";
     private double LOAN_INTEREST = 0.05;
     private int MANAGER_ACCOUNT_ID = 0;
 

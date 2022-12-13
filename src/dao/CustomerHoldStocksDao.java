@@ -28,9 +28,9 @@ public class CustomerHoldStocksDao {
         try {
             Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, stockNumber, priceBought, dateBought)" +
+            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, timeBought)" +
                     "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + timestamp + ")" +
-                    "ON DUPLICATE KEY UPDATE stockNumber = " + quantity + ";");
+                    "ON DUPLICATE KEY UPDATE quantity = " + quantity + ";");
         } catch (Exception ignored) {}
     }
 
@@ -38,7 +38,7 @@ public class CustomerHoldStocksDao {
         try {
             Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, dateBought)" +
+            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, timeBought)" +
                     "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + timestamp + ");");
         } catch (Exception ignored) {}
     }
@@ -58,7 +58,7 @@ public class CustomerHoldStocksDao {
         try {
             Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
-            stmt.executeQuery("DELETE FROM CustomerHoldStocks WHERE stockID = " + stockID + "AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM CustomerHoldStocks WHERE stockID = " + stockID + " AND customerID = " + customerID + ";");
         } catch (Exception ignored) {}
     }
     public ArrayList<CustomerHeldStock> getStocks(int customerID) {

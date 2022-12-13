@@ -11,7 +11,7 @@ public class TransactionDao {
                                         CurrencyType currencyType, TransactionType transactionType, long timestamp) {
 
     }
-    // check whether an transaction exists
+    // check whether a transaction exists
     public boolean transactionExist(int transactionID) {
         return false;
     }
