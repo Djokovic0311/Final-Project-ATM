@@ -151,3 +151,4 @@ public class GUIUpdateStockPrice extends JFrame {
     private JButton cancelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
+
