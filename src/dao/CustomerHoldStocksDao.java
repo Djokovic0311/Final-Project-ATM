@@ -26,8 +26,8 @@ public class CustomerHoldStocksDao {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
             Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, stockNumber, priceBought, dateBought)" +
-                    "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + timestamp + ")" +
+            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, stockNumber, priceBought, timeBought)" +
+                    "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + (double) timestamp + ")" +
                     "ON DUPLICATE KEY UPDATE stockNumber = " + quantity + ";");
         } catch (Exception ignored) {}
     }
@@ -36,8 +36,8 @@ public class CustomerHoldStocksDao {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
             Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, dateBought)" +
-                    "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + timestamp + ");");
+            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, timeBought)" +
+                    "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + (double) timestamp + ");");
         } catch (Exception ignored) {}
     }
     public int getCustomerHeldStocksByID(int stockID, int customerID){ // Why return int?

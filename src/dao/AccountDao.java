@@ -111,9 +111,8 @@ public class AccountDao {
             Statement stmt = con.createStatement();
             switch (accountType) {
                 case SAVINGS -> {
-                    // How to process Date?
-//                    stmt.executeQuery("INSERT INTO SavingAccount ( accountID, customerID, balanceUSD, balanceEUR, balanceCNY )" +
-//                            "VALUES ( " + accountID + ", " + customerID + ", " + balanceUSD + ", " + balanceEUR + ", " + balanceCNY +  ");");
+                    stmt.executeQuery("INSERT INTO SavingAccount ( accountID, customerID, balanceUSD, balanceEUR, balanceCNY )" +
+                            "VALUES ( " + accountID + ", " + customerID + ", " + balanceUSD + ", " + balanceEUR + ", " + balanceCNY +  ");");
                     return 1;
                 }
                 case CHECKINGS -> {
