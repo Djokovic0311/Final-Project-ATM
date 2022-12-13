@@ -9,6 +9,7 @@ import javax.swing.border.*;
  * Created by JFormDesigner on Mon Dec 12 21:47:23 EST 2022
  */
 
+import controller.StockController;
 
 
 /**
@@ -16,6 +17,7 @@ import javax.swing.border.*;
  */
 public class GUIStockManager extends JFrame {
 
+    private StockController stockController = new StockController();
     private List userInfo;
     private String userName;
 	
@@ -27,7 +29,8 @@ public class GUIStockManager extends JFrame {
 
     private void updatePrice(ActionEvent e){
         dispose();
-        GUIUpdateStockPrice usp = new GUIUpdateStockPrice(userInfo, userName) ;
+        GUIUpdateStockPrice usp = new GUIUpdateStockPrice(userInfo, userName);
+        usp.setVisible(true);
     }
 
     private void back(ActionEvent e) {
@@ -48,7 +51,7 @@ public class GUIStockManager extends JFrame {
     }
 
     private void checkMarket(ActionEvent e) {
-    	
+    	stockController.showMarketStocks();
     }
 
     private void initComponents() {
