@@ -1,6 +1,7 @@
 package dao;
 
 import model.*;
+import utils.ATMConstant;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerHoldStocksDao {
+    ATMConstant atmConstant = new ATMConstant();
     public boolean checkCustomerHolds(int stockID) { // What is this doing? If checking whether this customer have the stock then should provide customerID
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE stockID = " + stockID + ";");
             if (rs.next()) {
@@ -24,7 +26,7 @@ public class CustomerHoldStocksDao {
 
     public void updateCustomerHeldStocks(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) { // Problem: buy same stock with different price
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, stockNumber, priceBought, dateBought)" +
                     "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + timestamp + ")" +
@@ -34,7 +36,7 @@ public class CustomerHoldStocksDao {
 
     public void insertNewHeldStock(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, dateBought)" +
                     "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + timestamp + ");");
@@ -42,7 +44,7 @@ public class CustomerHoldStocksDao {
     }
     public int getCustomerHeldStocksByID(int stockID, int customerID){ // Why return int?
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE stockID = " + stockID + " customerID = " + customerID + ";");
             if (rs.next()) {
@@ -54,7 +56,7 @@ public class CustomerHoldStocksDao {
 
     public void removeCustomerHeldStock(int stockID, int customerID){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             stmt.executeQuery("DELETE FROM CustomerHoldStocks WHERE stockID = " + stockID + "AND customerID = " + customerID + ";");
         } catch (Exception ignored) {}
@@ -62,7 +64,7 @@ public class CustomerHoldStocksDao {
     public ArrayList<CustomerHeldStock> getStocks(int customerID) {
         ArrayList<CustomerHeldStock> result = new ArrayList<>();
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE customerID = " + customerID + ";");
             while (rs.next()) {

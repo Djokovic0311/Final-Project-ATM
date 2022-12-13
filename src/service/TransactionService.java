@@ -1,19 +1,19 @@
 package service;
 
 import dao.AccountDao;
-import dao.ConnectDao;
+
 import dao.TransactionDao;
 import model.*;
 import utils.ATMConstant;
 import utils.Utils;
 
-import java.sql.Connection;
+
 import java.util.Date;
 import java.util.List;
 
 public class TransactionService {
     AccountDao accountDao = new AccountDao();
-    ConnectDao connectDao = new ConnectDao();
+
     TransactionDao transactionDao = new TransactionDao();
     ATMConstant atmConstant = new ATMConstant();
     public int withdraw(int customerId, int accountId, AccountType accountType, double amount, CurrencyType currencyType) {
@@ -88,7 +88,6 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactions(Customer customer) throws Exception {
-        Connection conn = connectDao.connectToDb();
         List<Transaction> transactions = transactionDao.getTransactionsforCustomer(customer.getID());
         return transactions;
     }

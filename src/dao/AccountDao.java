@@ -1,6 +1,7 @@
 package dao;
 
 import model.*;
+import utils.ATMConstant;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public class AccountDao {
-
+    ATMConstant atmConstant = new ATMConstant();
     public Account selectAccountByID(int accountID, AccountType type) { // remove customer here, add account type
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             ResultSet rs;
             switch (type) {
@@ -78,7 +79,7 @@ public class AccountDao {
             queryWhere = "WHERE customerID = " + ID;
         } else { return false; }
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             ResultSet rs;
             switch (type) {
@@ -111,7 +112,7 @@ public class AccountDao {
                 balanceCNY = balance;
         }
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(), atmConstant.getDBUSERNAME(), atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             switch (accountType) {
                 case SAVINGS:
@@ -143,14 +144,14 @@ public class AccountDao {
     }
     public void payBankFees(double amount, int bankId) { // No currency type！
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(), atmConstant.getDBUSERNAME(), atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             stmt.executeQuery("UPDATE CheckingAccount SET balanceUSD = " + amount + " WHERE ID = " + bankId + ";");
         } catch (Exception ignored) {}
     }
     public void insertIntoSecurity(int accountID, int customerID, AccountType accountType, double balance){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(), atmConstant.getDBUSERNAME(), atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             stmt.executeQuery("INSERT INTO SecurityAccount ( accountID, customerID, balanceUSD, realizedProfit, unrealizedProfit )" +
                     "VALUES ( " + accountID + ", " + customerID + ", " + balance + ", " + 0 + ", " + 0 +  ");");
@@ -160,7 +161,7 @@ public class AccountDao {
     public SavingAccount[] getSavingAccountInfoForCustomer(int customerID) throws Exception {
         List<SavingAccount> savingAccountList = new ArrayList<>();
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE customerID = " + customerID + ";");
             while (rs.next()) {
@@ -188,7 +189,7 @@ public class AccountDao {
     // check and delete this customer's account
     public int deleteAccount(int accountID, int customerID) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             stmt.executeQuery("DELETE FROM SavingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
             stmt.executeQuery("DELETE FROM CheckingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
@@ -217,7 +218,7 @@ public class AccountDao {
 
         }
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = DriverManager.getConnection(atmConstant.getDBURL(),atmConstant.getDBUSERNAME(),atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
             switch (accountType) {
                 case SAVINGS:

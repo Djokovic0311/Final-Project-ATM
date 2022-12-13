@@ -13,7 +13,7 @@ create table SavingAccount (
     balanceUSD double,
     balanceEUR double,
     balanceCNY double,
-    lastDateRedeam DATE # YYYY-MM-DD
+    lastDateRedeem DATE # YYYY-MM-DD
 );
 
 # Treat back account as a checking account
@@ -49,7 +49,7 @@ CREATE TABLE Transactions (
     currencyType varchar(255),
     balance double,
     transactionType varchar(255),
-    trasactionDate DATE # YYYY-MM-DD
+    transactionDate DATE # YYYY-MM-DD
 );
 
 CREATE TABLE StockTransactions (
@@ -59,7 +59,7 @@ CREATE TABLE StockTransactions (
     quantity int,
     totalPrice double,
     transactionType varchar(255),
-    trasactionDate DATE # YYYY-MM-DD
+    transactionDate DATE # YYYY-MM-DD
 );
 
 CREATE TABLE CustomerHoldStocks (

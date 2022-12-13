@@ -8,7 +8,7 @@ public class ATMConstant {
     private int NO_ENOUGH_BALANCE = 3;
     // TODO: DB INFO
     private String DBURL = "";
-    private String DBUSERNAME = "";
+    private String DBUSERNAME = "root";
     private String DBPWD = "";
     private double LOAN_INTEREST = 0.05;
     private int MANAGER_ACCOUNT_ID = 0;
