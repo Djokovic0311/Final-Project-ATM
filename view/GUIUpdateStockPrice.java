@@ -1,8 +1,11 @@
 
 package view;
 
+import controller.AccountController;
 import controller.StockController;
 import controller.TransactionController;
+import dao.StockDao;
+
 import org.jdesktop.layout.GroupLayout;
 import utils.ATMConstant;
 import utils.Utils;
@@ -14,38 +17,26 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 public class GUIUpdateStockPrice extends JFrame {
-    private List userAccounts;
     private List userInfo;
     private String userName;
-    private int stockID;
     private StockController stockController = new StockController();
-    private String tradeType;
     ATMConstant atmConstant = new ATMConstant();
-    public GUIUpdateStockPrice(List userAccounts, List userInfo, String userName,int stockID) {
-        this.userName = userName;
+    public GUIUpdateStockPrice(List userInfo, String userName) {
         this.userInfo = userInfo;
-        this.userAccounts = userAccounts;
-        this.stockID = stockID;
+        this.userName = userName;
         initComponents();
     }
     
     private void cancel(ActionEvent e) throws Exception {
         dispose();
-        new GUIBankerHomePage(userAccounts, userInfo, userName).setVisible(true);
+        new GUIBankerHomePage(userInfo, userName).setVisible(true);
     }
 
     private void update(ActionEvent e) {
         int stockID = Integer.parseInt(stockTextField.getText());
         int nprice = Integer.parseInt(priceTextField.getText());
-        
-        int status = stock.setPrice(nprice);
-        if(status == atmConstant.getSUCCESS()) {
-            JOptionPane.showMessageDialog(null, "Success!!");
-            setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
-        }
-        
+        StockDao stock = new StockDao();
+        stock.updatePriceByID(stockID, nprice);
     }
 
     private void initComponents() {
@@ -134,7 +125,12 @@ public class GUIUpdateStockPrice extends JFrame {
                 cancelButton.setText("Cancel");
                 cancelButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        cancel(e);
+                        try {
+							cancel(e);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
                     }
                 });
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
