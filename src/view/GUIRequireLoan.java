@@ -48,7 +48,7 @@ public class GUIRequireLoan extends JFrame {
         double amount = Double.parseDouble(amountField.getText());
         CurrencyType currencyType = CurrencyType.valueOf(Objects.requireNonNull(currencyTypeComboBox.getSelectedItem()).toString());
         long timestamp = Utils.getTimestamp();
-        int status = loanController.requireLoan(userName,amount,1,atmConstant.getLOAN_INTEREST(),timestamp,currencyType);
+        int status = loanController.requireLoan(userName,amount,1,timestamp,currencyType);
         if(status == atmConstant.getSUCCESS()){
             JOptionPane.showMessageDialog(null, "Success!!");
             setVisible(false);

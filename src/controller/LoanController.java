@@ -24,10 +24,10 @@ public class LoanController {
         return loanService.getLoansForCustomer(customer.getID());
     }
 
-    public int requireLoan(String userName, double amount, int tenure, double rateOfInterest, long timestamp, CurrencyType currencyType){
+    public int requireLoan(String userName, double amount, int tenure, long timestamp, CurrencyType currencyType){
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         if(checkCanLoan(customer,amount,currencyType)){
-            loanService.requireLoan(customer,amount,tenure,rateOfInterest,timestamp,currencyType);
+            loanService.requireLoan(customer,amount,tenure,timestamp,currencyType);
             return atmConstant.getSUCCESS();
         }
         else {

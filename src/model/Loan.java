@@ -4,35 +4,39 @@ import java.util.Date;
 
 public class Loan {
     private int loanID;
-    private String  customerID;
-    private double principalAmount;
+    private int customerID;
+    private double amount;
     private CurrencyType currency;
     private int tenure;
-    private double rateOfInterest;
     private long loanCommenceDate;
+    private double rateOfInterest;
+
+    public Loan(int loanID, int customerID, double amount, CurrencyType currency) {
+        this.loanID = loanID;
+        this.customerID = customerID;
+        this.amount = amount;
+        this.currency = currency;
+        this.tenure = 1;
+        this.loanCommenceDate = 1;
+        this.rateOfInterest = 0.01;
+        this.loanCommenceDate = 1;
+    }
 
     public int getLoanID() {
         return loanID;
     }
 
-    public void setLoanID(int loanID) {
-        this.loanID = loanID;
-    }
-
-    public String getCustomerID() {
+    public int getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
-    }
 
     public double getPrincipalAmount() {
-        return principalAmount;
+        return amount;
     }
 
-    public void setPrincipalAmount(double principalAmount) {
-        this.principalAmount = principalAmount;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public CurrencyType getCurrency() {

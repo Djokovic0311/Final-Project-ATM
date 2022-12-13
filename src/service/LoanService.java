@@ -18,9 +18,9 @@ public class LoanService {
     public List<Loan> getLoansForCustomer(int customerID){
         return loanDao.getLoansByCustomerID(customerID);
     }
-    public void requireLoan(Customer customer,double amount, int tenure, double rateOfInterest, long timestamp, CurrencyType currencyType){
+    public void requireLoan(Customer customer,double amount, int tenure, long timestamp, CurrencyType currencyType){
         int loanID = Utils.getFixedLengthRandom(10);
-        loanDao.insertLoan(customer.getID(),amount,rateOfInterest,timestamp,currencyType,loanID);
+        loanDao.insertLoan(customer.getID(),amount,timestamp,currencyType,loanID);
     }
     public Loan getLoanByID(int loanID){
         return loanDao.getLoanByID(loanID);

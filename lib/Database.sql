@@ -1,3 +1,4 @@
+drop database Bank;
 create database Bank;
 use Bank;
 
@@ -35,9 +36,10 @@ create table SecurityAccount (
 );
 
 CREATE TABLE Loans (
-	accountID int,
+	loanID int,
     customerID int,
-    balance double,
+    currencyType varchar(255),
+    amount double,
     loanDate DATE # YYYY-MM-DD
 );
 
