@@ -24,8 +24,8 @@ public class LoanDao {
                 String currencyType = rs.getNString(2);
                 CurrencyType t = CurrencyType.getTypeFromString(currencyType);
                 int amount = rs.getInt(3);
-                // What about the date?
-                Loan l = new Loan(loanID, customerID, amount, t);
+                long date = (long) rs.getDouble(4);
+                Loan l = new Loan(loanID, customerID, amount, t, date);
                 result.add(l);
             }
         } catch (Exception e) { return null; }
@@ -39,9 +39,8 @@ public class LoanDao {
         try {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
             Statement stmt = con.createStatement();
-            // How to process the date?
-//            stmt.executeQuery("INSERT INTO Loans (loanID, customerID, currencyType, amount, loanDate)" +
-//                    "VALUES (" + loanDate + ", " + customerID + ", " + currencyType + " ," + amount + ", " + loanDate + ");");
+            stmt.executeQuery("INSERT INTO Loans (loanID, customerID, currencyType, amount, loanDate)" +
+                    "VALUES (" + loanID + ", " + customerID + ", " + currencyType + " ," + amount + ", " + (double) loanDate + ");");
         } catch (Exception ignored) {}
     }
 
@@ -55,8 +54,8 @@ public class LoanDao {
                 String currencyType = rs.getNString(2);
                 CurrencyType t = CurrencyType.getTypeFromString(currencyType);
                 int amount = rs.getInt(3);
-                // What about the date?
-                Loan l = new Loan(loanID, customerID, amount, t);
+                long date = (long) rs.getDouble(4);
+                Loan l = new Loan(loanID, customerID, amount, t, date);
                 return l;
             }
             return null;
@@ -76,7 +75,6 @@ public class LoanDao {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Loans WHERE loanID = " + loanID + ";");
             if (rs.next()) {
-                // What about the date?
                 return rs.getInt(3);
             }
             return 0;
