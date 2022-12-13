@@ -50,8 +50,9 @@ public class GUIStockManager extends JFrame {
         new GUIAddStockWindow((java.awt.List) userInfo, userName).setVisible(true);
     }
 
-    private void checkMarket(ActionEvent e) {
-    	stockController.showMarketStocks();
+    private void checkMarket(ActionEvent e) throws Exception {
+        dispose();
+        new GUIDisplayStockMarket((java.awt.List) userInfo, userName).setVisible(true);
     }
 
     private void initComponents() {
