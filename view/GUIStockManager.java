@@ -1,5 +1,8 @@
+package view;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.*;
 /*
@@ -12,49 +15,40 @@ import javax.swing.border.*;
  * @author Mingxin Li
  */
 public class GUIStockManager extends JFrame {
-    public GUIStockManager() {
+
+    private List userInfo;
+    private String userName;
+	
+    public GUIStockManager(List userInfo, String userName) {
+        this.userInfo = userInfo;
+        this.userName = userName;
         initComponents();
     }
 
     private void updatePrice(ActionEvent e){
         dispose();
-        GUIUpdateStockPrice usp = new GUIUpdateStockPrice();
+        GUIUpdateStockPrice usp = new GUIUpdateStockPrice(userInfo, userName) ;
     }
 
     private void back(ActionEvent e) {
         dispose();
-        GUIBankerHomePage bhp = new GUIBankerHomePage();
+        GUIBankerHomePage bhp = new GUIBankerHomePage(userInfo, userName);
         bhp.setVisible(true);
     }
 
     private void logout(ActionEvent e) {
         dispose();
         GUILoginWindow lw = new GUILoginWindow();
-        bhp.setVisible(true);
+        lw.setVisible(true);
     }
 
     private void addStock(ActionEvent e) {
         dispose();
-        new GUIAddStockWindow(stockID, stock).setVisible(true);
+        new GUIAddStockWindow((java.awt.List) userInfo, userName).setVisible(true);
     }
 
     private void checkMarket(ActionEvent e) {
-        for (Object account : userAccounts) {
-            if (account instanceof SecurityAccount) {
-                JPanel oneAccount = new JPanel();
-                oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((SecurityAccount) account).getAccountID()));
-                oneAccount.setLayout(new GridLayout(((SecurityAccount) account).getBalance().size(), 2, 0, 5));
-                security.add(oneAccount);
-                for (CurrencyType type : ((SecurityAccount) account).getBalance().keySet()) {
-                    JLabel t = new JLabel(type.name());
-                    t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    JLabel b = new JLabel(String.valueOf(((SecurityAccount) account).getBalance().get(type)));
-                    b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    oneAccount.add(t);
-                    oneAccount.add(b);
-                }
-            }
-        }
+    	
     }
 
     private void initComponents() {

@@ -20,15 +20,9 @@ public class GUIAddStockWindow extends JFrame {
     private List userInfo;
     private String userName;
     
-    protected int StockID;
-    protected int price;
-    protected int quantity;
-    public GUIAddStockWindow(List userInfo, String userName, int stockID, int price, int quantity) {
+    public GUIAddStockWindow(List userInfo, String userName) {
     	this.userInfo = userInfo;
     	this.userName = userName;
-    	this.StockID = stockID;
-        this.price = price;
-        this.quantity = quantity;
         initComponents();
     }
 
@@ -48,7 +42,7 @@ public class GUIAddStockWindow extends JFrame {
 
     private void cancel(ActionEvent e) {
         dispose();
-        new GUIBankerHomePage(userInfo, userName).setVisible(true);
+        new GUIBankerHomePage((java.util.List) userInfo, userName).setVisible(true);
     }
 
     private void initComponents() {
