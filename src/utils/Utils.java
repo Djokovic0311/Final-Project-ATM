@@ -39,4 +39,12 @@ public class Utils {
     public static long getTimestamp() {
         return Calendar.getInstance().getTimeInMillis();
     }
+
+    public String getStringFormatDate(long longFormatDate) {
+        return String.format("%tF %<tT", longFormatDate);
+    }
+
+    public int dayPass(long oldDate, long newDate) {
+        return (int) ((newDate-oldDate)/1000/60/60/24);
+    }
 }
