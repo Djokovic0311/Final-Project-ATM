@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
+import java.lang.*;
 
 /*
     This is the global utils class
@@ -40,11 +41,19 @@ public class Utils {
         return Calendar.getInstance().getTimeInMillis();
     }
 
-    public String getStringFormatDate(long longFormatDate) {
-        return String.format("%tF %<tT", longFormatDate);
+    public static String getStringFormatDate(long longFormatDate) {
+        return String.format("%tF", longFormatDate);
     }
 
-    public int dayPass(long oldDate, long newDate) {
-        return (int) ((newDate-oldDate)/1000/60/60/24);
+    public static int dayPass(long oldDate, long newDate) {
+        return (int) ((newDate/1000/60/60/24-oldDate/1000/60/60/24));
+    }
+
+    public static double getDoubleFormatDate(long longFormatDate) {
+        return (double) longFormatDate;
+    }
+
+    public static long getLongFormatDate(double doubleFormatDate) {
+        return (long) doubleFormatDate;
     }
 }
