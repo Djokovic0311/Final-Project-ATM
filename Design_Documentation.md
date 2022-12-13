@@ -1,0 +1,1 @@
+The program is divided into 5 layers: The GUI layer displaying the required information and guiding the user to input the actions. The controller layer receieve the input information from GUI layer, preprocess the 
