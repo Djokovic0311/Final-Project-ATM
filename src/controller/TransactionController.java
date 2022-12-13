@@ -43,4 +43,8 @@ public class TransactionController {
 
         return transactionService.getTransactions(customer);
     }
+
+    public List<Transaction> getDailyReport(long timestamp){
+        return
+    }
 }

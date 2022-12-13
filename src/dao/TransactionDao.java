@@ -18,4 +18,8 @@ public class TransactionDao {
     public List<Transaction> getTransactionsforCustomer(int customerID) {
         return null;
     }
+
+    public List<Transaction> getDailyTransactions(long timestamp){
+        return null;
+    }
 }
