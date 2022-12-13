@@ -64,4 +64,8 @@ public class StockService {
     public ArrayList<marketStock> getMarketStocks(){
         return null;
     }
+
+    public int updateStockPrice(int stockID, double newPrice){
+        if(stockDao.updatePriceByID(stockID,))
+    }
 }

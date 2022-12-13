@@ -4,7 +4,10 @@
 
 package view;
 
+import controller.StockController;
+
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -12,18 +15,26 @@ import javax.swing.border.*;
  * @author unknown
  */
 public class GUIUpdateStockPrice extends JFrame {
+    StockController stockController = new StockController();
     public GUIUpdateStockPrice() {
         initComponents();
+    }
+
+    private void ok(ActionEvent e) {
+        double price = Double.parseDouble(priceTextField.getText());
+        int stockID = Integer.parseInt(stockIDTextField.getText());
+
+        int status = stockController.
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        label1 = new JLabel();
-        textField1 = new JTextField();
-        textField2 = new JTextField();
-        textField3 = new JTextField();
+        stockIDLabel = new JLabel();
+        stockIDTextField = new JTextField();
+        priceTextField = new JTextField();
+        priceLabel = new JLabel();
         buttonBar = new JPanel();
         okButton = new JButton();
         cancelButton = new JButton();
@@ -41,16 +52,19 @@ public class GUIUpdateStockPrice extends JFrame {
             {
                 contentPanel.setLayout(null);
 
-                //---- label1 ----
-                label1.setText("Stock");
-                contentPanel.add(label1);
-                label1.setBounds(new Rectangle(new Point(80, 55), label1.getPreferredSize()));
-                contentPanel.add(textField1);
-                textField1.setBounds(new Rectangle(new Point(75, 110), textField1.getPreferredSize()));
-                contentPanel.add(textField2);
-                textField2.setBounds(new Rectangle(new Point(175, 55), textField2.getPreferredSize()));
-                contentPanel.add(textField3);
-                textField3.setBounds(new Rectangle(new Point(180, 110), textField3.getPreferredSize()));
+                //---- stockIDLabel ----
+                stockIDLabel.setText("StockID");
+                contentPanel.add(stockIDLabel);
+                stockIDLabel.setBounds(new Rectangle(new Point(80, 55), stockIDLabel.getPreferredSize()));
+                contentPanel.add(stockIDTextField);
+                stockIDTextField.setBounds(180, 55, 120, stockIDTextField.getPreferredSize().height);
+                contentPanel.add(priceTextField);
+                priceTextField.setBounds(185, 110, 110, priceTextField.getPreferredSize().height);
+
+                //---- priceLabel ----
+                priceLabel.setText("New Price");
+                contentPanel.add(priceLabel);
+                priceLabel.setBounds(new Rectangle(new Point(75, 115), priceLabel.getPreferredSize()));
 
                 {
                     // compute preferred size
@@ -78,6 +92,7 @@ public class GUIUpdateStockPrice extends JFrame {
 
                 //---- okButton ----
                 okButton.setText("OK");
+                okButton.addActionListener(e -> ok(e));
                 buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
@@ -99,10 +114,10 @@ public class GUIUpdateStockPrice extends JFrame {
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
-    private JLabel label1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JLabel stockIDLabel;
+    private JTextField stockIDTextField;
+    private JTextField priceTextField;
+    private JLabel priceLabel;
     private JPanel buttonBar;
     private JButton okButton;
     private JButton cancelButton;

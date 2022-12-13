@@ -36,4 +36,8 @@ public class StockController {
     public ArrayList<marketStock> showMarketStocks(){
         return stockService.getMarketStocks();
     }
+
+    public int updateStock(int stockID, double newPrice){
+
+    }
 }

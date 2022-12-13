@@ -45,6 +45,6 @@ public class TransactionController {
     }
 
     public List<Transaction> getDailyReport(long timestamp){
-        return
+        return transactionService.getDailyReport(timestamp);
     }
 }
