@@ -1,26 +1,42 @@
+package view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import org.jdesktop.layout.GroupLayout;
+import controller.StockController;
+import utils.ATMConstant;
 /*
  * Created by JFormDesigner on Mon Dec 12 22:41:18 EST 2022
  */
-
 
 
 /**
  * @author Mingxin Li
  */
 public class GUIAddStockWindow extends JFrame {
-    public GUIAddStockWindow() {
+	private ATMConstant atmConstant = new ATMConstant();
+    private StockController stockController = new StockController();
+    private List userInfo;
+    private String userName;
+    
+    protected int StockID;
+    protected int price;
+    protected int quantity;
+    public GUIAddStockWindow(List userInfo, String userName, int stockID, int price, int quantity) {
+    	this.userInfo = userInfo;
+    	this.userName = userName;
+    	this.StockID = stockID;
+        this.price = price;
+        this.quantity = quantity;
         initComponents();
     }
 
     private void add(ActionEvent e) {
         int stockID = Integer.parseInt(stockTextField.getText());
         int quantity = Integer.parseInt(quantityTextField.getText());
-        int quantity = Integer.parseInt(priceTextField.getText());
+        int price = Integer.parseInt(priceTextField.getText());
+        // add to database. only a demo.
         int status = stockController.trade(userName,stockID,quantity,tradeType);
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
@@ -32,10 +48,11 @@ public class GUIAddStockWindow extends JFrame {
 
     private void cancel(ActionEvent e) {
         dispose();
-        new GUIBankerHomePage(userAccounts, userInfo, userName).setVisible(true);
+        new GUIBankerHomePage(userInfo, userName).setVisible(true);
     }
 
     private void initComponents() {
+
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         // Generated using JFormDesigner Evaluation license - Mingxin Li
         this2 = new JFrame();
