@@ -5,7 +5,7 @@ use Bank;
 create table Person (
 	ID int,
     userName varchar(255),
-    userPassword int,
+    userPassword varchar(255),
     type varchar(255)
 );
 
