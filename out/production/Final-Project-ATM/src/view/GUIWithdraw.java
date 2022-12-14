@@ -92,12 +92,12 @@ public class GUIWithdraw extends JFrame {
                 //---- label1 ----
                 label1.setText("AccountID");
                 contentPanel.add(label1);
-                label1.setBounds(new Rectangle(new Point(50, 35), label1.getPreferredSize()));
+                label1.setBounds(50, 35, 100, label1.getPreferredSize().height);
 
                 //---- label2 ----
                 label2.setText("Amount");
                 contentPanel.add(label2);
-                label2.setBounds(50, 130, 47, 16);
+                label2.setBounds(50, 130, 90, 16);
 
                 //---- label3 ----
                 label3.setText("CurrencyType");

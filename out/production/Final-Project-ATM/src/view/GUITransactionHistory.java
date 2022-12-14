@@ -100,12 +100,18 @@ public class GUITransactionHistory extends JFrame {
                     transactionTable.setModel(new DefaultTableModel(
                         new Object[][] {
                         },
+                            //            v.addElement(transactionID);
+                            //            v.addElement(amount);
+                            //            v.addElement(transactionType);
+                            //            v.addElement(currencyType);
+                            //            v.addElement(timestamp);
+                            //            v.addElement(customerID);
+                            //            v.addElement(toAccountID);
+                            //            v.addElement(fromAccountID);
                         new String[] {
-                            "ID", "amount", "type", "currency", "timestamp", "userID", "toAccountID", "fromAccountID"
+                            "transactionID", "amount", "transactionType", "currencyType", "timestamp", "customerID", "toAccountID", "fromAccountID"
                         }
                     ));
-
-                    transactionTable.setPreferredScrollableViewportSize(new Dimension(455, 150));
                     scrollPane1.setViewportView(transactionTable);
                 }
                 contentPanel.add(scrollPane1);

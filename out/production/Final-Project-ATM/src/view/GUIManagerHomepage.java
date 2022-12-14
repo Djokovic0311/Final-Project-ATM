@@ -24,10 +24,11 @@ public class GUIManagerHomepage extends JFrame {
     }
 
     private void dailyReport(ActionEvent e) {
-        // TODO add your code here
+        dispose();
+        new GUIDailyReport().setVisible(true);
     }
 
-    private void checkCustomer(ActionEvent e) {
+    private void checkCustomer(ActionEvent e) throws Exception {
         dispose();
         new GUIManagerCheckCustomer().setVisible(true);
     }
@@ -61,7 +62,13 @@ public class GUIManagerHomepage extends JFrame {
 
                 //---- checkCustomerButton ----
                 checkCustomerButton.setText("Check customer");
-                checkCustomerButton.addActionListener(e -> checkCustomer(e));
+                checkCustomerButton.addActionListener(e -> {
+                    try {
+                        checkCustomer(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(checkCustomerButton);
 
                 //---- dailyReportButton ----

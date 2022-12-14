@@ -61,31 +61,5 @@ new FormModel {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 400, 300 )
 		} )
-		add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-			name: "scrollPane1"
-			add( new FormComponent( "javax.swing.JTable" ) {
-				name: "accountTable"
-				"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-				}, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-				}, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-				}, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-				} )
-			} )
-		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 0, 90 )
-			"size": new java.awt.Dimension( 385, 160 )
-		} )
 	}
 }

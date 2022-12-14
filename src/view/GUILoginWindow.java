@@ -51,13 +51,13 @@ public class GUILoginWindow extends JFrame{
         }
         if("Customer".equals(role)) {
             // customer login
-            JOptionPane.showMessageDialog(null,"Hello customer!");
+
             int statusCode = loginController.signIn(userName, password,role);
             if(statusCode == atmConstant.getSUCCESS()) {
                 System.out.println(userName+"success");
                 //TODO: SET CUSTOMER HOMEPAGE VISIBLE
+                JOptionPane.showMessageDialog(null,"Hello customer!");
                 setVisible(false);
-
                 List userInfo = accountController.getAccountInfoForCustomer(userName);
 
                 new GUICustomerHomePage(userInfo, userName).setVisible(true);
@@ -68,10 +68,11 @@ public class GUILoginWindow extends JFrame{
         }
         else if("Manager".equals(role)) {
             // manager login
-            JOptionPane.showMessageDialog(null,"Hello manager!");
+
             int statusCode = loginController.signIn(userName, password,role);
             if(statusCode == atmConstant.getSUCCESS()) {
                 //TODO: SET MANAGER HOMEPAGE VISIBLE
+                JOptionPane.showMessageDialog(null,"Hello manager!");
                 setVisible(false);
                 new GUIManagerHomepage().setVisible(true);
             }

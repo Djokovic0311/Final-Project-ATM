@@ -93,8 +93,10 @@ public class AccountDao {
                             System.out.println(accountID);
                             long redeemTime = (long) rs.getDouble(6);
                             result.add(new SavingAccount(accountID, customerID, type, balance, redeemTime));
+                            break;
                         case CHECKINGS :
                             result.add(new CheckingAccount(accountID, customerID, type, balance));
+                            break;
                     }
                 } else {
                     double realizedProfit = rs.getDouble(4);

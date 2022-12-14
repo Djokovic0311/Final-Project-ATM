@@ -121,14 +121,14 @@ public class GUITranscurrency extends JFrame {
                 //---- amountLabel ----
                 amountLabel.setText("Amount");
                 contentPanel.add(amountLabel);
-                amountLabel.setBounds(50, 150, 47, 16);
+                amountLabel.setBounds(50, 150, 90, 16);
                 contentPanel.add(amountTextField);
                 amountTextField.setBounds(170, 145, 85, 30);
 
                 //---- accountLabel ----
                 accountLabel.setText("AccountID");
                 contentPanel.add(accountLabel);
-                accountLabel.setBounds(50, 25, 63, 16);
+                accountLabel.setBounds(50, 25, 105, 16);
                 contentPanel.add(accountIDTextField);
                 accountIDTextField.setBounds(170, 25, 120, 30);
 
