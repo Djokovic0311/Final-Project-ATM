@@ -54,7 +54,7 @@ public class StockDao {
                 query = "UPDATE StockMarket SET price = ? Where stockID= ?;";
                 stmt = conn.prepareStatement(query);
                 stmt.setDouble(1, price);
-                stmt.setInt(1, stockID);
+                stmt.setInt(2, stockID);
                 rs = stmt.executeQuery();
                 return true;
             }
@@ -88,7 +88,7 @@ public class StockDao {
                 query = "INSERT INTO StockMarket (stockID, price) VALUES (?,?);";
                 stmt = conn.prepareStatement(query);
                 stmt.setInt(1, stockID);
-                stmt.setDouble(1, price);
+                stmt.setDouble(2, price);
                 rs = stmt.executeQuery();
                 return true;
             }
