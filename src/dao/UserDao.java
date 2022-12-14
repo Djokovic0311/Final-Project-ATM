@@ -10,30 +10,33 @@ public class UserDao {
 
 
     // select user by id
-    public User selectUserById(int id, String type) throws Exception {
-        Connection conn = ConnectDao.connectToDb();
-        Statement stmt = conn.createStatement();
-        User user;
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT * FROM Person WHERE ID = " + id + " AND type=" + type + ";");
-        while(rs.next()){
-            user = new User(rs.getString(1), rs.getInt(0),rs.getString(2),rs.getString(3));
-            return user;
-        }
-        return null;
-    }
-    public boolean insertIntoUser(int id, String name, String pwd) throws Exception {
-        Connection conn = ConnectDao.connectToDb();
-        Statement stmt = conn.createStatement();
-        ResultSet rs;
+    public User selectUserById(int id, String type) {
         try {
-            stmt.executeQuery("INSERT INTO Person (ID, userName, userPassword)" +
-                    "VALUES ( " + id + ", " + name + ", " + pwd +  ");");
-        }catch(Exception E){
-            return false;
+            Connection conn = ConnectDao.connectToDb();
+            Statement stmt = conn.createStatement();
+            User user;
+            ResultSet rs;
+            rs = stmt.executeQuery("SELECT * FROM Person WHERE ID = " + id + " AND type=\'" + type + "\';");
+            if (rs.next()){
+                user = new User(rs.getString(1), rs.getInt(0),rs.getString(2),rs.getString(3));
+                return user;
+            }
+            return null;
+        }  catch (Exception e) {
+            return null;
         }
 
-        return true;
+    }
+    public boolean insertIntoUser(int id, String name, String pwd) {
+        try {
+            Connection conn = ConnectDao.connectToDb();
+            Statement stmt = conn.createStatement();
+            stmt.executeQuery("INSERT INTO Person (ID, userName, userPassword)" +
+                    "VALUES ( " + id + ", \'" + name + "\', \'" + pwd +  "\');");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 

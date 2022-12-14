@@ -18,7 +18,7 @@ public class LoanDao {
     public List<Loan> getLoansByCustomerID(int customerID) {
         List<Loan> result = new ArrayList<>();
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Loans WHERE customerID = " + customerID + ";");
             while (rs.next()) {
@@ -40,7 +40,7 @@ public class LoanDao {
     // Add a new loan into the database
     public void insertLoan(int customerID, double amount, long loanDate, CurrencyType currencyType, int loanID){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             stmt.executeQuery("INSERT INTO Loans (loanID, customerID, currencyType, amount, loanDate)" +
                     "VALUES (" + loanID + ", " + customerID + ", " + currencyType + " ," + amount + ", " + (double) loanDate + ");");
@@ -51,7 +51,7 @@ public class LoanDao {
     // Retrieve the loan from database based on the loanID
     public Loan getLoanByID(int loanID){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Loans WHERE loanID = " + loanID + ";");
             if (rs.next()) {
@@ -69,7 +69,7 @@ public class LoanDao {
     // Update the amount of a loan, used when customer pay the loan
     public void updateLoan(int loanID, double amount) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             stmt.executeQuery("UPDATE Loans SET amount = " + amount + " WHERE loanID = " + loanID + ";");
         } catch (Exception ignored) {}
@@ -78,7 +78,7 @@ public class LoanDao {
     // Get the remaining amount of a loan
     public double getLoanRemaining(int loanID){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Loans WHERE loanID = " + loanID + ";");
             if (rs.next()) {
@@ -91,7 +91,7 @@ public class LoanDao {
     // Remove a loan from the database
     public void deleteLoan(int loanID){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             stmt.executeQuery("DELETE FROM Loans WHERE loanID = " + loanID + ";");
         } catch (Exception ignored) {}

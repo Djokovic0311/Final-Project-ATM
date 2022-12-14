@@ -14,7 +14,7 @@ public class AccountDao {
     // This function returns the account that match the input id and type
     public Account selectAccountByID(int accountID, AccountType type) { // remove customer here, add account type
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs;
             switch (type) {
@@ -78,7 +78,7 @@ public class AccountDao {
             queryWhere = "WHERE customerID = " + ID;
         } else { return false; }
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs;
             switch (type) {
@@ -98,7 +98,7 @@ public class AccountDao {
         } catch (Exception e) { return false; }
     }
 
-    // This function insert a new saving/checking account into database, return 1 is success, 0 if fail.
+    // This function insert a new saving/checking account into database, return 1 is success, 0 if failed.
     public int insertIntoCheckingOrSaving(int accountID, int customerID, AccountType accountType, double balance, CurrencyType currencyType){
         double balanceUSD = 0;
         double balanceEUR = 0;
@@ -115,7 +115,7 @@ public class AccountDao {
                 break;
         }
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             switch (accountType) {
                 case SAVINGS:
@@ -153,7 +153,7 @@ public class AccountDao {
     // This function pays the fee to banker
     public void payBankFees(double amount, int bankId) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             stmt.executeQuery("UPDATE CheckingAccount SET balanceUSD = " + amount + " WHERE ID = " + bankId + ";");
         } catch (Exception ignored) {}
@@ -162,9 +162,9 @@ public class AccountDao {
     // This function add a new security account into database
     public void insertIntoSecurity(int accountID, int customerID, AccountType accountType, double balance){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO SecurityAccount ( accountID, customerID, balanceUSD, realizedProfit, unrealizedProfit )" +
+            stmt.executeQuery("INSERT INTO SecurityAccount (accountID, customerID, currentBalance, realizedProfit, unrealizedProfit)" +
                     "VALUES ( " + accountID + ", " + customerID + ", " + balance + ", " + 0 + ", " + 0 +  ");");
         } catch (Exception ignored) {
         }
@@ -174,7 +174,7 @@ public class AccountDao {
     public SavingAccount[] getSavingAccountInfoForCustomer(int customerID) throws Exception {
         List<SavingAccount> savingAccountList = new ArrayList<>();
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE customerID = " + customerID + ";");
             while (rs.next()) {
@@ -204,11 +204,11 @@ public class AccountDao {
     // Delete this customer's account
     public int deleteAccount(int accountID, int customerID) {
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
-            stmt.executeQuery("DELETE FROM SavingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
-            stmt.executeQuery("DELETE FROM CheckingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
-            stmt.executeQuery("DELETE FROM SecurityAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM SavingAccount WHERE accountID = " + accountID + " AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM CheckingAccount WHERE accountID = " + accountID + " AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM SecurityAccount WHERE accountID = " + accountID + " AND customerID = " + customerID + ";");
             return 1;
         } catch (Exception e) { return 0; }
     }
@@ -236,17 +236,17 @@ public class AccountDao {
             default: return;
         }
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             switch (accountType) {
                 case SAVINGS :
-                    stmt.executeQuery("UPDATE SavingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
+                    stmt.executeQuery("UPDATE SavingAccount " + querySet + " WHERE accountID = " + accountID + ";");
                     break;
                 case CHECKINGS :
-                    stmt.executeQuery("UPDATE CheckingAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
+                    stmt.executeQuery("UPDATE CheckingAccount " + querySet + " WHERE accountID = " + accountID + ";");
                     break;
                 case SECURITY :
-                    stmt.executeQuery("UPDATE SecurityAccount " + querySet + " WHERE accountIDID = " + accountID + ";");
+                    stmt.executeQuery("UPDATE SecurityAccount " + querySet + " WHERE accountID = " + accountID + ";");
                     break;
             }
         } catch (Exception ignored) {
@@ -257,7 +257,7 @@ public class AccountDao {
     // Redeem the interest of saving account
     public void redeemForSavingAccount(int accountID, long timestamp){
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank","root","108875556");
+            Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs =  stmt.executeQuery("SELECT * FROM SavingAccount WHERE accountID = " + accountID + ";");
             double balanceUSD = rs.getDouble(2);
