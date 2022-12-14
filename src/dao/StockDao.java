@@ -35,11 +35,11 @@ public class StockDao {
                 return false;
             } else {
                 //stock price will be updated
-                query = "UPDATE StockMarket SET price = ? Where stockID= ?;";
-                stmt = conn.prepareStatement(query);
-                stmt.setDouble(1, price);
-                stmt.setInt(2, stockID);
-                stmt.executeQuery();
+                String query1 = "UPDATE StockMarket SET price = ? Where stockID= ?;";
+                PreparedStatement stmt1 = conn.prepareStatement(query1);
+                stmt1.setDouble(1, price);
+                stmt1.setInt(2, stockID);
+                stmt1.executeQuery();
                 return true;
             }
         } catch (Exception e) { return false; }
