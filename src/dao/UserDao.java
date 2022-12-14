@@ -31,8 +31,8 @@ public class UserDao {
         try {
             Connection conn = ConnectDao.connectToDb();
             Statement stmt = conn.createStatement();
-            stmt.executeQuery("INSERT INTO Person (ID, userName, userPassword)" +
-                    "VALUES ( " + id + ", \'" + name + "\', \'" + pwd +  "\');");
+            stmt.executeQuery("INSERT INTO Person (ID, userName, userPassword, userType)" +
+                    "VALUES ( " + id + ", \'" + name + "\', \'" + pwd + "\', \'Customer\');");
             return true;
         } catch (Exception e) {
             return false;
