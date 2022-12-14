@@ -85,7 +85,7 @@ public class GUIStock extends JFrame {
         cancelButton = new JButton();
 
         //======== this ========
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

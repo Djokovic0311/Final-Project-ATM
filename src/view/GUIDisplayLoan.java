@@ -77,7 +77,7 @@ public class GUIDisplayLoan extends JFrame {
         backButton = new JButton();
 
         //======== this ========
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
@@ -97,7 +97,7 @@ public class GUIDisplayLoan extends JFrame {
                         new Object[][] {
                         },
                         new String[] {
-                            "amount", "loanID", "CurrencyType", "interest"
+                            null, null, null, null
                         }
                     ));
                     scrollPane1.setViewportView(loanTable);

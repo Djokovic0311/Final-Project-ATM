@@ -60,7 +60,7 @@ public class GUICustomerCloseAccount extends JFrame {
 
         //======== this ========
         setTitle("Close an Account");
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

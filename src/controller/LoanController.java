@@ -18,13 +18,13 @@ public class LoanController {
     LoginService loginService = new LoginService();
     AccountService accountService = new AccountService();
     ATMConstant atmConstant = new ATMConstant();
-    public List getLoansForCustomer(String userName) throws Exception {
+    public List getLoansForCustomer(String userName) {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         int accountID = customer.getSecurityAccount();
         return loanService.getLoansForCustomer(customer.getID());
     }
 
-    public int requireLoan(String userName, double amount, int tenure, long timestamp, CurrencyType currencyType) throws Exception {
+    public int requireLoan(String userName, double amount, int tenure, long timestamp, CurrencyType currencyType){
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         if(checkCanLoan(customer,amount,currencyType)){
             loanService.requireLoan(customer,amount,tenure,timestamp,currencyType);
@@ -35,7 +35,7 @@ public class LoanController {
         }
     }
 
-    public int payForLoan(String userName, double amount, int accountID, int loanID) throws Exception {
+    public int payForLoan(String userName, double amount, int accountID, int loanID){
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         Account account = (Account) accountService.getAccountByID(accountID);
         return loanService.payForLoan(customer, amount,account,loanID);

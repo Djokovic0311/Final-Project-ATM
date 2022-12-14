@@ -11,15 +11,11 @@ public class TransactionDao {
                                         CurrencyType currencyType, TransactionType transactionType, long timestamp) {
 
     }
-    // check whether a transaction exists
+    // check whether an transaction exists
     public boolean transactionExist(int transactionID) {
         return false;
     }
     public List<Transaction> getTransactionsforCustomer(int customerID) {
-        return null;
-    }
-
-    public List<Transaction> getDailyTransactions(long timestamp){
         return null;
     }
 }

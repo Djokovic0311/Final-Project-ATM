@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class Manager extends User{
+public class Manager {
     private int AccountID;
 
     private void checkCustomer(Customer C){

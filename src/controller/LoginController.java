@@ -1,7 +1,6 @@
 package controller;
 
 import model.Customer;
-import model.User;
 import service.LoginService;
 import utils.ATMConstant;
 import utils.Utils;
@@ -10,8 +9,8 @@ public class LoginController {
 
     LoginService loginService = new LoginService();
     ATMConstant atmConstant = new ATMConstant();
-    public int signIn(String userName, String password, String userType) throws Exception {
-        return loginService.signIn(userName,password,userType);
+    public int signIn(String userName, String password) throws Exception {
+        return loginService.signIn(userName,password);
     }
 
     public int signUpCustomer(String name, String pwd) throws Exception {
@@ -25,7 +24,4 @@ public class LoginController {
         return loginService.signUp(customer,pwd);
     }
 
-    public User getUserByID(int userID) throws Exception {
-        return loginService.getCustomerByID(userID);
-    }
 }

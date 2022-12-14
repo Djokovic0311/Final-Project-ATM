@@ -58,7 +58,7 @@ public class GUICustomerHomePage extends JFrame {
 
         //======== this ========
         setTitle("Hello Customer!");
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
         contentPane.setLayout(new GridLayout(2, 2, 10, 10));
 
         //---- profileButton ----

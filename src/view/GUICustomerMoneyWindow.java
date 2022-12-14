@@ -101,7 +101,7 @@ public class GUICustomerMoneyWindow extends JFrame {
 
         //======== this ========
         setTitle("Welcome to Business Center!");
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
         contentPane.setLayout(null);
 
         //======== dialogPane ========

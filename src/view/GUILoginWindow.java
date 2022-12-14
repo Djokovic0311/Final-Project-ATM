@@ -52,14 +52,14 @@ public class GUILoginWindow extends JFrame{
         if("Customer".equals(role)) {
             // customer login
             JOptionPane.showMessageDialog(null,"Hello customer!");
-            int statusCode = loginController.signIn(userName, password,role);
+            int statusCode = loginController.signIn(userName, password);
             if(statusCode == atmConstant.getSUCCESS()) {
                 //TODO: SET CUSTOMER HOMEPAGE VISIBLE
                 setVisible(false);
 
                 List userInfo = accountController.getAccountInfoForCustomer(userName);
 
-                new GUICustomerHomePage(userInfo, userName).setVisible(true);
+                new GUICustomerHomePage(userInfo, userName);
             }
             else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username or Password!");
@@ -68,11 +68,10 @@ public class GUILoginWindow extends JFrame{
         else if("Manager".equals(role)) {
             // manager login
             JOptionPane.showMessageDialog(null,"Hello manager!");
-            int statusCode = loginController.signIn(userName, password,role);
+            int statusCode = loginController.signIn(userName, password);
             if(statusCode == atmConstant.getSUCCESS()) {
                 //TODO: SET MANAGER HOMEPAGE VISIBLE
                 setVisible(false);
-                new GUIManagerHomepage().setVisible(true);
             }
             else {
                 JOptionPane.showMessageDialog(null, "Incorrect Username or Password!");
@@ -102,7 +101,7 @@ public class GUILoginWindow extends JFrame{
         resetButton = new JButton();
 
         //======== this ========
-        Container contentPane = getContentPane();
+        var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
@@ -136,7 +135,7 @@ public class GUILoginWindow extends JFrame{
 
                 //---- RoleComboBox ----
                 RoleComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
-                    "Customer",
+                    "model.Customer",
                     "Manager"
                 }));
                 contentPanel.add(RoleComboBox);
@@ -168,7 +167,7 @@ public class GUILoginWindow extends JFrame{
                         new Insets(0, 0, 5, 0), 0, 0));
 
                     //---- registerButton ----
-                    registerButton.setText("New User? Click to Register!");
+                    registerButton.setText("New model.User? Click to Register!");
                     registerButton.addActionListener(e -> register(e));
                     buttonBar.add(registerButton, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
                         GridBagConstraints.CENTER, GridBagConstraints.BOTH,
