@@ -34,7 +34,6 @@ public class StockDao {
             if (!rs.next()) {
                 return false;
             } else {
-                //stock price will be updated
                 String query1 = "UPDATE StockMarket SET price = ? Where stockID= ?;";
                 PreparedStatement stmt1 = conn.prepareStatement(query1);
                 stmt1.setDouble(1, price);
