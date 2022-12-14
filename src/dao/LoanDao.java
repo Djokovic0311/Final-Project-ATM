@@ -10,8 +10,6 @@ import java.util.Currency;
 import java.util.List;
 
 public class LoanDao {
-
-    // Get all the loan of this customer
     public List<Loan> getLoansByCustomerID(int customerID) {
         List<Loan> result = new ArrayList<>();
         try {
@@ -36,7 +34,6 @@ public class LoanDao {
         return result;
     }
 
-    // Add a new loan into the database
     public void insertLoan(int customerID, double amount, long loanDate, CurrencyType currencyType, int loanID){
         try {
             String query = "INSERT INTO Loans (loanID, customerID, currencyType, amount, loanTime) VALUES (?,?,?,?,?);";
@@ -51,8 +48,6 @@ public class LoanDao {
         } catch (Exception ignored) {}
     }
 
-
-    // Retrieve the loan from database based on the loanID
     public Loan getLoanByID(int loanID){
         try {
             String query = "SELECT * FROM Loans WHERE loanID = ?;";
@@ -72,7 +67,6 @@ public class LoanDao {
         } catch (Exception e) { return null; }
     }
 
-    // Update the amount of a loan, used when customer pay the loan
     public void updateLoan(int loanID, double amount) {
         try {
             String query = "UPDATE Loans SET amount = ? WHERE loanID = ?;";
@@ -83,8 +77,6 @@ public class LoanDao {
             stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
-
-    // Get the remaining amount of a loan
     public double getLoanRemaining(int loanID){
         try {
             String query = "SELECT * FROM Loans WHERE loanID = ?;";
@@ -98,8 +90,6 @@ public class LoanDao {
             return 0;
         } catch (Exception e) { return 0; }
     }
-
-    // Remove a loan from the database
     public void deleteLoan(int loanID){
         try {
             String query = "DELETE FROM Loans WHERE loanID = ?;";

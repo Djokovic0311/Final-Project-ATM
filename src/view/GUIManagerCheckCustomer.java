@@ -125,15 +125,15 @@ public class GUIManagerCheckCustomer extends JFrame {
                     }
                 });
                 buttonBar.add(checkButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 0, 5), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- backButton ----
                 backButton.setText("back");
                 backButton.addActionListener(e -> back(e));
                 buttonBar.add(backButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 0, 0), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 0), 0, 0));
             }
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }
@@ -146,11 +146,11 @@ public class GUIManagerCheckCustomer extends JFrame {
 
             //---- accountTable ----
             accountTable.setModel(new DefaultTableModel(
-                    new Object[][] {
-                    },
-                    new String[] {
-                            "accountID", "accountType", "total Balance"
-                    }
+                new Object[][] {
+                },
+                new String[] {
+                    "accountID", "accountType", "total Balance"
+                }
             ));
             scrollPane1.setViewportView(accountTable);
             scrollPane1.setBounds(0, 0, 375, 200);

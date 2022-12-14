@@ -7,7 +7,7 @@ public class ATMConstant {
     private int NO_USER_FOUND = 2;
     private int NO_ENOUGH_BALANCE = 3;
     // TODO: DB INFO
-    private String DBURL = "jdbc:mysql://localhost:3306/Bank";
+    private String DBURL = "jdbc:mysql://localhost:3306/Bank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     private String DBUSERNAME = "root";
     private String DBPWD = "108875556";
     private double LOAN_INTEREST = 0.05;
@@ -102,4 +102,5 @@ public class ATMConstant {
     public void setREDEEM_INTEREST(double REDEEM_INTEREST) {
         this.REDEEM_INTEREST = REDEEM_INTEREST;
     }
+
 }

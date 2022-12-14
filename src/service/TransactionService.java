@@ -8,7 +8,6 @@ import utils.ATMConstant;
 import utils.Utils;
 
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,7 @@ public class TransactionService {
 
     TransactionDao transactionDao = new TransactionDao();
     ATMConstant atmConstant = new ATMConstant();
-    public int withdraw(int customerId, int accountId, AccountType accountType, double amount, CurrencyType currencyType) throws SQLException {
+    public int withdraw(int customerId, int accountId, AccountType accountType, double amount, CurrencyType currencyType) {
         double balance = accountDao.getBalanceByCurrencyType(accountId, customerId, accountType, currencyType);
         if(balance < amount) {
             System.out.println("Insufficient funds");
@@ -40,7 +39,7 @@ public class TransactionService {
         }
     }
 
-    public int deposit(int customerId, int accountId, AccountType accountType, double amount, CurrencyType currencyType) throws SQLException {
+    public int deposit(int customerId, int accountId, AccountType accountType, double amount, CurrencyType currencyType) {
         double balance = accountDao.getBalanceByCurrencyType(accountId, customerId, accountType, currencyType);
 
         double remaining = balance + amount;
@@ -59,7 +58,7 @@ public class TransactionService {
 
     }
 
-    public int transfer(int customerId, int fromAccountId, int toAccountId, double amount, CurrencyType currencyType,AccountType accountType) throws SQLException {
+    public int transfer(int customerId, int fromAccountId, int toAccountId, double amount, CurrencyType currencyType,AccountType accountType) {
         double fromBalance = accountDao.getBalanceByCurrencyType(fromAccountId, customerId, accountType, currencyType);
         double toBalance = accountDao.getBalanceByCurrencyType(toAccountId, customerId, accountType, currencyType);
 
@@ -94,7 +93,7 @@ public class TransactionService {
         return transactions;
     }
 
-    public void insertTransaction(Transaction transaction) throws SQLException {
+    public void insertTransaction(Transaction transaction){
         int customerID = transaction.getuserID();
         int senderAccountId = transaction.getFromAccountID();
         int receiverAccountId = transaction.getToAccountID();

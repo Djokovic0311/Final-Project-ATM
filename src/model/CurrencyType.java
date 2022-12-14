@@ -17,11 +17,12 @@ public enum CurrencyType {
 
     public static CurrencyType getTypeFromString(String s) {
         switch (s) {
-            case "USD":
-                return USD;
+            case "USD" :
+                 return USD;
             case "EUR":
                 return EUR;
-            case "CNY": return CNY;
+            case "CNY" :
+                return CNY;
         }
         return null;
     }

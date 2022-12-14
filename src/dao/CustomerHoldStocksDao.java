@@ -1,15 +1,15 @@
 package dao;
 
 import model.*;
+import utils.ATMConstant;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerHoldStocksDao {
-
-    // Check whether this account exist
-    public boolean checkCustomerHolds(int stockID) {
+    ATMConstant atmConstant = new ATMConstant();
+    public boolean checkCustomerHolds(int stockID) { // What is this doing? If checking whether this customer have the stock then should provide customerID
         try {
             String query = "SELECT * FROM CustomerHoldStocks WHERE stockID = ?;";
             Connection conn = ConnectDao.connectToDb();
@@ -20,8 +20,6 @@ public class CustomerHoldStocksDao {
         } catch (Exception e) { return false; }
     }
 
-
-    // Update the information of a stock hold by customer, called when the customer buy or sell stock
     public void updateCustomerHeldStocks(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) { // Problem: buy same stock with different price
         int original_amount = getCustomerHeldStocksByID(stockID, customerID);
         try {
@@ -38,8 +36,6 @@ public class CustomerHoldStocksDao {
         } catch (Exception ignored) {}
     }
 
-
-    // Insert a new stock inside the database of customer hold stocks
     public void insertNewHeldStock(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) {
         try {
             String query = "INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, timeBought)" +
@@ -54,8 +50,6 @@ public class CustomerHoldStocksDao {
             stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
-
-    // get number of stock hold based on customerID and stockID
     public int getCustomerHeldStocksByID(int stockID, int customerID){ // Why return int?
         try {
             String query = "SELECT * FROM CustomerHoldStocks WHERE stockID = ? AND customerID = ?;";
@@ -71,7 +65,6 @@ public class CustomerHoldStocksDao {
         } catch (Exception e) { return 0; }
     }
 
-    // Remove a customer hold stock when the customer sell it out totally
     public void removeCustomerHeldStock(int stockID, int customerID){
         try {
             String query = "DELETE FROM CustomerHoldStocks WHERE stockID = ? AND customerID = ?;";

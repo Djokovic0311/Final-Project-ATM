@@ -18,10 +18,10 @@ public class Utils {
     public static boolean isEmpty(String str) {
         return "".equals(str) || str == null;
     }
-    public static int getFixedLengthRandom(int len) {
+     public static int getFixedLengthRandom(int len) {
         int rs = (int) ((Math.random() * 9 + 1) * Math.pow(10, len - 1));
         return rs;
-    }
+     }
     public static String getFixedLengthRandomString(int len) {
 
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -34,16 +34,17 @@ public class Utils {
         }
         return buff.toString();
     }
-    // hash username to id
+     // hash username to id
     public static int createHashCodeForPersonId(String userName){
-        return Objects.hash(userName);
+
+        return Math.abs(Objects.hash(userName));
     }
     public static long getTimestamp() {
         return Calendar.getInstance().getTimeInMillis();
     }
 
     public String getStringFormatDate(long longFormatDate) {
-        return String.format("%tF", longFormatDate);
+        return String.format("%tF %<tT", longFormatDate);
     }
 
     public static int dayPass(long oldDate, long newDate) {

@@ -122,14 +122,14 @@ public class GUIDailyReport extends JFrame {
                     }
                 });
                 buttonBar.add(checkButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 0, 5), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                        new Insets(0, 0, 0, 0), 0, 0));
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 0), 0, 0));
             }
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }
@@ -142,11 +142,11 @@ public class GUIDailyReport extends JFrame {
 
             //---- transactionTable ----
             transactionTable.setModel(new DefaultTableModel(
-                    new Object[][] {
-                    },
-                    new String[] {
-                            null, null, null, null, null
-                    }
+                new Object[][] {
+                },
+                new String[] {
+                    null, null, null, null, null
+                }
             ));
             scrollPane1.setViewportView(transactionTable);
         }

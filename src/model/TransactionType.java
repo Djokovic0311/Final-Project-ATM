@@ -1,9 +1,9 @@
 package model;
 
 /**
- This is the enum for transaction type
- @author: Jiahang Li
- @version: 1.0
+    This is the enum for transaction type
+    @author: Jiahang Li
+    @version: 1.0
  */
 
 public enum TransactionType {
@@ -12,18 +12,17 @@ public enum TransactionType {
     TRANSFER,
     WITHDRAW,
     MANAGER,
-
     DEPOSIT;
 
-    public static TransactionType getTypeFromString(String s) {
+    public static TransactionType getTypeFromString (String s) {
         switch (s) {
-            case "BUYSTOCK" :
+            case "BUYSTOCK":
                 return BUYSTOCK;
             case "SELLSTOCK":
                 return SELLSTOCK;
-            case "TRANSFER" :
+            case "TRANSFER":
                 return TRANSFER;
-            case "WITHDRAM" :
+            case "WITHDRAM":
                 return WITHDRAW;
             case "MANAGER":
                 return MANAGER;
@@ -33,4 +32,3 @@ public enum TransactionType {
         return null;
     }
 }
-
