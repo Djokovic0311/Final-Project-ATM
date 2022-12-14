@@ -97,7 +97,7 @@ public class GUIDisplayLoan extends JFrame {
                         new Object[][] {
                         },
                         new String[] {
-                            null, null, null, null
+                            "amount", "loanID", "CurrencyType", "interest"
                         }
                     ));
                     scrollPane1.setViewportView(loanTable);

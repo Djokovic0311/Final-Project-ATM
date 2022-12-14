@@ -2,15 +2,13 @@ package dao;
 
 import model.*;
 import utils.ATMConstant;
+import utils.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AccountDao {
     ATMConstant atmConstant = new ATMConstant();
@@ -21,7 +19,7 @@ public class AccountDao {
             ResultSet rs;
             switch (type) {
                 case SAVINGS :
-                    rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE accountID = " + accountID + ";");
+                    rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE ID = " + accountID + ";");
                     break;
                 case CHECKINGS :
                     rs = stmt.executeQuery("SELECT * FROM CheckingAccount WHERE accountID = " + accountID + ";");
@@ -146,14 +144,14 @@ public class AccountDao {
         try {
             Connection con = DriverManager.getConnection(atmConstant.getDBURL(), atmConstant.getDBUSERNAME(), atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
-            stmt.executeQuery("UPDATE CheckingAccount SET balanceUSD = " + amount + " WHERE ID = " + bankId + ";");
+            stmt.executeQuery("UPDATE CheckingAccount SET balanceUSD = " + amount + " WHERE accountID = " + bankId + ";");
         } catch (Exception ignored) {}
     }
     public void insertIntoSecurity(int accountID, int customerID, AccountType accountType, double balance){
         try {
             Connection con = DriverManager.getConnection(atmConstant.getDBURL(), atmConstant.getDBUSERNAME(), atmConstant.getDBPWD());
             Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO SecurityAccount ( accountID, customerID, balanceUSD, realizedProfit, unrealizedProfit )" +
+            stmt.executeQuery("INSERT INTO SecurityAccount ( accountID, customerID, currentBalance, realizedProfit, unrealizedProfit )" +
                     "VALUES ( " + accountID + ", " + customerID + ", " + balance + ", " + 0 + ", " + 0 +  ");");
         } catch (Exception ignored) {
         }
@@ -191,9 +189,9 @@ public class AccountDao {
         try {
             Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
-            stmt.executeQuery("DELETE FROM SavingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
-            stmt.executeQuery("DELETE FROM CheckingAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
-            stmt.executeQuery("DELETE FROM SecurityAccount WHERE accountID = " + accountID + "AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM SavingAccount WHERE ID = " + accountID + " AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM CheckingAccount WHERE accountID = " + accountID + " AND customerID = " + customerID + ";");
+            stmt.executeQuery("DELETE FROM SecurityAccount WHERE accountID = " + accountID + " AND customerID = " + customerID + ";");
             return 1;
         } catch (Exception e) { return 0; }
     }
@@ -215,7 +213,6 @@ public class AccountDao {
             case CNY:
                 querySet = "SET balanceCNY = " + amount;
                 break;
-
         }
         try {
             Connection con = ConnectDao.connectToDb();
@@ -235,7 +232,26 @@ public class AccountDao {
         }
     }
 
-    public void redeemForSavingAccount(int accountID, long timestamp){
-
+    public void redeemForSavingAccount(int accountID, long timestamp) throws Exception {
+        Connection con = ConnectDao.connectToDb();
+        Statement stmt = con.createStatement();
+        ResultSet rs =  stmt.executeQuery("SELECT * FROM SavingAccount WHERE ID = " + accountID + ";");
+        double balanceUSD = rs.getDouble(2);
+        double balanceEUR = rs.getDouble(3);
+        double balanceCNY = rs.getDouble(4);
+        long lastDateRedeem = (long) rs.getDouble(5);
+        int dayPass = Utils.dayPass(lastDateRedeem, timestamp);
+        if (balanceUSD >= 500) {
+            balanceUSD = Utils.redeem(balanceUSD, dayPass);
+        }
+        if (balanceEUR >= 500) {
+            balanceEUR = Utils.redeem(balanceEUR, dayPass);
+        }
+        if (balanceCNY >= 500) {
+            balanceCNY = Utils.redeem(balanceCNY, dayPass);
+        }
+        double lastTimeRedeem = (double) Calendar.getInstance().getTimeInMillis();
+        stmt.executeQuery("UPDATE SavingAccount SET balanceUSD = " + balanceUSD + ", balanceEUR = " + balanceEUR + ", balanceCNY = " + balanceCNY
+                + ", lastTimeRedeem = " + lastTimeRedeem + " WHERE ID = " + accountID + ";");
     }
 }

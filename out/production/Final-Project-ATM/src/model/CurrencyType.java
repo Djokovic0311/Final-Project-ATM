@@ -22,7 +22,7 @@ public enum CurrencyType {
             case "EUR":
                 return EUR;
             case "CNY" :
-                return CNY; 
+                return CNY;
         }
         return null;
     }

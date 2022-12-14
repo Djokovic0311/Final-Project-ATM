@@ -11,19 +11,17 @@ new FormModel {
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 					name: "contentPanel"
 					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "dateLabel"
-						"text": "Date"
+						name: "customerIDLabel"
+						"text": "customerID"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"x": 80
-						"y": 10
-						"width": 55
-						"height": 20
+						"x": 75
+						"y": 15
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "dateTextField"
+						name: "customerIDTextField"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"x": 185
-						"y": 5
+						"x": 200
+						"y": 10
 						"width": 85
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
@@ -39,15 +37,16 @@ new FormModel {
 					"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "checkButton"
-						"text": "Check"
+						"text": "check"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "check", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 1
 						"gridy": 0
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "cancelButton"
-						"text": "Cancel"
+						name: "backButton"
+						"text": "back"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 2
 						"gridy": 0
@@ -65,36 +64,28 @@ new FormModel {
 		add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 			name: "scrollPane1"
 			add( new FormComponent( "javax.swing.JTable" ) {
-				name: "transactionTable"
+				name: "accountTable"
 				"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 					add( null )
 					add( null )
 					add( null )
+				}, new java.util.Vector {
+					add( null )
 					add( null )
 					add( null )
 				}, new java.util.Vector {
 					add( null )
 					add( null )
 					add( null )
-					add( null )
-					add( null )
 				}, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-				}, new java.util.Vector {
-					add( null )
-					add( null )
 					add( null )
 					add( null )
 					add( null )
 				} )
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 20, 90 )
-			"size": new java.awt.Dimension( 365, 155 )
+			"location": new java.awt.Point( 0, 90 )
+			"size": new java.awt.Dimension( 385, 160 )
 		} )
 	}
 }

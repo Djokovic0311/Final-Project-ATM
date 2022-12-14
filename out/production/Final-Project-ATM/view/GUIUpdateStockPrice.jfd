@@ -11,20 +11,32 @@ new FormModel {
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 					name: "contentPanel"
 					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "dateLabel"
-						"text": "Date"
+						name: "stockIDLabel"
+						"text": "StockID"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"x": 80
-						"y": 10
-						"width": 55
-						"height": 20
+						"y": 55
 					} )
 					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "dateTextField"
+						name: "stockIDTextField"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 180
+						"y": 55
+						"width": 120
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "priceTextField"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"x": 185
-						"y": 5
-						"width": 85
+						"y": 110
+						"width": 110
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "priceLabel"
+						"text": "Price"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 80
+						"y": 115
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "Center"
@@ -38,12 +50,11 @@ new FormModel {
 					name: "buttonBar"
 					"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
 					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "checkButton"
-						"text": "Check"
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "check", true ) )
+						name: "okButton"
+						"text": "OK"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "ok", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 1
-						"gridy": 0
 					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "cancelButton"
@@ -61,40 +72,6 @@ new FormModel {
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 400, 300 )
-		} )
-		add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-			name: "scrollPane1"
-			add( new FormComponent( "javax.swing.JTable" ) {
-				name: "transactionTable"
-				"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-				}, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-				}, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-				}, new java.util.Vector {
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-					add( null )
-				} )
-			} )
-		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 20, 90 )
-			"size": new java.awt.Dimension( 365, 155 )
 		} )
 	}
 }

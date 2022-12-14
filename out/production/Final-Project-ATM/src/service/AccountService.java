@@ -131,7 +131,7 @@ public class AccountService {
                 account.getBalanceByCurrency(to)+amount*from.getValue()/to.getValue());
     }
 
-    public void redeem(int accountID){
+    public void redeem(int accountID) throws Exception {
         long timestamp = Utils.getTimestamp();
         accountDao.redeemForSavingAccount(accountID,timestamp);
         SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(accountID);
