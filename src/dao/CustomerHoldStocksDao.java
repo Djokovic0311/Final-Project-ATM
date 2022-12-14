@@ -17,10 +17,7 @@ public class CustomerHoldStocksDao {
             Connection con = ConnectDao.connectToDb();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE stockID = " + stockID + ";");
-            if (rs.next()) {
-                return true;
-            }
-            return false;
+            return rs.next();
         } catch (Exception e) { return false; }
     }
 
