@@ -2,10 +2,7 @@ package dao;
 
 import model.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +11,11 @@ public class CustomerHoldStocksDao {
     // Check whether this account exist
     public boolean checkCustomerHolds(int stockID) {
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE stockID = " + stockID + ";");
+            String query = "SELECT * FROM CustomerHoldStocks WHERE stockID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            ResultSet rs = stmt.executeQuery();
             return rs.next();
         } catch (Exception e) { return false; }
     }
@@ -26,11 +25,16 @@ public class CustomerHoldStocksDao {
     public void updateCustomerHeldStocks(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) { // Problem: buy same stock with different price
         int original_amount = getCustomerHeldStocksByID(stockID, customerID);
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, stockNumber, priceBought, timeBought)" +
-                    "VALUES (" + stockID + ", " + customerID + ", " + original_amount + quantity + " ," + purchasedPrice + ", " + (double) timestamp + ")" +
-                    "ON DUPLICATE KEY UPDATE stockNumber = " + quantity + ";");
+            String query = "UPDATE CustomerHoldStocks SET quantity = ?, priceBought = ?, timeBought = ?" +
+                    "WHERE stockID = ? AND customerID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, quantity + original_amount);
+            stmt.setDouble(2, purchasedPrice);
+            stmt.setDouble(3, (double) timestamp);
+            stmt.setInt(4, stockID);
+            stmt.setInt(5, customerID);
+            stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
 
@@ -38,21 +42,30 @@ public class CustomerHoldStocksDao {
     // Insert a new stock inside the database of customer hold stocks
     public void insertNewHeldStock(int stockID, int customerID, double purchasedPrice, int quantity, long timestamp) {
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            stmt.executeQuery("INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, timeBought)" +
-                    "VALUES (" + stockID + ", " + customerID + ", " + quantity + " ," + purchasedPrice + ", " + (double) timestamp + ");");
+            String query = "INSERT INTO CustomerHoldStocks (stockID, customerID, quantity, priceBought, timeBought)" +
+                    "VALUES (?,?,?,?,?);";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            stmt.setInt(2, customerID);
+            stmt.setInt(3, quantity);
+            stmt.setDouble(4, purchasedPrice);
+            stmt.setDouble(5, (double) timestamp);
+            stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
 
-    // get the customer hold stock based on customerID and stockID
+    // get number of stock hold based on customerID and stockID
     public int getCustomerHeldStocksByID(int stockID, int customerID){ // Why return int?
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE stockID = " + stockID + " customerID = " + customerID + ";");
+            String query = "SELECT * FROM CustomerHoldStocks WHERE stockID = ? AND customerID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            stmt.setInt(2, customerID);
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(2);
+                return rs.getInt(3);
             }
             return 0;
         } catch (Exception e) { return 0; }
@@ -61,22 +74,27 @@ public class CustomerHoldStocksDao {
     // Remove a customer hold stock when the customer sell it out totally
     public void removeCustomerHeldStock(int stockID, int customerID){
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            stmt.executeQuery("DELETE FROM CustomerHoldStocks WHERE stockID = " + stockID + "AND customerID = " + customerID + ";");
+            String query = "DELETE FROM CustomerHoldStocks WHERE stockID = ? AND customerID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            stmt.setInt(2, customerID);
+            stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
     public ArrayList<CustomerHeldStock> getStocks(int customerID) {
         ArrayList<CustomerHeldStock> result = new ArrayList<>();
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM CustomerHoldStocks WHERE customerID = " + customerID + ";");
+            String query = "SELECT * FROM CustomerHoldStocks WHERE customerID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, customerID);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int stockID = rs.getInt(0);
-                int quantity = rs.getInt(2);
-                double price = rs.getDouble(3);
-                long date = (long) rs.getDouble(4);
+                int stockID = rs.getInt(1);
+                int quantity = rs.getInt(3);
+                double price = rs.getDouble(4);
+                long date = (long) rs.getDouble(5);
                 CustomerHeldStock chs = new CustomerHeldStock(stockID, price, quantity, date);
                 result.add(chs);
             }

@@ -12,68 +12,70 @@ public class TransactionDao {
     public void insertTransactionIntoDB(int customerID, int senderAccountId, int receiverAccountId, double amount,
                                         CurrencyType currencyType, TransactionType transactionType, long timestamp) {
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-
-            ResultSet countset;
-            countset = stmt.executeQuery("SELECT COUNT(*) as count FROM TRANSACTIONS");
-
+            Connection conn = ConnectDao.connectToDb();
+            String query1 = "SELECT COUNT(*) as count FROM Transactions;";
+            PreparedStatement stmt1 = conn.prepareStatement(query1);
+            ResultSet rs = stmt1.executeQuery();
             int recordNumber = 0;
-            if (countset.next()) {
-                recordNumber = countset.getInt(1);
+            if (rs.next()) {
+                recordNumber = rs.getInt(1);
             }
-            int transactionid = recordNumber + 1;
-            stmt.executeQuery("INSERT INTO Transactions (transactionID,customerID,accountID1,accountID2,currencyType,balance,transactionType,transactionTime) " +
-                    "VALUES(" + transactionid + ", " + customerID + ", " + senderAccountId + ", " + receiverAccountId + ", \'" +currencyType.toString() + "\', " + amount + ", \'" + transactionType.toString() + "\', " + (double) timestamp+ ");");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            int transactionID = recordNumber + 1;
+            String query2 = "INSERT INTO Transactions (transactionID,customerID,accountID1,accountID2,currencyType,balance,transactionType,transactionTime) " +
+                    "VALUES (?,?,?,?,?,?,?,?);";
+            PreparedStatement stmt2 = conn.prepareStatement(query2);
+            stmt2.setInt(1, transactionID);
+            stmt2.setInt(2, customerID);
+            stmt2.setInt(3, senderAccountId);
+            stmt2.setInt(4, receiverAccountId);
+            stmt2.setString(5, currencyType.toString());
+            stmt2.setDouble(6, amount);
+            stmt2.setString(7, transactionType.toString());
+            stmt2.setDouble(8, (double) timestamp);
+            stmt2.executeUpdate();
+        } catch (Exception ignored) {}
 
 
     }
     // check whether an transaction exists
     public boolean transactionExist(int transactionID) {
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            ResultSet rs;
-            rs = stmt.executeQuery("SELECT * FROM TRANSACTIONS WHERE transactionID = " + transactionID + ";");
+            String query = "SELECT * FROM TRANSACTIONS WHERE transactionID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, transactionID);
+            ResultSet rs = stmt.executeQuery();
             return rs.next();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
 
     public List<Transaction> getTransactionsforCustomer(int customerID) {
+        List<Transaction> transactions = new ArrayList<>();
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            ResultSet rs;
-            rs = stmt.executeQuery("SELECT * FROM TRANSACTIONS WHERE userID = " + customerID + ";");
-
-            List<Transaction> transactions = new ArrayList<>();
+            String query = "SELECT * FROM TRANSACTIONS WHERE customerID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, customerID);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()){
-                int transactionId = rs.getInt(0);
-                String type  = rs.getString(3);
-                TransactionType transactiontype = TransactionType.getTypeFromString(type);
-                int fromacc = rs.getInt(2);
-                int toacc = rs.getInt(3);
-                int balance = rs.getInt(4);
-                String currencyType = rs.getString(4);
+                int transactionId = rs.getInt(1);
+                int fromacc = rs.getInt(3);
+                int toacc = rs.getInt(4);
+                String currencyType = rs.getString(5);
                 CurrencyType currencytype = CurrencyType.getTypeFromString(currencyType);
-                long timestamp = (long)rs.getDouble(7);
-
+                int balance = rs.getInt(6);
+                String type = rs.getString(7);
+                TransactionType transactiontype = TransactionType.getTypeFromString(type);
+                long timestamp = (long) rs.getDouble(8);
                 Transaction T = new Transaction(transactionId,timestamp, balance,customerID,transactiontype,fromacc,toacc,currencytype);
                 transactions.add(T);
             }
-            if (transactions.isEmpty()) {
-                return null;
-            }
-            return transactions;
-        } catch (Exception e) {
-            return null;
-        }
+        } catch (Exception e) { return null; }
+        if (transactions.isEmpty()) { return null; }
+        return transactions;
     }
 
     public List<Transaction> getDailyTransactions(long timestamp){
