@@ -44,7 +44,15 @@ public class Utils {
         return String.format("%tF %<tT", longFormatDate);
     }
 
-    public int dayPass(long oldDate, long newDate) {
+    public static int dayPass(long oldDate, long newDate) {
         return (int) ((newDate-oldDate)/1000/60/60/24);
+    }
+    public static double redeem(double balance, int dayPass) {
+        double new_balance = balance;
+        ATMConstant a = new ATMConstant();
+        for (int i = 0; i < dayPass; i ++) {
+            new_balance *= a.getREDEEM_INTEREST();
+        }
+        return new_balance;
     }
 }

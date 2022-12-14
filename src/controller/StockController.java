@@ -15,7 +15,7 @@ public class StockController {
     AccountService accountService = new AccountService();
     ATMConstant atmConstant = new ATMConstant();
 
-    public int trade(String userName, int stockID, int quantity, String tradeType) {
+    public int trade(String userName, int stockID, int quantity, String tradeType) throws Exception {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         int accountID = customer.getSecurityAccount();
         SecurityAccount securityAccount = (SecurityAccount) accountService.getAccountByID(accountID);
@@ -26,7 +26,7 @@ public class StockController {
         }
     }
 
-    public ArrayList<CustomerHeldStock> showHeldStocks(String userName) {
+    public ArrayList<CustomerHeldStock> showHeldStocks(String userName) throws Exception {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         int accountID = customer.getSecurityAccount();
         SecurityAccount securityAccount = (SecurityAccount) accountService.getAccountByID(accountID);

@@ -21,7 +21,7 @@ public class LoginService {
 
     ATMConstant atmConstant = new ATMConstant();
 
-    public int signIn(String userName,String password, String userType) {
+    public int signIn(String userName,String password, String userType) throws Exception {
         if(Objects.equals(userType, "Customer")){
             Customer customer = new Customer();
             customer.setName(userName);
@@ -64,7 +64,7 @@ public class LoginService {
 
     }
 
-    public int signUp(Customer customer, String pwd) {
+    public int signUp(Customer customer, String pwd) throws Exception {
         int id = customer.getID();
         String userName = customer.getName();
         Customer existingUser = (Customer) userDao.selectUserById(id, "customer");
@@ -78,9 +78,14 @@ public class LoginService {
         else return atmConstant.getERROR();
     }
 
-    public User getCustomerInfo(String userName) {
+    public User getCustomerInfo(String userName) throws Exception {
         int customerID = Utils.createHashCodeForPersonId(userName);
         User user = userDao.selectUserById(customerID,"customer");
+        return user;
+    }
+
+    public User getCustomerByID(int userID) throws Exception {
+        User user = userDao.selectUserById(userID,"customer");
         return user;
     }
 }

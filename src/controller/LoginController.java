@@ -1,6 +1,7 @@
 package controller;
 
 import model.Customer;
+import model.User;
 import service.LoginService;
 import utils.ATMConstant;
 import utils.Utils;
@@ -24,4 +25,7 @@ public class LoginController {
         return loginService.signUp(customer,pwd);
     }
 
+    public User getUserByID(int userID) throws Exception {
+        return loginService.getCustomerByID(userID);
+    }
 }

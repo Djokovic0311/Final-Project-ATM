@@ -2,15 +2,13 @@ package dao;
 
 import model.*;
 import utils.ATMConstant;
+import utils.Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AccountDao {
     ATMConstant atmConstant = new ATMConstant();
@@ -234,7 +232,26 @@ public class AccountDao {
         }
     }
 
-    public void redeemForSavingAccount(int accountID, long timestamp){
-
+    public void redeemForSavingAccount(int accountID, long timestamp) throws Exception {
+        Connection con = ConnectDao.connectToDb();
+        Statement stmt = con.createStatement();
+        ResultSet rs =  stmt.executeQuery("SELECT * FROM SavingAccount WHERE ID = " + accountID + ";");
+        double balanceUSD = rs.getDouble(2);
+        double balanceEUR = rs.getDouble(3);
+        double balanceCNY = rs.getDouble(4);
+        long lastDateRedeem = (long) rs.getDouble(5);
+        int dayPass = Utils.dayPass(lastDateRedeem, timestamp);
+        if (balanceUSD >= 500) {
+            balanceUSD = Utils.redeem(balanceUSD, dayPass);
+        }
+        if (balanceEUR >= 500) {
+            balanceEUR = Utils.redeem(balanceEUR, dayPass);
+        }
+        if (balanceCNY >= 500) {
+            balanceCNY = Utils.redeem(balanceCNY, dayPass);
+        }
+        double lastTimeRedeem = (double) Calendar.getInstance().getTimeInMillis();
+        stmt.executeQuery("UPDATE SavingAccount SET balanceUSD = " + balanceUSD + ", balanceEUR = " + balanceEUR + ", balanceCNY = " + balanceCNY
+                + ", lastTimeRedeem = " + lastTimeRedeem + " WHERE ID = " + accountID + ";");
     }
 }

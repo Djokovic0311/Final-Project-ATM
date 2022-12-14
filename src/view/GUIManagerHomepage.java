@@ -33,7 +33,8 @@ public class GUIManagerHomepage extends JFrame {
     }
 
     private void stockManagement(ActionEvent e) {
-        // TODO add your code here
+        dispose();
+        new GUIStockManagement().setVisible(true);
     }
 
     private void initComponents() {
