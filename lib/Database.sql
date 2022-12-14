@@ -10,7 +10,7 @@ create table Person (
 );
 
 create table SavingAccount (
-	ID int,
+	accountID int,
     customerID int,
     balanceUSD double,
     balanceEUR double,
