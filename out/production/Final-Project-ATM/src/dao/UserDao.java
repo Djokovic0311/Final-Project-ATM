@@ -15,7 +15,7 @@ public class UserDao {
         Statement stmt = conn.createStatement();
         User user;
         ResultSet rs;
-        rs = stmt.executeQuery("SELECT * FROM Person WHERE ID = " + id + " AND type=" + type + ";");
+        rs = stmt.executeQuery("SELECT * FROM Person WHERE ID = " + id + " AND type=\'" + type + "\'"+";");
         while(rs.next()){
             user = new User(rs.getString(1), rs.getInt(0),rs.getString(2),rs.getString(3));
             return user;
