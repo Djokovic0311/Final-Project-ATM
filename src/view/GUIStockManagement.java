@@ -49,7 +49,7 @@ public class GUIStockManagement extends JFrame {
 
         //======== this ========
         setTitle("Manager Stock Center");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
@@ -69,7 +69,13 @@ public class GUIStockManagement extends JFrame {
 
                 //---- checkStockButton ----
                 checkStockButton.setText("Check Stock Market");
-                checkStockButton.addActionListener(e -> checkStock(e));
+                checkStockButton.addActionListener(e -> {
+                    try {
+                        checkStock(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 contentPanel.add(checkStockButton);
                 checkStockButton.setBounds(75, 75, 140, 30);
 
@@ -107,8 +113,8 @@ public class GUIStockManagement extends JFrame {
                 backButton.setText("back");
                 backButton.addActionListener(e -> back(e));
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 0), 0, 0));
             }
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }

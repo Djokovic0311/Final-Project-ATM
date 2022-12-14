@@ -6,7 +6,7 @@ package view;
 
 import controller.TransactionController;
 import model.CurrencyType;
-import sun.awt.UNIXToolkit;
+//import sun.awt.UNIXToolkit;
 import utils.ATMConstant;
 import utils.Utils;
 
@@ -73,7 +73,7 @@ public class GUIWithdraw extends JFrame {
 
         //======== this ========
         setTitle("Withdraw ");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

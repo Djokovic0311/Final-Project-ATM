@@ -39,7 +39,7 @@ public class GUIBuyOrSellStock extends JFrame {
         new GUIStock(userAccounts, userInfo, userName).setVisible(true);
     }
 
-    private void trade(ActionEvent e) {
+    private void trade(ActionEvent e) throws Exception {
         int stockID = Integer.parseInt(stockTextField.getText());
         int quantity = Integer.parseInt(quantityTextField.getText());
 
@@ -67,7 +67,7 @@ public class GUIBuyOrSellStock extends JFrame {
 
         //======== this ========
         setTitle("Trade Stocks");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
@@ -119,7 +119,13 @@ public class GUIBuyOrSellStock extends JFrame {
 
                 //---- tradeButton ----
                 tradeButton.setText("Trade");
-                tradeButton.addActionListener(e -> trade(e));
+                tradeButton.addActionListener(e -> {
+                    try {
+                        trade(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(tradeButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));

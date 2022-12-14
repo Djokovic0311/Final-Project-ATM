@@ -4,28 +4,72 @@
 
 package view;
 
+import java.awt.event.*;
+import controller.TransactionController;
+import model.*;
+import utils.Utils;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * @author unknown
  */
 public class GUIDailyReport extends JFrame {
+    private List<Transaction> transactions;
+    TransactionController transactionController = new TransactionController();
     public GUIDailyReport() {
         initComponents();
     }
 
+    private void fillTable() throws Exception {
+        DefaultTableModel defaultModel = (DefaultTableModel) transactionTable.getModel();
+
+        defaultModel.setNumRows(0);
+        for(Transaction transaction : transactions) {
+            Vector v = new Vector();
+            int transactionID = transaction.getID();
+            String type = transaction.getType().toString();
+            int accountID = transaction.getFromAccountID();
+            double amount = transaction.getAmount();
+            String currency = transaction.getCurrencyType().toString();
+            v.addElement(transactionID);
+            v.addElement(type);
+            v.addElement(accountID);
+            v.addElement(amount);
+            v.addElement(currency);
+
+            defaultModel.addRow(v);
+            transactionTable.setModel(defaultModel);
+        }
+    }
+
+    private void check(ActionEvent e) throws Exception {
+        String month = dateTextField.getText().split("\\.")[0];
+        String day = dateTextField.getText().split("\\.")[1];
+
+        long timestamp = Utils.dateToStamp(day,month);
+        transactions = transactionController.getDailyReport(timestamp);
+        fillTable();
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
+        dateLabel = new JLabel();
+        dateTextField = new JTextField();
         buttonBar = new JPanel();
-        okButton = new JButton();
+        checkButton = new JButton();
         cancelButton = new JButton();
+        scrollPane1 = new JScrollPane();
+        transactionTable = new JTable();
 
         //======== this ========
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
@@ -36,6 +80,13 @@ public class GUIDailyReport extends JFrame {
             //======== contentPanel ========
             {
                 contentPanel.setLayout(null);
+
+                //---- dateLabel ----
+                dateLabel.setText("Date");
+                contentPanel.add(dateLabel);
+                dateLabel.setBounds(80, 10, 55, 20);
+                contentPanel.add(dateTextField);
+                dateTextField.setBounds(185, 5, 85, dateTextField.getPreferredSize().height);
 
                 {
                     // compute preferred size
@@ -61,31 +112,56 @@ public class GUIDailyReport extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
-                //---- okButton ----
-                okButton.setText("OK");
-                buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 5), 0, 0));
+                //---- checkButton ----
+                checkButton.setText("Check");
+                checkButton.addActionListener(e -> {
+                    try {
+                        check(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                buttonBar.add(checkButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 0), 0, 0));
             }
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(getOwner());
+
+        //======== scrollPane1 ========
+        {
+
+            //---- transactionTable ----
+            transactionTable.setModel(new DefaultTableModel(
+                    new Object[][] {
+                    },
+                    new String[] {
+                            null, null, null, null, null
+                    }
+            ));
+            scrollPane1.setViewportView(transactionTable);
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
+    private JLabel dateLabel;
+    private JTextField dateTextField;
     private JPanel buttonBar;
-    private JButton okButton;
+    private JButton checkButton;
     private JButton cancelButton;
+    private JScrollPane scrollPane1;
+    private JTable transactionTable;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

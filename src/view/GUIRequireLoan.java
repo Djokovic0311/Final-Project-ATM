@@ -73,7 +73,7 @@ public class GUIRequireLoan extends JFrame {
 
         //======== this ========
         setTitle("Apply For Loan");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

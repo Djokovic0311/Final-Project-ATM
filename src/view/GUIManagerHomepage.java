@@ -47,7 +47,7 @@ public class GUIManagerHomepage extends JFrame {
         logOutButton = new JButton();
 
         //======== this ========
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

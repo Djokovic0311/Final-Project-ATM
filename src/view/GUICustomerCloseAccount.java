@@ -35,7 +35,7 @@ public class GUICustomerCloseAccount extends JFrame {
         new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
     }
 
-    private void confirm(ActionEvent e) {
+    private void confirm(ActionEvent e) throws Exception {
         int accountID = Integer.parseInt(accountIDTextField.getText());
         int status = accountController.closeAccount(username, accountID);
 
@@ -60,7 +60,7 @@ public class GUICustomerCloseAccount extends JFrame {
 
         //======== this ========
         setTitle("Close an Account");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
@@ -105,7 +105,13 @@ public class GUICustomerCloseAccount extends JFrame {
 
                 //---- confirmButton ----
                 confirmButton.setText("Confirm");
-                confirmButton.addActionListener(e -> confirm(e));
+                confirmButton.addActionListener(e -> {
+                    try {
+                        confirm(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(confirmButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));

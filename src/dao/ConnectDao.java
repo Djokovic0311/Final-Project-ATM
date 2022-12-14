@@ -7,10 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectDao {
-    ATMConstant atmConstant = new ATMConstant();
+    static ATMConstant atmConstant = new ATMConstant();
 
     //connect to DB
-    public Connection connectToDb() throws Exception {
+    public static Connection connectToDb() throws Exception {
         System.out.println("Connecting to DB");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -23,7 +23,7 @@ public class ConnectDao {
         }
     }
 
-    public void closeDbConnection(Connection connection) throws SQLException {
+    public static void closeDbConnection(Connection connection) throws SQLException {
         if(connection!=null || !connection.isClosed()){
             connection.close();
         }else {

@@ -1,12 +1,14 @@
+
 package utils;
 
 import model.Customer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
-import java.lang.*;
 
 /*
     This is the global utils class
@@ -64,5 +66,12 @@ public class Utils {
             new_balance *= a.getREDEEM_INTEREST();
         }
         return new_balance;
+    }
+
+    public static long dateToStamp(String day, String month) throws ParseException {
+        String s = "2022-"+month +"-"+day+" 00:00:00";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = simpleDateFormat.parse(s);
+        return date.getTime();
     }
 }
