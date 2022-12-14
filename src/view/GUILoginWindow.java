@@ -37,8 +37,8 @@ public class GUILoginWindow extends JFrame{
     }
 
     private void login(ActionEvent e) throws Exception {
-        String userName = userNameTextField.getText().toString();
-        String password = Arrays.toString(passwordTextField.getPassword());
+        String userName = userNameTextField.getText();
+        String password = passwordTextField.getText();
         String role =  Objects.requireNonNull(RoleComboBox.getSelectedItem()).toString();
 
         if(Utils.isEmpty(userName)) {
@@ -54,6 +54,7 @@ public class GUILoginWindow extends JFrame{
             JOptionPane.showMessageDialog(null,"Hello customer!");
             int statusCode = loginController.signIn(userName, password,role);
             if(statusCode == atmConstant.getSUCCESS()) {
+                System.out.println(userName+"success");
                 //TODO: SET CUSTOMER HOMEPAGE VISIBLE
                 setVisible(false);
 

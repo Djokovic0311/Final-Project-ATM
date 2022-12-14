@@ -31,6 +31,7 @@ public class LoginService {
 
             Customer existingUser = (Customer) userDao.selectUserById(customerId,userType);
             if(existingUser == null) {
+//                System.out.println("1");
                 return atmConstant.getNO_USER_FOUND();
             }
             else {
@@ -39,6 +40,9 @@ public class LoginService {
                     return atmConstant.getSUCCESS();
                 }
                 else {
+//                    System.out.println("2");
+                    System.out.println(existingUser.getPassword());
+                    System.out.println(password);
                     System.out.println("Incorrect pwd");
                     return atmConstant.getERROR();
                 }
@@ -69,7 +73,7 @@ public class LoginService {
         String userName = customer.getName();
         Customer existingUser = (Customer) userDao.selectUserById(id, "customer");
         if(existingUser == null) {
-            System.out.println("1");
+//            System.out.println("1");
             boolean status = userDao.insertIntoUser(id, userName, pwd);
             if(status) {
 
@@ -77,21 +81,21 @@ public class LoginService {
             }
 
             else {
-                System.out.println("2");
+//                System.out.println("2");
                 return atmConstant.getERROR();
             }
         }
         else return atmConstant.getERROR();
     }
 
-    public User getCustomerInfo(String userName) throws Exception {
+    public Customer getCustomerInfo(String userName) throws Exception {
         int customerID = Utils.createHashCodeForPersonId(userName);
-        User user = userDao.selectUserById(customerID,"customer");
-        return user;
+        Customer customer = (Customer) userDao.selectUserById(customerID,"Customer");
+        return customer;
     }
 
-    public User getCustomerByID(int userID) throws Exception {
-        User user = userDao.selectUserById(userID,"customer");
-        return user;
+    public Customer getCustomerByID(int userID) throws Exception {
+        Customer customer = (Customer) userDao.selectUserById(userID,"Customer");
+        return customer;
     }
 }

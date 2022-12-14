@@ -29,6 +29,11 @@ public class GUIUserProfileWindow extends JFrame {
         // TODO add your code here
     }
 
+    private void back(ActionEvent e) {
+        dispose();
+        new GUICustomerHomePage(userInfo,username).setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         label1 = new JLabel();
@@ -36,6 +41,7 @@ public class GUIUserProfileWindow extends JFrame {
         userNameContent = new JLabel();
         passwordContent = new JLabel();
         passwordChangeButton = new JButton();
+        backButton = new JButton();
 
         //======== this ========
         setTitle("User Profile");
@@ -55,18 +61,24 @@ public class GUIUserProfileWindow extends JFrame {
         //---- userNameContent ----
         userNameContent.setText("default");
         contentPane.add(userNameContent);
-        userNameContent.setBounds(new Rectangle(new Point(185, 60), userNameContent.getPreferredSize()));
+        userNameContent.setBounds(185, 60, 85, userNameContent.getPreferredSize().height);
 
         //---- passwordContent ----
         passwordContent.setText("default");
         contentPane.add(passwordContent);
-        passwordContent.setBounds(new Rectangle(new Point(180, 110), passwordContent.getPreferredSize()));
+        passwordContent.setBounds(180, 110, 85, passwordContent.getPreferredSize().height);
 
         //---- passwordChangeButton ----
         passwordChangeButton.setText("change");
         passwordChangeButton.addActionListener(e -> passwordChange(e));
         contentPane.add(passwordChangeButton);
         passwordChangeButton.setBounds(new Rectangle(new Point(280, 105), passwordChangeButton.getPreferredSize()));
+
+        //---- backButton ----
+        backButton.setText("back");
+        backButton.addActionListener(e -> back(e));
+        contentPane.add(backButton);
+        backButton.setBounds(new Rectangle(new Point(300, 215), backButton.getPreferredSize()));
 
         {
             // compute preferred size
@@ -98,5 +110,6 @@ public class GUIUserProfileWindow extends JFrame {
     private JLabel userNameContent;
     private JLabel passwordContent;
     private JButton passwordChangeButton;
+    private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

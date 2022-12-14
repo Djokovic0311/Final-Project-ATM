@@ -15,8 +15,8 @@ public class Customer extends User {
 
     public Customer(String name, int ID, String type, String password) {
         super(name, ID, type, password);
-        savingAccounts = null;
-        checkingAccounts = null;
+        savingAccounts = new int[]{};
+        checkingAccounts = new int[]{};
         loanAccount = -1;
         securityAccount = -1;
     }

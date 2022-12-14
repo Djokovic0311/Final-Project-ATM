@@ -36,7 +36,8 @@ public class Utils {
     }
      // hash username to id
     public static int createHashCodeForPersonId(String userName){
-        return Objects.hash(userName);
+
+        return Math.abs(Objects.hash(userName));
     }
     public static long getTimestamp() {
         return Calendar.getInstance().getTimeInMillis();

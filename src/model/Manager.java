@@ -4,7 +4,9 @@ import java.sql.Date;
 
 public class Manager extends User{
     private int AccountID;
-
+    public Manager(String name, int ID, String type, String password){
+        super(name,ID,type,password);
+    }
     private void checkCustomer(Customer C){
         C.toString();
     }
