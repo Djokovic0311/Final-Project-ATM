@@ -69,11 +69,17 @@ public class LoginService {
         String userName = customer.getName();
         Customer existingUser = (Customer) userDao.selectUserById(id, "customer");
         if(existingUser == null) {
+            System.out.println("1");
             boolean status = userDao.insertIntoUser(id, userName, pwd);
             if(status) {
+
                 return atmConstant.getSUCCESS();
             }
-            else return atmConstant.getERROR();
+
+            else {
+                System.out.println("2");
+                return atmConstant.getERROR();
+            }
         }
         else return atmConstant.getERROR();
     }

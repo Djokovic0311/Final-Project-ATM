@@ -1,4 +1,3 @@
-
 package utils;
 
 import model.Customer;
@@ -19,10 +18,10 @@ public class Utils {
     public static boolean isEmpty(String str) {
         return "".equals(str) || str == null;
     }
-     public static int getFixedLengthRandom(int len) {
+    public static int getFixedLengthRandom(int len) {
         int rs = (int) ((Math.random() * 9 + 1) * Math.pow(10, len - 1));
         return rs;
-     }
+    }
     public static String getFixedLengthRandomString(int len) {
 
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -35,7 +34,7 @@ public class Utils {
         }
         return buff.toString();
     }
-     // hash username to id
+    // hash username to id
     public static int createHashCodeForPersonId(String userName){
         return Objects.hash(userName);
     }
@@ -43,22 +42,13 @@ public class Utils {
         return Calendar.getInstance().getTimeInMillis();
     }
 
-    public static String getStringFormatDate(long longFormatDate) {
+    public String getStringFormatDate(long longFormatDate) {
         return String.format("%tF", longFormatDate);
     }
 
     public static int dayPass(long oldDate, long newDate) {
-        return (int) ((newDate/1000/60/60/24-oldDate/1000/60/60/24));
+        return (int) ((newDate-oldDate)/1000/60/60/24);
     }
-
-    public static double getDoubleFormatDate(long longFormatDate) {
-        return (double) longFormatDate;
-    }
-
-    public static long getLongFormatDate(double doubleFormatDate) {
-        return (long) doubleFormatDate;
-    }
-
     public static double redeem(double balance, int dayPass) {
         double new_balance = balance;
         ATMConstant a = new ATMConstant();
