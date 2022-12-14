@@ -98,10 +98,7 @@ public class CustomerHoldStocksDao {
                 CustomerHeldStock chs = new CustomerHeldStock(stockID, price, quantity, date);
                 result.add(chs);
             }
-        } catch (Exception e) { return null; }
-        if (result.isEmpty()) {
-            return null;
-        }
+        } catch (Exception e) { return result; }
         return result;
     }
 

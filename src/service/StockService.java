@@ -62,7 +62,7 @@ public class StockService {
     }
 
     public ArrayList<marketStock> getMarketStocks(){
-        return null;
+        return stockDao.getStocks();
     }
 
     public int updateStockPrice(int stockID, double newPrice){
