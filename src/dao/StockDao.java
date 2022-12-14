@@ -1,61 +1,102 @@
-
-
 package dao;
 
+import model.*;
+import utils.Utils;
+
 import java.sql.*;
+import java.util.*;
 
 public class StockDao {
     public double getPriceByID(int stockID) throws SQLException {
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
-        Statement stmt = con.createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT * FROM StockMarket where stockID = " + stockID + ";");
-        while(rs.next()){
-            double price = rs.getDouble(1);
-            return price;
+        try {
+
+            String query;
+
+            ResultSet rs;
+            query = "SELECT * FROM StockMarket where stockID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                double price = rs.getDouble(1);
+                return price;
+            }
+
+        } catch (Exception E) {
+            return 0.0;
         }
         return 0.0;
     }
+
     // check stock existence first, if it exists, update stock price and return true;
     //else return false;
     public boolean updatePriceByID(int stockID, double price) throws SQLException {
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
-        Statement stmt = con.createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT * FROM StockMarket where stockID = " + stockID + ";");
+        try {
+            String query;
 
-        int count = 0;
-        while(rs.next()){
-            count = count + 1;
-        }
+            ResultSet rs;
+            query = "SELECT * FROM StockMarket where stockID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            rs = stmt.executeQuery();
 
-        if(count==0){
+            int count = 0;
+            while (rs.next()) {
+                count = count + 1;
+            }
+
+            if (count == 0) {
+                return false;
+            } else {
+                //stock price will be updated
+                query = "UPDATE StockMarket SET price = ? Where stockID= ?;";
+                stmt = conn.prepareStatement(query);
+                stmt.setDouble(1, price);
+                stmt.setInt(1, stockID);
+                rs = stmt.executeQuery();
+                return true;
+            }
+        } catch (Exception E) {
+            System.out.println("The database could not be updated");
             return false;
-        }else{
-            //stock price will be updated
-            rs = stmt.executeQuery("UPDATE StockMarket SET price =" + price + "Where stockID= stockID" + ";");
-            return true;
         }
 
     }
+
     // check stock existence first, if it doesnt, insert stock  and return true;
     // else return false;
     public boolean insertIntoStock(int stockID, double price) throws SQLException {
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Bank", "root", "108875556");
-        Statement stmt = con.createStatement();
-        ResultSet rs;
-        rs = stmt.executeQuery("SELECT * FROM StockMarket where stockID = " + stockID + ";");
-        int count = 0;
-        while(rs.next()){
-            count = count + 1;
-        }
-        if(count!=0){
+        try {
+            String query;
+
+            ResultSet rs;
+            Connection conn = ConnectDao.connectToDb();
+            query = "SELECT * FROM StockMarket where stockID = ?;";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            rs = stmt.executeQuery();
+            int count = 0;
+            while (rs.next()) {
+                count = count + 1;
+            }
+            if (count != 0) {
+                System.out.println("Entry already present in database");
+                return false;
+            } else {
+                query = "INSERT INTO StockMarket (stockID, price) VALUES (?,?);";
+                stmt = conn.prepareStatement(query);
+                stmt.setInt(1, stockID);
+                stmt.setDouble(1, price);
+                rs = stmt.executeQuery();
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Could not be added to the DB");
             return false;
-        }else{
-            stmt.executeQuery("INSERT INTO StockMarket (stockID, price)" +
-                    "VALUES ( " + stockID + ", " + price +  ");");
-            return true;
         }
-        
+
     }
 }
