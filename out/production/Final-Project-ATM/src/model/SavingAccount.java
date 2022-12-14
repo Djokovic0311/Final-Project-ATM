@@ -26,7 +26,11 @@ public class SavingAccount extends Account{ // Warning: Date part is not complet
         this.balance = balance;
         this.lastRedeemDate = Utils.getTimestamp();
     }
-
+    public SavingAccount(int accountID, int userID, AccountType type, Map<CurrencyType, Double> balance, long time) {
+        this(accountID, userID, type);
+        this.balance = balance;
+        this.lastRedeemDate = time;
+    }
     public SavingAccount(int accountID, int userID, AccountType type, CurrencyType t, double balance) {
         this(accountID, userID, type);
         this.balance.put(t, balance);

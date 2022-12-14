@@ -86,6 +86,11 @@ public class GUILoginWindow extends JFrame{
         new GUIRegistry().setVisible(true);
     }
 
+    private void exit(ActionEvent e) {
+        dispose();
+        System.exit(0);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -98,6 +103,7 @@ public class GUILoginWindow extends JFrame{
         RoleComboBox = new JComboBox<>();
         roleLabel = new JLabel();
         buttonBar = new JPanel();
+        exitButton = new JButton();
         loginButton = new JButton();
         registerButton = new JButton();
         resetButton = new JButton();
@@ -154,6 +160,13 @@ public class GUILoginWindow extends JFrame{
                     buttonBar.setLayout(new GridBagLayout());
                     ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 80};
                     ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0};
+
+                    //---- exitButton ----
+                    exitButton.setText("Exit");
+                    exitButton.addActionListener(e -> exit(e));
+                    buttonBar.add(exitButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 5, 5), 0, 0));
 
                     //---- loginButton ----
                     loginButton.setText("Login");
@@ -219,6 +232,7 @@ public class GUILoginWindow extends JFrame{
     private JComboBox<String> RoleComboBox;
     private JLabel roleLabel;
     private JPanel buttonBar;
+    private JButton exitButton;
     private JButton loginButton;
     private JButton registerButton;
     private JButton resetButton;

@@ -4,6 +4,7 @@
 
 package view;
 
+import controller.AccountController;
 import controller.TransactionController;
 import model.CurrencyType;
 import sun.awt.UNIXToolkit;
@@ -24,7 +25,7 @@ public class GUIWithdraw extends JFrame {
     private List userAccounts;
     private List userInfo;
     private String userName;
-
+    private AccountController accountController = new AccountController();
     private TransactionController transactionController = new TransactionController();
     ATMConstant atmConstant = new ATMConstant();
 
@@ -44,7 +45,9 @@ public class GUIWithdraw extends JFrame {
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
             setVisible(false);
-            new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+            userAccounts = accountController.getAccountsForCustomer(userName);
+            userInfo = accountController.getAccountInfoForCustomer(userName);
+            new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
         }
@@ -53,8 +56,9 @@ public class GUIWithdraw extends JFrame {
 
     private void cancel(ActionEvent e) throws Exception {
         dispose();
-        setVisible(false);
-        new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+        userAccounts = accountController.getAccountsForCustomer(userName);
+        userInfo = accountController.getAccountInfoForCustomer(userName);
+        new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
     }
 
     private void initComponents() {
@@ -106,9 +110,7 @@ public class GUIWithdraw extends JFrame {
                 currencyTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(currencyTypeComboBox);
                 currencyTypeComboBox.setBounds(160, 80, 84, 30);

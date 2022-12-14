@@ -65,7 +65,6 @@ public class GUICustomerHomePage extends JFrame {
         profileButton.setText("Manage Profile");
         profileButton.addActionListener(e -> {
 			profile(e);
-			profile(e);
 		});
         contentPane.add(profileButton);
 

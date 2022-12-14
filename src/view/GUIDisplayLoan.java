@@ -41,8 +41,10 @@ public class GUIDisplayLoan extends JFrame {
         fillTable();
     }
 
-    private void back(ActionEvent e) {
-        // TODO add your code here
+    private void back(ActionEvent e) throws Exception {
+        dispose();
+        userInfo = accountController.getAccountInfoForCustomer(userName);
+        new GUILoan(userInfo,userName).setVisible(true);
     }
     private void fillTable() throws Exception {
         this.loans = loanController.getLoansForCustomer(userName);
@@ -97,7 +99,7 @@ public class GUIDisplayLoan extends JFrame {
                         new Object[][] {
                         },
                         new String[] {
-                            "amount", "loanID", "CurrencyType", "interest"
+                            null, null, null, null
                         }
                     ));
                     scrollPane1.setViewportView(loanTable);
@@ -131,7 +133,13 @@ public class GUIDisplayLoan extends JFrame {
 
                 //---- backButton ----
                 backButton.setText("Back");
-                backButton.addActionListener(e -> back(e));
+                backButton.addActionListener(e -> {
+                    try {
+                        back(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

@@ -48,6 +48,12 @@ public class GUIPayForLoan extends JFrame {
 
     }
 
+    private void cancel(ActionEvent e) throws Exception {
+        dispose();
+        userInfo = accountController.getAccountInfoForCustomer(userName);
+        new GUILoan(userInfo,userName).setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -135,6 +141,13 @@ public class GUIPayForLoan extends JFrame {
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
+                cancelButton.addActionListener(e -> {
+                    try {
+                        cancel(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

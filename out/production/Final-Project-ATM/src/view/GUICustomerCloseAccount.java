@@ -30,7 +30,7 @@ public class GUICustomerCloseAccount extends JFrame {
         initComponents();
     }
 
-    private void cancel(ActionEvent e) {
+    private void cancel(ActionEvent e) throws Exception {
         dispose();
         new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
     }
@@ -41,6 +41,7 @@ public class GUICustomerCloseAccount extends JFrame {
 
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
+            userAccounts = accountController.getAccountsForCustomer(username);
             new GUICustomerAccountWindow(userAccounts, userInfo,username).setVisible(true);
             setVisible(false);
         } else {
@@ -77,7 +78,7 @@ public class GUICustomerCloseAccount extends JFrame {
                 contentPanel.add(accountIDLabel);
                 accountIDLabel.setBounds(new Rectangle(new Point(60, 65), accountIDLabel.getPreferredSize()));
                 contentPanel.add(accountIDTextField);
-                accountIDTextField.setBounds(new Rectangle(new Point(190, 60), accountIDTextField.getPreferredSize()));
+                accountIDTextField.setBounds(145, 60, 155, accountIDTextField.getPreferredSize().height);
 
                 {
                     // compute preferred size
@@ -118,7 +119,13 @@ public class GUICustomerCloseAccount extends JFrame {
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> cancel(e));
+                cancelButton.addActionListener(e -> {
+                    try {
+                        cancel(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

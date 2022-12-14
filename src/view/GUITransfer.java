@@ -4,6 +4,7 @@
 
 package view;
 
+import controller.AccountController;
 import controller.TransactionController;
 import model.CurrencyType;
 import utils.ATMConstant;
@@ -23,7 +24,7 @@ public class GUITransfer extends JFrame {
     private java.util.List userAccounts;
     private List userInfo;
     private String userName;
-
+    private AccountController accountController = new AccountController();
     private TransactionController transactionController = new TransactionController();
     ATMConstant atmConstant = new ATMConstant();
 
@@ -37,7 +38,7 @@ public class GUITransfer extends JFrame {
     private void cancel(ActionEvent e) throws Exception {
         dispose();
         setVisible(false);
-        new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+        new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
     }
 
     private void transfer(ActionEvent e) throws Exception {
@@ -50,6 +51,8 @@ public class GUITransfer extends JFrame {
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
             setVisible(false);
+            userAccounts = accountController.getAccountsForCustomer(userName);
+            userInfo = accountController.getAccountInfoForCustomer(userName);
             new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
         } else {
             JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");

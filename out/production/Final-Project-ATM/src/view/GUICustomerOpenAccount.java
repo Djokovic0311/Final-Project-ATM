@@ -35,7 +35,7 @@ public class GUICustomerOpenAccount extends JFrame {
 
     }
 
-    private void cancel(ActionEvent e) {
+    private void cancel(ActionEvent e) throws Exception {
         dispose();
         new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
     }
@@ -56,11 +56,15 @@ public class GUICustomerOpenAccount extends JFrame {
 
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
+            userAccounts = accountController.getAccountsForCustomer(username);
+            System.out.println("length");
+            System.out.println(userAccounts.size());
             new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
             setVisible(false);
         } else {
             JOptionPane.showMessageDialog(null, "Please try again!!");
         }
+
     }
 
     private void initComponents() {
@@ -167,7 +171,13 @@ public class GUICustomerOpenAccount extends JFrame {
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
-                cancelButton.addActionListener(e -> cancel(e));
+                cancelButton.addActionListener(e -> {
+                    try {
+                        cancel(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

@@ -31,7 +31,7 @@ public class GUITranscurrency extends JFrame {
     private StockController stockController = new StockController();
     ATMConstant atmConstant = new ATMConstant();
 
-    public GUITranscurrency() throws Exception {
+    public GUITranscurrency(String userName) throws Exception {
         this.userAccounts = accountController.getAccountsForCustomer(userName);
 
         this.userInfo = userInfo;
@@ -104,9 +104,7 @@ public class GUITranscurrency extends JFrame {
                 fromCurrencyComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(fromCurrencyComboBox);
                 fromCurrencyComboBox.setBounds(170, 60, 84, 30);
@@ -115,9 +113,7 @@ public class GUITranscurrency extends JFrame {
                 toCurrencyComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(toCurrencyComboBox);
                 toCurrencyComboBox.setBounds(170, 100, 84, 30);

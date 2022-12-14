@@ -15,7 +15,7 @@ public class UserDao {
 
     // select user by id
     public Object selectUserById(int id, String type) {
-        System.out.println("The input id is: " + id);
+//        System.out.println("The input id is: " + id);
         try {
             Connection conn = ConnectDao.connectToDb();
             String query = "SELECT * FROM Person WHERE ID = ? AND userType = ?;";
@@ -28,10 +28,10 @@ public class UserDao {
                 int userID = rs.getInt(1);
                 String userType = rs.getString(4);
                 String password = rs.getString(3);
-                System.out.println("name is" + name);
-                System.out.println("ID is" + userID);
-                System.out.println("type is" + userType);
-                System.out.println("password is" + password);
+//                System.out.println("name is" + name);
+//                System.out.println("ID is" + userID);
+//                System.out.println("type is" + userType);
+//                System.out.println("password is" + password);
                 if(Objects.equals(type, "Customer")){
                     return new Customer(name,userID,userType,password);
                 }

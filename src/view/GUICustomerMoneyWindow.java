@@ -75,7 +75,7 @@ public class GUICustomerMoneyWindow extends JFrame {
 
     private void transcurrency(ActionEvent e) throws Exception {
         dispose();
-        new GUITranscurrency().setVisible(true);
+        new GUITranscurrency(userName).setVisible(true);
     }
 
     private void redeem(ActionEvent e) throws Exception {

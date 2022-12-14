@@ -30,13 +30,11 @@ new FormModel {
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
 						name: "fromCurrencyComboBox"
-						"model": &DefaultComboBoxModel0 new javax.swing.DefaultComboBoxModel {
+						"model": new javax.swing.DefaultComboBoxModel {
 							selectedItem: "USD"
 							addElement( "USD" )
 							addElement( "EUR" )
-							addElement( "GBP" )
 							addElement( "CNY" )
-							addElement( "HKD" )
 						}
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"width": 84
@@ -46,7 +44,12 @@ new FormModel {
 					} )
 					add( new FormComponent( "javax.swing.JComboBox" ) {
 						name: "toCurrencyComboBox"
-						"model": #DefaultComboBoxModel0
+						"model": new javax.swing.DefaultComboBoxModel {
+							selectedItem: "USD"
+							addElement( "USD" )
+							addElement( "EUR" )
+							addElement( "CNY" )
+						}
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 						"width": 84
 						"height": 30

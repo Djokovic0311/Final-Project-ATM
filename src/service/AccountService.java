@@ -1,5 +1,6 @@
 package service;
 
+import controller.AccountController;
 import dao.AccountDao;
 
 import model.*;
@@ -8,6 +9,7 @@ import utils.Utils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AccountService {
@@ -20,44 +22,26 @@ public class AccountService {
         info.add(user.getPassword());
         return info;
     }
-    public List<Object> getAccountsForCustomer(Customer customer) throws Exception {
-        List<Object> accounts = new ArrayList<>();
+    public List<Account> getAccountsForCustomer(Customer customer) throws Exception {
+        List<Account> accounts = new ArrayList<>();
 
-        for(int i = 0; i < customer.getCheckingAccounts().length; i++) {
-            CheckingAccount checkingAccount = (CheckingAccount) accountDao.selectAccountByID(customer.getCheckingAccounts()[i], AccountType.CHECKINGS);
-            accounts.add(checkingAccount);
-        }
-        for(int i = 0; i < customer.getSavingAccounts().length; i++) {
-            SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(customer.getSavingAccounts()[i], AccountType.SAVINGS);
-            accounts.add(savingAccount);
-        }
+        accounts.addAll(accountDao.selectAccountByCustomerID(customer.getID(), AccountType.CHECKINGS));
+        accounts.addAll(accountDao.selectAccountByCustomerID(customer.getID(), AccountType.SAVINGS));
 
-        if(customer.getSecurityAccount() != -1) {
-            SecurityAccount securityAccount = (SecurityAccount) accountDao.selectAccountByID(customer.getSecurityAccount(), AccountType.SECURITY);
-            accounts.add(securityAccount);
-        }
+        accounts.addAll(accountDao.selectAccountByCustomerID(customer.getID(), AccountType.SECURITY));
+
+        System.out.println("accounts ");
+
+        System.out.println(accounts.size());
         return accounts;
     }
 
     public int createNewAccount(Customer customer,AccountType accountType,double balance,CurrencyType currencyType) throws Exception {
         int accountID;
         int status;
+
         switch (accountType) {
             case SAVINGS:
-                accountID = Utils.getFixedLengthRandom(8);
-                while(accountDao.doesAccountExists(accountID)) {
-                    accountID = Utils.getFixedLengthRandom(8);
-                }
-                status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance, currencyType);
-                if(status != 0) {
-                    // successfully create
-                    // pay fee to manager account
-                    accountDao.payBankFees(balance,atmConstant.getMANAGER_ACCOUNT_ID());
-                    return atmConstant.getSUCCESS();
-                }
-                else return atmConstant.getERROR();
-
-        case CHECKINGS:
                 accountID = Utils.getFixedLengthRandom(8);
                 while(accountDao.doesAccountExists(accountID)) {
                     accountID = Utils.getFixedLengthRandom(8);
@@ -70,6 +54,20 @@ public class AccountService {
                     return atmConstant.getSUCCESS();
                 }
                 else return atmConstant.getERROR();
+
+            case CHECKINGS:
+                    accountID = Utils.getFixedLengthRandom(8);
+                    while(accountDao.doesAccountExists(accountID)) {
+                        accountID = Utils.getFixedLengthRandom(8);
+                    }
+                    status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance, currencyType);
+                    if(status != 0) {
+                        // successfully create
+                        // pay fee to manager account
+                        accountDao.payBankFees(balance,atmConstant.getMANAGER_ACCOUNT_ID());
+                        return atmConstant.getSUCCESS();
+                    }
+                    else return atmConstant.getERROR();
 
             case SECURITY:
                 return createNewSecuritiesAccount(customer, balance, currencyType);
@@ -110,6 +108,7 @@ public class AccountService {
 
         int customerID = Utils.createHashCodeForPersonId(customer.getName());
         boolean accountExists = accountDao.doesAccountExists(accountID);
+        System.out.println(accountExists);
         int status = 0;
         if(accountExists) {
             status = accountDao.deleteAccount(accountID, customerID);
@@ -121,7 +120,10 @@ public class AccountService {
     }
 
     public Object getAccountByID(int accountID) {
-        return accountDao.selectAccountByID(accountID);
+        for(AccountType accountType : AccountType.values()){
+            return accountDao.selectAccountByID(accountID, accountType);
+        }
+        return null;
     }
 
     public void transcurrency(Account account, CurrencyType from,CurrencyType to, double amount){
@@ -133,12 +135,10 @@ public class AccountService {
 
     public void redeem(int accountID) throws Exception {
         long timestamp = Utils.getTimestamp();
-        accountDao.redeemForSavingAccount(accountID,timestamp);
-        SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(accountID);
+
+        SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(accountID,AccountType.SAVINGS);
         for(CurrencyType currencyType : CurrencyType.values()){
-            double interest = savingAccount.getLastRedeemDate() * atmConstant.getREDEEM_INTEREST();
-            accountDao.updateAccountBalance(savingAccount.getAccountID(),AccountType.SAVINGS,currencyType,
-                    savingAccount.getBalanceByCurrency(currencyType)+interest);
+            accountDao.redeemForSavingAccount(accountID,timestamp);
         }
 
     }
