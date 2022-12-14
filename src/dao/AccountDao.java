@@ -1,14 +1,13 @@
 package dao;
 
 import model.*;
+import utils.ATMConstant;
 import utils.Utils;
 
 import java.sql.*;
 import java.util.*;
 
 public class AccountDao {
-
-    // This function returns the account that match the input id and type
     public Account selectAccountByID(int accountID, AccountType type) { // remove customer here, add account type
         try {
             String query;
@@ -56,8 +55,62 @@ public class AccountDao {
         } catch (Exception e) { return null; }
     }
 
+    public Account[] selectAccountByCustomerID(int customerID, AccountType type) {
+        List<Account> result = new ArrayList<>();
+        try {
+            String query;
+            switch (type) {
+                case SAVINGS :
+                    query = "SELECT * FROM SavingAccount WHERE customerID = ?;";
+                    break;
+                case CHECKINGS :
+                    query = "SELECT * FROM CheckingAccount WHERE customerID = ?;";
+                    break;
+                case SECURITY :
+                    query = "SELECT * FROM SecurityAccount WHERE customerID = ?;";
+                    break;
+                default :
+                    return null;
+            }
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, customerID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int accountID = rs.getInt(1);
+                double balance_usd = rs.getDouble(3);
+                if (type == AccountType.SAVINGS || type == AccountType.CHECKINGS) {
+                    double balance_eur = rs.getDouble(4);
+                    double balance_cny = rs.getDouble(5);
+                    Map<CurrencyType, Double> balance = new Hashtable<>();
+                    balance.put(CurrencyType.USD, balance_usd);
+                    balance.put(CurrencyType.EUR, balance_eur);
+                    balance.put(CurrencyType.CNY, balance_cny);
+                    switch (type) {
+                        case SAVINGS :
+                            long redeemTime = (long) rs.getDouble(6);
+                            result.add(new SavingAccount(accountID, customerID, type, balance, redeemTime));
+                        case CHECKINGS :
+                            result.add(new CheckingAccount(accountID, customerID, type, balance));
+                    }
+                } else {
+                    double realizedProfit = rs.getDouble(4);
+                    double unrealizedProfit = rs.getDouble(5);
+                    result.add(new SecurityAccount(accountID, customerID, type, balance_usd, realizedProfit, unrealizedProfit));
+                }
+            }
+            if (result.isEmpty()) {
+                return null;
+            } else {
+                Account[] a = new Account[result.size()];
+                for (int i = 0; i < result.size(); i ++) {
+                    a[i] = result.get(i);
+                }
+                return a;
+            }
+        } catch (Exception e) { return null; }
+    }
 
-    // This function returns the account that match the input id
     public Account selectAccountByID(int accountID) {
         SavingAccount sa = (SavingAccount) selectAccountByID(accountID, AccountType.SAVINGS);
         if (sa != null) { return sa; }
@@ -67,7 +120,6 @@ public class AccountDao {
         return se;
     }
 
-    // This function returns the whether the corresponding account exist based on accountID or customerID
     public boolean checkAccountExistByID(int ID, AccountType type, String basedOn) {
         try {
             String query;
@@ -104,7 +156,6 @@ public class AccountDao {
         } catch (Exception e) { return false; }
     }
 
-    // This function insert a new saving/checking account into database, return 1 is success, 0 if failed.
     public int insertIntoCheckingOrSaving(int accountID, int customerID, AccountType accountType, double balance, CurrencyType currencyType){
         double balanceUSD = 0;
         double balanceEUR = 0;
@@ -151,27 +202,19 @@ public class AccountDao {
             }
         } catch (Exception e) { return 0; }
     }
-
-    // This function returns the whether the corresponding account exist based on accountID
     public boolean doesAccountExists(int accountID) {
         boolean saving = checkAccountExistByID(accountID, AccountType.SAVINGS, "accountID");
         boolean checking = checkAccountExistByID(accountID, AccountType.CHECKINGS, "accountID");
         boolean security = checkAccountExistByID(accountID, AccountType.SECURITY, "accountID");
-        return saving && checking && security;
+        return saving || checking || security;
     }
-
-    // This function returns the whether the corresponding saving account exist based on customerID
     public boolean doesSavingAccountExist(int customerID){
         return checkAccountExistByID(customerID, AccountType.SAVINGS, "customerID");
     }
-
-    // This function returns the whether the corresponding security account exist based on customerID
     public boolean doesSecuritiesAccountExist(int accountID) {
         return checkAccountExistByID(accountID, AccountType.SECURITY, "accountID");
     }
-
-    // This function pays the fee to banker
-    public void payBankFees(double amount, int bankId) {
+    public void payBankFees(double amount, int bankId) { // No currency type！
         try {
             String query = "UPDATE CheckingAccount SET balanceUSD = ? WHERE accountID = ?;";
             Connection conn = ConnectDao.connectToDb();
@@ -181,8 +224,6 @@ public class AccountDao {
             stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
-
-    // This function add a new security account into database
     public void insertIntoSecurity(int accountID, int customerID, AccountType accountType, double balance){
         try {
             String query = "INSERT INTO SecurityAccount (accountID, customerID, currentBalance, realizedProfit, unrealizedProfit) " +
@@ -197,8 +238,6 @@ public class AccountDao {
             stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
-
-    // This function returns a list contains all saving account of this customer
     public SavingAccount[] getSavingAccountInfoForCustomer(int customerID) {
         List<SavingAccount> savingAccountList = new ArrayList<>();
         try {
@@ -230,8 +269,7 @@ public class AccountDao {
             return s;
         }
     }
-
-    // Delete this customer's account
+    // check and delete this customer's account
     public int deleteAccount(int accountID, int customerID) {
         try {
             Connection conn = ConnectDao.connectToDb();
@@ -254,14 +292,11 @@ public class AccountDao {
         } catch (Exception e) { return 0; }
     }
 
-    // Get the balance of the corresponding account in specified currency
     public double getBalanceByCurrencyType(int accountID, int customerID, AccountType accountType, CurrencyType currencyType) {
         Account a = selectAccountByID(accountID, accountType);
         return a.getBalanceByCurrency(currencyType);
     }
 
-
-    // Update the balance of an account
     public void updateAccountBalance(int accountID, AccountType accountType, CurrencyType currencyType, double amount) {
         String querySet;
         switch (currencyType) {
@@ -299,9 +334,7 @@ public class AccountDao {
         } catch (Exception ignored) {}
     }
 
-
-    // Redeem the interest of saving account
-    public void redeemForSavingAccount(int accountID, long timestamp){
+    public void redeemForSavingAccount(int accountID, long timestamp) {
         try {
             String query1 = "SELECT * FROM SavingAccount WHERE accountID = ?;";
             Connection conn = ConnectDao.connectToDb();
