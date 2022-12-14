@@ -92,7 +92,7 @@ public class GUIDisplayStock extends JFrame {
         backButton = new JButton();
 
         //======== this ========
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

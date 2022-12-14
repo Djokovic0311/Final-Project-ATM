@@ -65,19 +65,7 @@ public abstract class Account {
         return this.balance.get(currencyType);
     }
 
-    // deposit amount to a specific currency
-    public void deposit(CurrencyType currencyType, double amount) {
-        this.balance.put(currencyType, this.balance.getOrDefault(currencyType,0.0) + amount);
-    }
 
-    // withdraw amount to a specific currency, if not enough, return false
-    public boolean withdraw(CurrencyType currencyType, double amount) {
-        if(this.balance.containsKey(currencyType) && this.balance.get(currencyType) >= amount) {
-            this.balance.put(currencyType, this.balance.getOrDefault(currencyType,0.0) - amount);
-            return true;
-        }
-        else return false;
-    }
 
     // getters and setters
     public int getAccountID() {

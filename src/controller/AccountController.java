@@ -38,7 +38,7 @@ public class AccountController {
         return accountService.createNewAccount(customer,accountType,balance,currencyType);
     }
 
-    public int closeAccount(String userName, int accountID) {
+    public int closeAccount(String userName, int accountID) throws Exception {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         if(customer==null)
             return atmConstant.getNO_USER_FOUND();

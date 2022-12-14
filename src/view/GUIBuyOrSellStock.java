@@ -67,7 +67,7 @@ public class GUIBuyOrSellStock extends JFrame {
 
         //======== this ========
         setTitle("Trade Stocks");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

@@ -3,9 +3,8 @@ package model;
 public class CustomerHeldStock extends Stock {
     private long buyTime;
 
-    public CustomerHeldStock(int stockID, double price, int quantity, long time) {
+    public CustomerHeldStock(int stockID, double price, int quantity) {
         super(stockID, price, quantity);
-        this.buyTime = time;
     }
 
     public long getBuyTime(){

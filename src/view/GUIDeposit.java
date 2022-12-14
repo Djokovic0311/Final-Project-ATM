@@ -71,7 +71,7 @@ public class GUIDeposit extends JFrame {
 
         //======== this ========
         setTitle("Deposit");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========

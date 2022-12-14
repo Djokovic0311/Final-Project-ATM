@@ -11,14 +11,15 @@ public class Loan {
     private long loanCommenceDate;
     private double rateOfInterest;
 
-    public Loan(int loanID, int customerID, double amount, CurrencyType currency, long date) {
+    public Loan(int loanID, int customerID, double amount, CurrencyType currency) {
         this.loanID = loanID;
         this.customerID = customerID;
         this.amount = amount;
         this.currency = currency;
         this.tenure = 1;
+        this.loanCommenceDate = 1;
         this.rateOfInterest = 0.01;
-        this.loanCommenceDate = date;
+        this.loanCommenceDate = 1;
     }
 
     public int getLoanID() {

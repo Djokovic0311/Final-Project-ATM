@@ -1,29 +1,26 @@
 package service;
 
 import dao.AccountDao;
-import dao.ConnectDao;
+
 import model.*;
 import utils.ATMConstant;
 import utils.Utils;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountService {
-    ConnectDao connectDao = new ConnectDao();
+
     AccountDao accountDao = new AccountDao();
     ATMConstant atmConstant = new ATMConstant();
     public List<Object> getAccountInfoForCustomer(User user) throws Exception {
-        Connection conn = connectDao.connectToDb();
         List<Object> info = new ArrayList<>();
         info.add(user.getName());
         info.add(user.getPassword());
         return info;
     }
     public List<Object> getAccountsForCustomer(Customer customer) throws Exception {
-        Connection conn = connectDao.connectToDb();
         List<Object> accounts = new ArrayList<>();
 
         for(int i = 0; i < customer.getCheckingAccounts().length; i++) {
@@ -43,13 +40,15 @@ public class AccountService {
     }
 
     public int createNewAccount(Customer customer,AccountType accountType,double balance,CurrencyType currencyType) throws Exception {
+        int accountID;
+        int status;
         switch (accountType) {
-            case SAVINGS -> {
-                int accountID = Utils.getFixedLengthRandom(8);
+            case SAVINGS:
+                accountID = Utils.getFixedLengthRandom(8);
                 while(accountDao.doesAccountExists(accountID)) {
                     accountID = Utils.getFixedLengthRandom(8);
                 }
-                int status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance, currencyType);
+                status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance, currencyType);
                 if(status != 0) {
                     // successfully create
                     // pay fee to manager account
@@ -57,13 +56,13 @@ public class AccountService {
                     return atmConstant.getSUCCESS();
                 }
                 else return atmConstant.getERROR();
-            }
-            case CHECKINGS -> {
-                int accountID = Utils.getFixedLengthRandom(8);
+
+        case CHECKINGS:
+                accountID = Utils.getFixedLengthRandom(8);
                 while(accountDao.doesAccountExists(accountID)) {
                     accountID = Utils.getFixedLengthRandom(8);
                 }
-                int status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.SAVINGS, balance, currencyType);
+                status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.SAVINGS, balance, currencyType);
                 if(status != 0) {
                     // successfully create
                     // pay fee to manager account
@@ -71,10 +70,9 @@ public class AccountService {
                     return atmConstant.getSUCCESS();
                 }
                 else return atmConstant.getERROR();
-            }
-            case SECURITY -> {
+
+            case SECURITY:
                 return createNewSecuritiesAccount(customer, balance, currencyType);
-            }
         }
         return 0;
     }
@@ -133,7 +131,7 @@ public class AccountService {
                 account.getBalanceByCurrency(to)+amount*from.getValue()/to.getValue());
     }
 
-    public void redeem(int accountID){
+    public void redeem(int accountID) throws Exception {
         long timestamp = Utils.getTimestamp();
         accountDao.redeemForSavingAccount(accountID,timestamp);
         SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(accountID);

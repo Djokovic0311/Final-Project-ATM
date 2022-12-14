@@ -39,7 +39,7 @@ public class GUIUserProfileWindow extends JFrame {
 
         //======== this ========
         setTitle("User Profile");
-        var contentPane = getContentPane();
+        Container contentPane = getContentPane();
         contentPane.setLayout(null);
 
         //---- label1 ----
