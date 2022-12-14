@@ -31,7 +31,7 @@ public class GUITranscurrency extends JFrame {
     private StockController stockController = new StockController();
     ATMConstant atmConstant = new ATMConstant();
 
-    public GUITranscurrency() throws Exception {
+    public GUITranscurrency(String userName) throws Exception {
         this.userAccounts = accountController.getAccountsForCustomer(userName);
 
         this.userInfo = userInfo;

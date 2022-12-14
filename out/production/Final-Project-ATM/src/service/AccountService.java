@@ -135,12 +135,10 @@ public class AccountService {
 
     public void redeem(int accountID) throws Exception {
         long timestamp = Utils.getTimestamp();
-        accountDao.redeemForSavingAccount(accountID,timestamp);
+
         SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(accountID,AccountType.SAVINGS);
         for(CurrencyType currencyType : CurrencyType.values()){
-            double interest = savingAccount.getLastRedeemDate() * atmConstant.getREDEEM_INTEREST();
-            accountDao.updateAccountBalance(savingAccount.getAccountID(),AccountType.SAVINGS,currencyType,
-                    savingAccount.getBalanceByCurrency(currencyType)+interest);
+            accountDao.redeemForSavingAccount(accountID,timestamp);
         }
 
     }
