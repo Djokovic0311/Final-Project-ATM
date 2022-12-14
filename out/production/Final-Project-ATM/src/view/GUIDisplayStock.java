@@ -112,7 +112,7 @@ public class GUIDisplayStock extends JFrame {
                         new Object[][] {
                         },
                         new String[] {
-                            null, null, null, null
+                            "stockID", "price", "timestamp", "quantity"
                         }
                     ));
                     scrollPane1.setViewportView(stockTable);

@@ -119,9 +119,10 @@ public class AccountService {
         return status;
     }
 
-    public Object getAccountByID(int accountID) {
+    public Account getAccountByID(int accountID) {
         for(AccountType accountType : AccountType.values()){
-            return accountDao.selectAccountByID(accountID, accountType);
+            if(accountDao.selectAccountByID(accountID, accountType) != null)
+                return accountDao.selectAccountByID(accountID, accountType);
         }
         return null;
     }
@@ -129,7 +130,7 @@ public class AccountService {
     public void transcurrency(Account account, CurrencyType from,CurrencyType to, double amount){
         accountDao.updateAccountBalance(account.getAccountID(),account.getType(),from,
                 account.getBalanceByCurrency(from)-amount);
-        accountDao.updateAccountBalance(account.getAccountID(),account.getType(),from,
+        accountDao.updateAccountBalance(account.getAccountID(),account.getType(),to,
                 account.getBalanceByCurrency(to)+amount*from.getValue()/to.getValue());
     }
 

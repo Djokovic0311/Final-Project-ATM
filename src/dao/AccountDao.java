@@ -14,9 +14,11 @@ public class AccountDao {
             String query;
             switch (type) {
                 case SAVINGS :
+
                     query = "SELECT * FROM SavingAccount WHERE ID = ?;";
                     break;
                 case CHECKINGS :
+                    System.out.println(accountID);
                     query = "SELECT * FROM CheckingAccount WHERE accountID = ?;";
                     break;
                 case SECURITY :

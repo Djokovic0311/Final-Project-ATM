@@ -48,6 +48,7 @@ public class AccountController {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         Account account = getAccountsForCustomerByID(userName,accountID);
         if(account == null) {
+            System.out.println("No account");
             return atmConstant.getERROR();
         }
         else {

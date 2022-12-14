@@ -1,5 +1,9 @@
 package dao;
 
+import model.marketStock;
+
+import java.util.ArrayList;
+
 public class StockDao {
     public double getPriceByID(int stockID) {
         return 0.0;
@@ -14,4 +18,6 @@ public class StockDao {
     public boolean insertIntoStock(int stockID, double price){
         return true;
     }
+
+    public ArrayList<marketStock> getStocks(){return new ArrayList<>();}
 }
