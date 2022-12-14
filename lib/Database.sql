@@ -31,7 +31,6 @@ create table SecurityAccount (
 	accountID int,
     customerID int,
     currentBalance double,
-    investedAmount double,
     realizedProfit double,
     unrealizedProfit double
 );
