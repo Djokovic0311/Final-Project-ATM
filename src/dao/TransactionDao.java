@@ -78,7 +78,30 @@ public class TransactionDao {
         return transactions;
     }
 
-    public List<Transaction> getDailyTransactions(long timestamp){
-        return null;
+    public List<Transaction> getDailyTransactions (long timestamp){
+        double time = (double) timestamp;
+        List<Transaction> transactions = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM TRANSACTIONS WHERE transactionTime = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setDouble(1, time);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()){
+                int transactionId = rs.getInt(1);
+                int customerID = rs.getInt(2);
+                int fromacc = rs.getInt(3);
+                int toacc = rs.getInt(4);
+                String currencyType = rs.getString(5);
+                CurrencyType currencytype = CurrencyType.getTypeFromString(currencyType);
+                int balance = rs.getInt(6);
+                String type = rs.getString(7);
+                TransactionType transactiontype = TransactionType.getTypeFromString(type);
+                Transaction T = new Transaction(transactionId,timestamp, balance,customerID,transactiontype,fromacc,toacc,currencytype);
+                transactions.add(T);
+            }
+        } catch (Exception e) { return null; }
+        if (transactions.isEmpty()) { return null; }
+        return transactions;
     }
 }
