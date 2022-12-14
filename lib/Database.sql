@@ -6,7 +6,7 @@ create table Person (
 	ID int,
     userName varchar(255),
     userPassword varchar(255),
-    type varchar(255)
+    userType varchar(255)
 );
 
 create table SavingAccount (
