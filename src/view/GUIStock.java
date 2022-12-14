@@ -14,6 +14,7 @@ import utils.ATMConstant;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -32,9 +33,11 @@ public class GUIStock extends JFrame {
     public GUIStock(List userAccounts, List userInfo, String userName) throws Exception {
         this.userName = userName;
         this.userInfo = userInfo;
-        this.userAccounts = accountController.getAccountsForCustomer(userName);
+        if(!Objects.equals(userName, "banker"))
+            this.userAccounts = accountController.getAccountsForCustomer(userName);
         initComponents();
-        showSecurityAccount();
+        if(!Objects.equals(userName, "banker"))
+            showSecurityAccount();
     }
 
     private void back(ActionEvent e) throws Exception {

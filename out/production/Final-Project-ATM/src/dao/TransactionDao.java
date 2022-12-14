@@ -100,8 +100,7 @@ public class TransactionDao {
                 Transaction T = new Transaction(transactionId,timestamp, balance,customerID,transactiontype,fromacc,toacc,currencytype);
                 transactions.add(T);
             }
-        } catch (Exception e) { return null; }
-        if (transactions.isEmpty()) { return null; }
+        } catch (Exception e) { return transactions; }
         return transactions;
     }
 }

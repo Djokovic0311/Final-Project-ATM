@@ -36,6 +36,11 @@ public class GUIDailyReport extends JFrame {
         transactions = transactionController.getDailyReport(timestamp);
         new GUIDailyReportTable(transactions).setVisible(true);
     }
+
+    private void cancel(ActionEvent e) {
+        dispose();
+        new GUIManagerHomepage().setVisible(true);
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -105,6 +110,7 @@ public class GUIDailyReport extends JFrame {
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
+                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

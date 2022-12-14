@@ -19,7 +19,7 @@ public class GUIStockManagement extends JFrame {
 
     private void checkStock(ActionEvent e) throws Exception {
         dispose();
-        new  GUIDisplayStock(null, null,"","held").setVisible(true);
+        new  GUIDisplayStock(null, null,"banker","market").setVisible(true);
     }
 
     private void updatePrice(ActionEvent e) {

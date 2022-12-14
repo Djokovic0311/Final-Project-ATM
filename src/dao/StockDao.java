@@ -69,5 +69,22 @@ public class StockDao {
         } catch (Exception e) { return false; }
 
     }
-    public ArrayList<marketStock> getStocks(){return new ArrayList<>();}
+    public ArrayList<marketStock> getStocks(){
+        ArrayList<marketStock> result = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM StockMarket;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) { // Already exist
+                int stockID = rs.getInt(1);
+                double price = rs.getDouble(2);
+                result.add(new marketStock(stockID, price, 1000));
+            }
+        } catch (Exception e) { return null; }
+        if (result.isEmpty()) {
+            return null;
+        }
+        return result;
+    }
 }

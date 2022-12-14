@@ -36,7 +36,8 @@ public class GUIDisplayStock extends JFrame {
     public GUIDisplayStock(List userAccounts, List userInfo, String userName, String type) throws Exception {
         this.userName = userName;
         this.userInfo = userInfo;
-        this.userAccounts = accountController.getAccountsForCustomer(userName);
+        if(!Objects.equals(userName, "banker"))
+            this.userAccounts = accountController.getAccountsForCustomer(userName);
         if(Objects.equals(type, "held")) {
             this.stocks = new ArrayList<CustomerHeldStock>();
             this.stocks = stockController.showHeldStocks(userName);
@@ -51,7 +52,10 @@ public class GUIDisplayStock extends JFrame {
 
     private void back(ActionEvent e) throws Exception {
         dispose();
-        new GUIStock(userAccounts, userInfo, userName).setVisible(true);
+        if(!Objects.equals(userName, "banker"))
+            new GUIStock(userAccounts, userInfo, userName).setVisible(true);
+        else
+            new GUIStockManagement().setVisible(true);
     }
 
     private void fillTable() throws Exception {

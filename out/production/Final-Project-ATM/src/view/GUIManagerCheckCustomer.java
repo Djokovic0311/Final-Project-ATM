@@ -39,6 +39,7 @@ public class GUIManagerCheckCustomer extends JFrame {
         int customerID = Integer.parseInt(customerIDTextField.getText());
         Customer customer = (Customer) loginController.getUserByID(customerID);
         this.accounts = accountController.getAccountsForCustomer(customer.getName());
+        dispose();
         new GUICustomerChecked(accounts).setVisible(true);
     }
 
