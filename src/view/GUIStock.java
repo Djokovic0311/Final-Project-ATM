@@ -7,6 +7,7 @@ package view;
 import controller.AccountController;
 import controller.StockController;
 import controller.TransactionController;
+import model.Account;
 import model.CurrencyType;
 import model.SecurityAccount;
 import utils.ATMConstant;
@@ -25,6 +26,7 @@ public class GUIStock extends JFrame {
     private List userAccounts;
     private List userInfo;
     private String userName;
+
 
     private TransactionController transactionController = new TransactionController();
     private AccountController accountController = new AccountController();
@@ -77,12 +79,19 @@ public class GUIStock extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
+        accountIDLabel = new JLabel();
+        balanceLabel = new JLabel();
+        realizedLabel = new JLabel();
+        unrealizedLabel = new JLabel();
+        accountIDTextField = new JTextField();
+        balanceTextField = new JTextField();
+        realizedTextField = new JTextField();
+        unrealizedTextField = new JTextField();
+        buttonBar = new JPanel();
         buyButton = new JButton();
         sellButton = new JButton();
         checkHeldButton = new JButton();
         checkMarketButton = new JButton();
-        security = new JPanel();
-        buttonBar = new JPanel();
         backButton = new JButton();
 
         //======== this ========
@@ -98,66 +107,45 @@ public class GUIStock extends JFrame {
             {
                 contentPanel.setLayout(null);
 
-                //---- buyButton ----
-                buyButton.setText("Buy stock");
-                buyButton.addActionListener(e -> {
-			button1(e);
-			buy(e);
-		});
-                contentPanel.add(buyButton);
-                buyButton.setBounds(new Rectangle(new Point(45, 120), buyButton.getPreferredSize()));
+                //---- accountIDLabel ----
+                accountIDLabel.setText("Security Account ID");
+                contentPanel.add(accountIDLabel);
+                accountIDLabel.setBounds(new Rectangle(new Point(50, 25), accountIDLabel.getPreferredSize()));
 
-                //---- sellButton ----
-                sellButton.setText("Sell stock");
-                sellButton.addActionListener(e -> sell(e));
-                contentPanel.add(sellButton);
-                sellButton.setBounds(240, 120, 78, 30);
+                //---- balanceLabel ----
+                balanceLabel.setText("balance");
+                contentPanel.add(balanceLabel);
+                balanceLabel.setBounds(50, 55, 120, 16);
 
-                //---- checkHeldButton ----
-                checkHeldButton.setText("Check held stocks ");
-                checkHeldButton.addActionListener(e -> {
-                    try {
-                        checkHeld(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
-                contentPanel.add(checkHeldButton);
-                checkHeldButton.setBounds(25, 160, 140, 30);
+                //---- realizedLabel ----
+                realizedLabel.setText("realized profit");
+                contentPanel.add(realizedLabel);
+                realizedLabel.setBounds(50, 90, 120, 16);
 
-                //---- checkMarketButton ----
-                checkMarketButton.setText("Check stock market");
-                checkMarketButton.addActionListener(e -> {
-                    try {
-                        checkMarket(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
-                contentPanel.add(checkMarketButton);
-                checkMarketButton.setBounds(215, 160, 145, 30);
+                //---- unrealizedLabel ----
+                unrealizedLabel.setText("unrealized profit");
+                contentPanel.add(unrealizedLabel);
+                unrealizedLabel.setBounds(50, 125, 120, 16);
 
-                //======== security ========
-                {
-                    security.setLayout(null);
+                //---- accountIDTextField ----
+                accountIDTextField.setEditable(false);
+                contentPanel.add(accountIDTextField);
+                accountIDTextField.setBounds(200, 20, 125, accountIDTextField.getPreferredSize().height);
 
-                    {
-                        // compute preferred size
-                        Dimension preferredSize = new Dimension();
-                        for(int i = 0; i < security.getComponentCount(); i++) {
-                            Rectangle bounds = security.getComponent(i).getBounds();
-                            preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                            preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-                        }
-                        Insets insets = security.getInsets();
-                        preferredSize.width += insets.right;
-                        preferredSize.height += insets.bottom;
-                        security.setMinimumSize(preferredSize);
-                        security.setPreferredSize(preferredSize);
-                    }
-                }
-                contentPanel.add(security);
-                security.setBounds(new Rectangle(new Point(150, 40), security.getPreferredSize()));
+                //---- balanceTextField ----
+                balanceTextField.setEditable(false);
+                contentPanel.add(balanceTextField);
+                balanceTextField.setBounds(200, 55, 125, 30);
+
+                //---- realizedTextField ----
+                realizedTextField.setEditable(false);
+                contentPanel.add(realizedTextField);
+                realizedTextField.setBounds(200, 90, 125, 30);
+
+                //---- unrealizedTextField ----
+                unrealizedTextField.setEditable(false);
+                contentPanel.add(unrealizedTextField);
+                unrealizedTextField.setBounds(200, 125, 125, 30);
 
                 {
                     // compute preferred size
@@ -183,6 +171,48 @@ public class GUIStock extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
+                //---- buyButton ----
+                buyButton.setText("Buy stock");
+                buyButton.addActionListener(e -> {
+			buy(e);
+		});
+                buttonBar.add(buyButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 5, 5), 0, 0));
+
+                //---- sellButton ----
+                sellButton.setText("Sell stock");
+                sellButton.addActionListener(e -> sell(e));
+                buttonBar.add(sellButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 5, 5), 0, 0));
+
+                //---- checkHeldButton ----
+                checkHeldButton.setText("Check held stocks ");
+                checkHeldButton.addActionListener(e -> {
+                    try {
+                        checkHeld(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                buttonBar.add(checkHeldButton, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 5), 0, 0));
+
+                //---- checkMarketButton ----
+                checkMarketButton.setText("Check stock market");
+                checkMarketButton.addActionListener(e -> {
+                    try {
+                        checkMarket(e);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
+                buttonBar.add(checkMarketButton, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                    new Insets(0, 0, 0, 5), 0, 0));
+
                 //---- backButton ----
                 backButton.setText("back");
                 backButton.addActionListener(e -> {
@@ -192,7 +222,7 @@ public class GUIStock extends JFrame {
                         throw new RuntimeException(ex);
                     }
                 });
-                buttonBar.add(backButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                buttonBar.add(backButton, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));
             }
@@ -207,30 +237,32 @@ public class GUIStock extends JFrame {
     private void showSecurityAccount() {
         for (Object account : userAccounts) {
             if (account instanceof SecurityAccount) {
-                JPanel oneAccount = new JPanel();
-                oneAccount.setBorder(BorderFactory.createTitledBorder("Amount " + ((SecurityAccount) account).getAccountID()));
-                oneAccount.setLayout(new GridLayout(((SecurityAccount) account).getBalance().size(), 2, 0, 5));
-                security.add(oneAccount);
-                for (CurrencyType type : ((SecurityAccount) account).getBalance().keySet()) {
-                    JLabel t = new JLabel(type.name());
-                    t.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    JLabel b = new JLabel(String.valueOf(((SecurityAccount) account).getBalance().get(type)));
-                    b.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 12));
-                    oneAccount.add(t);
-                    oneAccount.add(b);
-                }
+                 accountIDTextField.setText(((SecurityAccount) account).getAccountID()+"");
+                 balanceTextField.setText(((SecurityAccount) account).getBalanceByCurrency(CurrencyType.USD)+"");
+                 realizedTextField.setText(((SecurityAccount) account).getRealizedProfit()+"");
+                 unrealizedTextField.setText(((SecurityAccount) account).getUnrealizedProfit()+"");
+                 break;
             }
+
         }
     }
+
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
+    private JLabel accountIDLabel;
+    private JLabel balanceLabel;
+    private JLabel realizedLabel;
+    private JLabel unrealizedLabel;
+    private JTextField accountIDTextField;
+    private JTextField balanceTextField;
+    private JTextField realizedTextField;
+    private JTextField unrealizedTextField;
+    private JPanel buttonBar;
     private JButton buyButton;
     private JButton sellButton;
     private JButton checkHeldButton;
     private JButton checkMarketButton;
-    private JPanel security;
-    private JPanel buttonBar;
     private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

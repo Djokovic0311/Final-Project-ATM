@@ -10,62 +10,114 @@ new FormModel {
 				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 					name: "contentPanel"
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "buyButton"
-						"text": "Buy stock"
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1", true ) )
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buy", true ) )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "accountIDLabel"
+						"text": "Security Account ID"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"x": 45
-						"y": 120
+						"x": 50
+						"y": 25
 					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "sellButton"
-						"text": "Sell stock"
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "sell", true ) )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "balanceLabel"
+						"text": "balance"
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"width": 78
+						"width": 120
+						"height": 16
+						"x": 50
+						"y": 55
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "realizedLabel"
+						"text": "realized profit"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 120
+						"height": 16
+						"x": 50
+						"y": 90
+					} )
+					add( new FormComponent( "javax.swing.JLabel" ) {
+						name: "unrealizedLabel"
+						"text": "unrealized profit"
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 120
+						"height": 16
+						"x": 50
+						"y": 125
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "accountIDTextField"
+						"editable": false
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"x": 200
+						"y": 20
+						"width": 125
+					} )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "balanceTextField"
+						"editable": false
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+						"width": 125
 						"height": 30
-						"x": 240
-						"y": 120
+						"x": 200
+						"y": 55
 					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "checkHeldButton"
-						"text": "Check held stocks "
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "checkHeld", true ) )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "realizedTextField"
+						"editable": false
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"width": 140
+						"width": 125
 						"height": 30
-						"x": 25
-						"y": 160
+						"x": 200
+						"y": 90
 					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "checkMarketButton"
-						"text": "Check stock market"
-						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "checkMarket", true ) )
+					add( new FormComponent( "javax.swing.JTextField" ) {
+						name: "unrealizedTextField"
+						"editable": false
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"width": 145
+						"width": 125
 						"height": 30
-						"x": 215
-						"y": 160
-					} )
-					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
-						name: "security"
-					}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-						"x": 150
-						"y": 40
+						"x": 200
+						"y": 125
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "Center"
 				} )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 					"$columnSpecs": "0:1.0, 80, 80"
-					"$rowSpecs": "0"
+					"$rowSpecs": "0, 0"
 					"$hGap": 5
 					"$vGap": 5
 				} ) {
 					name: "buttonBar"
 					"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "buyButton"
+						"text": "Buy stock"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1", true ) )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "buy", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "sellButton"
+						"text": "Sell stock"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "sell", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 1
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "checkHeldButton"
+						"text": "Check held stocks "
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "checkHeld", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 1
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "checkMarketButton"
+						"text": "Check stock market"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "checkMarket", true ) )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 1
+						"gridy": 1
+					} )
 					add( new FormComponent( "javax.swing.JButton" ) {
 						name: "backButton"
 						"text": "back"
@@ -73,6 +125,7 @@ new FormModel {
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 2
+						"gridy": 1
 					} )
 				}, new FormLayoutConstraints( class java.lang.String ) {
 					"value": "South"

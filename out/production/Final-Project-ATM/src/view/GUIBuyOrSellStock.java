@@ -42,7 +42,8 @@ public class GUIBuyOrSellStock extends JFrame {
     private void trade(ActionEvent e) throws Exception {
         int stockID = Integer.parseInt(stockTextField.getText());
         int quantity = Integer.parseInt(quantityTextField.getText());
-
+        System.out.println("quantity");
+        System.out.println(quantity);
         int status = stockController.trade(userName,stockID,quantity,tradeType);
         if(status == atmConstant.getSUCCESS()) {
             setVisible(false);
