@@ -71,10 +71,11 @@ public class LoginService {
     public int signUp(Customer customer, String pwd) throws Exception {
         int id = customer.getID();
         String userName = customer.getName();
-        System.out.println(id);
-        Customer existingUser = (Customer) userDao.selectUserById(id, "customer");
+
+        Customer existingUser = (Customer) userDao.selectUserById(id, "Customer");
         if(existingUser == null) {
 //            System.out.println("1");
+            System.out.println(id);
             boolean status = userDao.insertIntoUser(id, userName, pwd);
             if(status) {
 
