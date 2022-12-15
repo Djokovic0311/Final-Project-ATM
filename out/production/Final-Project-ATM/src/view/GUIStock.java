@@ -48,14 +48,14 @@ public class GUIStock extends JFrame {
 
     private void buy(ActionEvent e) {
         dispose();
-        new GUIBuyOrSellStock(userAccounts, userInfo, userName,"buy");
+        new GUIBuyOrSellStock(userAccounts, userInfo, userName,"buy").setVisible(true);
     }
 
 
 
     private void sell(ActionEvent e) {
         dispose();
-        new GUIBuyOrSellStock(userAccounts, userInfo, userName,"sell");
+        new GUIBuyOrSellStock(userAccounts, userInfo, userName,"sell").setVisible(true);
     }
 
     private void checkHeld(ActionEvent e) throws Exception {

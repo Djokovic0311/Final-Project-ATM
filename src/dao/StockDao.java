@@ -16,7 +16,7 @@ public class StockDao {
             stmt.setInt(1, stockID);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                double price = rs.getDouble(1);
+                double price = rs.getDouble(2);
                 return price;
             }
             return 0.0;
@@ -38,8 +38,8 @@ public class StockDao {
                 //stock price will be updated
                 query = "UPDATE StockMarket SET price = ? Where stockID= ?;";
                 stmt = conn.prepareStatement(query);
-                stmt.setDouble(1, price);
-                stmt.setInt(2, stockID);
+                stmt.setInt(1, stockID);
+                stmt.setDouble(2, price);
                 stmt.executeQuery();
                 return true;
             }
@@ -86,5 +86,16 @@ public class StockDao {
             return null;
         }
         return result;
+    }
+
+    public boolean checkStockByID (int stockID) {
+        try {
+            String query = "SELECT * FROM StockMarket where stockID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (Exception e) { return false; }
     }
 }

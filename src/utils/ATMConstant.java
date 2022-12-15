@@ -12,6 +12,7 @@ public class ATMConstant {
     private String DBPWD = "123456";
     private double LOAN_INTEREST = 0.05;
     private int MANAGER_ACCOUNT_ID = 20221216;
+    private int MANAGER_ID = 1415926;
 
     private double REDEEM_INTEREST = 0.1;
     private double OPEN_ACCOUNT_FEE = 10;
@@ -119,5 +120,13 @@ public class ATMConstant {
 
     public void setFEE_RATE(double FEE_RATE) {
         this.FEE_RATE = FEE_RATE;
+    }
+
+    public int getMANAGER_ID() {
+        return MANAGER_ID;
+    }
+
+    public void setMANAGER_ID(int MANAGER_ID) {
+        this.MANAGER_ID = MANAGER_ID;
     }
 }

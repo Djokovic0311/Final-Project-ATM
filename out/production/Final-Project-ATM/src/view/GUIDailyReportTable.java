@@ -30,7 +30,7 @@ public class GUIDailyReportTable extends JFrame {
         for(Transaction transaction : transactions) {
             Vector v = new Vector();
             int transactionID = transaction.getID();
-            String type = transaction.getType().toString();
+            String type = String.valueOf(transaction.getType());
             int accountID = transaction.getFromAccountID();
             double amount = transaction.getAmount();
             String currency = transaction.getCurrencyType().toString();

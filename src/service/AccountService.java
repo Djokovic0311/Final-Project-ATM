@@ -82,10 +82,12 @@ public class AccountService {
 
         if(!accountExists && accountDao.doesSavingAccountExist(customer.getID()) ){
             SavingAccount[] savingAccounts = accountDao.getSavingAccountInfoForCustomer(customer.getID());
+            System.out.println("savingAccounts.length");
+            System.out.println(savingAccounts.length);
             for(SavingAccount savingAccount : savingAccounts) {
+
                 if(savingAccount.getBalanceByCurrency(currencyType)>=5000 && savingAccount.getBalanceByCurrency(currencyType)-depositAmount >=2500) {
                     savingAccount.setBalanceByCurrency(currencyType,savingAccount.getBalanceByCurrency(currencyType)-depositAmount);
-
                     int accountID = Utils.getFixedLengthRandom(8);
                     while(accountDao.doesAccountExists(accountID)) {
                         accountID = Utils.getFixedLengthRandom(8);
@@ -93,9 +95,6 @@ public class AccountService {
                     accountDao.insertIntoSecurity(accountID, customer.getID(),AccountType.SECURITY,depositAmount);
                     responseStatus = atmConstant.getSUCCESS();
                     break;
-                }
-                else {
-                    responseStatus = atmConstant.getERROR();
                 }
             }
         }else {
@@ -145,10 +144,12 @@ public class AccountService {
 
     public void redeem(int accountID) throws Exception {
         long timestamp = Utils.getTimestamp();
+        double[] interests = accountDao.redeemForSavingAccount(accountID,timestamp);
 
-        SavingAccount savingAccount = (SavingAccount) accountDao.selectAccountByID(accountID,AccountType.SAVINGS);
+        int idx = 0;
         for(CurrencyType currencyType : CurrencyType.values()){
-            accountDao.redeemForSavingAccount(accountID,timestamp);
+            double balance = accountDao.getBalanceByCurrencyType(atmConstant.getMANAGER_ACCOUNT_ID(),atmConstant.getMANAGER_ID(),AccountType.CHECKINGS,currencyType);
+            accountDao.updateAccountBalance(atmConstant.getMANAGER_ACCOUNT_ID(),AccountType.CHECKINGS,currencyType,balance-interests[idx++]);
         }
 
     }

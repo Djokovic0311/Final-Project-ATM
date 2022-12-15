@@ -29,7 +29,7 @@ public class CustomerHoldStocksDao {
                     "WHERE stockID = ? AND customerID = ?;";
             Connection conn = ConnectDao.connectToDb();
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, quantity + original_amount);
+            stmt.setInt(1, quantity);
             stmt.setDouble(2, purchasedPrice);
             stmt.setDouble(3, (double) timestamp);
             stmt.setInt(4, stockID);

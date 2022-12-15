@@ -25,9 +25,6 @@ public class GUIUserProfileWindow extends JFrame {
         setText(userInfo);
     }
 
-    private void passwordChange(ActionEvent e) {
-        // TODO add your code here
-    }
 
     private void back(ActionEvent e) {
         dispose();
@@ -40,7 +37,6 @@ public class GUIUserProfileWindow extends JFrame {
         label2 = new JLabel();
         userNameContent = new JLabel();
         passwordContent = new JLabel();
-        passwordChangeButton = new JButton();
         backButton = new JButton();
 
         //======== this ========
@@ -67,12 +63,6 @@ public class GUIUserProfileWindow extends JFrame {
         passwordContent.setText("default");
         contentPane.add(passwordContent);
         passwordContent.setBounds(180, 110, 85, passwordContent.getPreferredSize().height);
-
-        //---- passwordChangeButton ----
-        passwordChangeButton.setText("change");
-        passwordChangeButton.addActionListener(e -> passwordChange(e));
-        contentPane.add(passwordChangeButton);
-        passwordChangeButton.setBounds(new Rectangle(new Point(280, 105), passwordChangeButton.getPreferredSize()));
 
         //---- backButton ----
         backButton.setText("back");
@@ -109,7 +99,6 @@ public class GUIUserProfileWindow extends JFrame {
     private JLabel label2;
     private JLabel userNameContent;
     private JLabel passwordContent;
-    private JButton passwordChangeButton;
     private JButton backButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

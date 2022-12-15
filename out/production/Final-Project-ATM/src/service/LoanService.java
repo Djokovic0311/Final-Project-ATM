@@ -20,7 +20,7 @@ public class LoanService {
     }
     public void requireLoan(Customer customer,double amount, int tenure, long timestamp, CurrencyType currencyType){
         int loanID = Utils.getFixedLengthRandom(10);
-        loanDao.insertLoan(customer.getID(),amount,timestamp,currencyType,loanID);
+        loanDao.insertLoan(customer.getID(),amount*(1+atmConstant.getLOAN_INTEREST()),timestamp,currencyType,loanID);
     }
     public Loan getLoanByID(int loanID){
         return loanDao.getLoanByID(loanID);
@@ -47,10 +47,12 @@ public class LoanService {
                     loanDao.updateLoan(loanID,left-amount);
                     accountDao.updateAccountBalance(account.getAccountID(),account.getType(),currencyType,
                             account.getBalance().get(currencyType)-amount);
+                    accountDao.payBankFees(amount * atmConstant.getLOAN_INTEREST(),atmConstant.getMANAGER_ACCOUNT_ID());
                     return atmConstant.getSUCCESS();
                 }
                 else {
                     loanDao.deleteLoan(loanID);
+                    accountDao.payBankFees(amount * atmConstant.getLOAN_INTEREST(),atmConstant.getMANAGER_ACCOUNT_ID());
                     accountDao.updateAccountBalance(account.getAccountID(),account.getType(),currencyType,
                             account.getBalance().get(currencyType)-amount);
                     return atmConstant.getSUCCESS();

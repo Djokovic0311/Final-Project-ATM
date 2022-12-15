@@ -231,22 +231,25 @@ public class AccountDao {
             stmt.executeUpdate();
         } catch (Exception ignored) {}
     }
-    public SavingAccount[] getSavingAccountInfoForCustomer(int customerID) throws Exception {
+    public SavingAccount[] getSavingAccountInfoForCustomer(int customerID) {
         List<SavingAccount> savingAccountList = new ArrayList<>();
         try {
-            Connection con = ConnectDao.connectToDb();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM SavingAccount WHERE customerID = " + customerID + ";");
+            String query = "SELECT * FROM SavingAccount WHERE customerID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, customerID);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int accountID = rs.getInt(0);
-                double balance_usd = rs.getDouble(2);
-                double balance_eur = rs.getDouble(3);
-                double balance_cny = rs.getDouble(4);
+                int accountID = rs.getInt(1);
+                double balance_usd = rs.getDouble(3);
+                double balance_eur = rs.getDouble(4);
+                double balance_cny = rs.getDouble(5);
                 Map<CurrencyType, Double> balance = new Hashtable<>();
                 balance.put(CurrencyType.USD, balance_usd);
                 balance.put(CurrencyType.EUR, balance_eur);
                 balance.put(CurrencyType.CNY, balance_cny);
-                savingAccountList.add(new SavingAccount(accountID, customerID, AccountType.SAVINGS, balance));
+                long redeemTime = (long) rs.getDouble(6);
+                savingAccountList.add(new SavingAccount(accountID, customerID, AccountType.SAVINGS, balance, redeemTime));
             }
         } catch (Exception e) { return null; }
         if (savingAccountList.size() == 0) {
@@ -324,7 +327,7 @@ public class AccountDao {
         } catch (Exception ignored) {}
     }
 
-    public void redeemForSavingAccount(int accountID, long timestamp) throws Exception {
+    public double[] redeemForSavingAccount(int accountID, long timestamp) throws Exception {
         try {
             String query1 = "SELECT * FROM SavingAccount WHERE ID = ?;";
             Connection conn = ConnectDao.connectToDb();
@@ -336,25 +339,47 @@ public class AccountDao {
             double balanceCNY = rs.getDouble(5);
             long lastDateRedeem = (long) rs.getDouble(6);
             int dayPass = Utils.dayPass(lastDateRedeem, timestamp);
+            double[] list_interest = new double[]{0, 0, 0};
+            double newBalanceUSD = balanceUSD;
+            double newBalanceEUR = balanceEUR;
+            double newBalanceCNY = balanceCNY;
             if (balanceUSD >= 500) {
-                balanceUSD = Utils.redeem(balanceUSD, dayPass);
+                newBalanceUSD = Utils.redeem(balanceUSD, dayPass);
+                list_interest[0] = newBalanceUSD - balanceUSD;
             }
             if (balanceEUR >= 500) {
-                balanceEUR = Utils.redeem(balanceEUR, dayPass);
+                newBalanceEUR = Utils.redeem(balanceEUR, dayPass);
+                list_interest[1] = newBalanceEUR - balanceEUR;
             }
             if (balanceCNY >= 500) {
-                balanceCNY = Utils.redeem(balanceCNY, dayPass);
+                newBalanceCNY = Utils.redeem(balanceCNY, dayPass);
+                list_interest[2] = newBalanceCNY - balanceCNY;
             }
             double lastTimeRedeem = (double) Calendar.getInstance().getTimeInMillis();
             String query2 = "UPDATE SavingAccount SET balanceUSD = ?, balanceEUR = ?, balanceCNY = ?, " +
                     "lastTimeRedeem = ? WHERE ID = ?;";
             PreparedStatement stmt2 = conn.prepareStatement(query2);
-            stmt2.setDouble(1, balanceUSD);
-            stmt2.setDouble(2, balanceEUR);
-            stmt2.setDouble(3, balanceCNY);
+            stmt2.setDouble(1, newBalanceUSD);
+            stmt2.setDouble(2, newBalanceEUR);
+            stmt2.setDouble(3, newBalanceCNY);
             stmt2.setDouble(4, lastTimeRedeem);
             stmt2.setInt(5, accountID);
             stmt2.executeUpdate();
-        } catch (Exception ignored) {}
+            return list_interest;
+        } catch (Exception ignored) {
+            return new double[]{0, 0, 0};
+        }
+    }
+
+    public int[] getAccountIDFroCustomer(int customerID, AccountType type) {
+        List<Account> accounts = selectAccountByCustomerID(customerID, type);
+        if (accounts == null) {
+            return null;
+        }
+        int[] result = new int[accounts.size()];
+        for (int i = 0; i < accounts.size(); i ++) {
+            result[i] = accounts.get(i).getAccountID();
+        }
+        return result;
     }
 }
