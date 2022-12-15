@@ -269,6 +269,7 @@ public class AccountDao {
             return s;
         }
     }
+    }
     // check and delete this customer's account
     public int deleteAccount(int accountID, int customerID) {
         try {
@@ -336,7 +337,7 @@ public class AccountDao {
 
     public void redeemForSavingAccount(int accountID, long timestamp) throws Exception {
         try {
-            String query1 = "SELECT * FROM SavingAccount WHERE accountID = ?;";
+            String query1 = "SELECT * FROM SavingAccount WHERE ID = ?;";
             Connection conn = ConnectDao.connectToDb();
             PreparedStatement stmt1 = conn.prepareStatement(query1);
             stmt1.setInt(1, accountID);
@@ -346,25 +347,35 @@ public class AccountDao {
             double balanceCNY = rs.getDouble(5);
             long lastDateRedeem = (long) rs.getDouble(6);
             int dayPass = Utils.dayPass(lastDateRedeem, timestamp);
+            double[] list_interest = new double[]{0, 0, 0};
+            double newBalanceUSD = balanceUSD;
+            double newBalanceEUR = balanceEUR;
+            double newBalanceCNY = balanceCNY;
             if (balanceUSD >= 500) {
-                balanceUSD = Utils.redeem(balanceUSD, dayPass);
+                newBalanceUSD = Utils.redeem(balanceUSD, dayPass);
+                list_interest[0] = newBalanceUSD - balanceUSD;
             }
             if (balanceEUR >= 500) {
-                balanceEUR = Utils.redeem(balanceEUR, dayPass);
+                newBalanceEUR = Utils.redeem(balanceEUR, dayPass);
+                list_interest[1] = newBalanceEUR - balanceEUR;
             }
             if (balanceCNY >= 500) {
-                balanceCNY = Utils.redeem(balanceCNY, dayPass);
+                newBalanceCNY = Utils.redeem(balanceCNY, dayPass);
+                list_interest[2] = newBalanceCNY - balanceCNY;
             }
             double lastTimeRedeem = (double) Calendar.getInstance().getTimeInMillis();
             String query2 = "UPDATE SavingAccount SET balanceUSD = ?, balanceEUR = ?, balanceCNY = ?, " +
-                    "lastTimeRedeem = ? WHERE accountID = ?;";
+                    "lastTimeRedeem = ? WHERE ID = ?;";
             PreparedStatement stmt2 = conn.prepareStatement(query2);
-            stmt2.setDouble(1, balanceUSD);
-            stmt2.setDouble(2, balanceEUR);
-            stmt2.setDouble(3, balanceCNY);
+            stmt2.setDouble(1, newBalanceUSD);
+            stmt2.setDouble(2, newBalanceEUR);
+            stmt2.setDouble(3, newBalanceCNY);
             stmt2.setDouble(4, lastTimeRedeem);
             stmt2.setInt(5, accountID);
             stmt2.executeUpdate();
-        } catch (Exception ignored) {}
+            return list_interest;
+        } catch (Exception ignored) {
+            return new double[]{0, 0, 0};
+        }
     }
 }
