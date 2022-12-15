@@ -1,0 +1,47 @@
+JFDML JFormDesigner: "8.0.0.0.194" Java: "17.0.4" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+				name: "dialogPane"
+				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
+					"columns": 2
+					"rows": 2
+				} ) {
+					name: "contentPanel"
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "checkCustomerButton"
+						"text": "Check customer"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "checkCustomer", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "dailyReportButton"
+						"text": "Daily Report"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "dailyReport", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "stockManagementButton"
+						"text": "Stock Management"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "stockManagement", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "logOutButton"
+						"text": "Log out"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "logOut", true ) )
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "Center"
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 400, 300 )
+		} )
+	}
+}
