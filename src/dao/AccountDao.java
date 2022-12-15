@@ -366,4 +366,16 @@ public class AccountDao {
             return new double[]{0, 0, 0};
         }
     }
+    
+    public int[] getAccountIDFroCustomer(int customerID, AccountType type) {
+        List<Account> accounts = selectAccountByCustomerID(customerID, type);
+        if (accounts == null) {
+            return null;
+        }
+        int[] result = new int[accounts.size()];
+        for (int i = 0; i < accounts.size(); i ++) {
+            result[i] = accounts.get(i).getAccountID();
+        }
+        return result;
+    }
 }
