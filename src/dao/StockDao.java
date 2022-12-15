@@ -44,28 +44,29 @@ public class StockDao {
         } catch (Exception e) { return false; }
 
     }
-
+    
     // check stock existence first, if it doesn't, insert stock  and return true;
     // else return false;
-    public boolean updatePriceByID(int stockID, double price) {
+    public boolean insertIntoStock(int stockID, double price) {
         try {
             String query = "SELECT * FROM StockMarket where stockID = ?;";
             Connection conn = ConnectDao.connectToDb();
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, stockID);
             ResultSet rs = stmt.executeQuery();
-            if (!rs.next()) {
+            if (rs.next()) { // Already exist
                 return false;
             } else {
-                String query1 = "UPDATE StockMarket SET price = ? Where stockID= ?;";
-                PreparedStatement stmt1 = conn.prepareStatement(query1);
-                stmt1.setDouble(1, price);
-                stmt1.setInt(2, stockID);
-                stmt1.executeQuery();
+                query = "INSERT INTO StockMarket (stockID, price) VALUES (?,?);";
+                stmt = conn.prepareStatement(query);
+                stmt.setInt(1, stockID);
+                stmt.setDouble(2, price);
+                stmt.executeUpdate();
                 return true;
             }
         } catch (Exception e) { return false; }
     }
+    
 
     public ArrayList<marketStock> getStocks(){
         ArrayList<marketStock> result = new ArrayList<>();
@@ -84,5 +85,16 @@ public class StockDao {
             return null;
         }
         return result;
+    }
+    
+    public boolean checkStockByID (int stockID) {
+        try {
+            String query = "SELECT * FROM StockMarket where stockID = ?;";
+            Connection conn = ConnectDao.connectToDb();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, stockID);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (Exception e) { return false; }
     }
 }
