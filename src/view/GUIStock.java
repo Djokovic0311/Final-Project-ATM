@@ -85,7 +85,6 @@ public class GUIStock extends JFrame {
         security = new JPanel();
         buttonBar = new JPanel();
         backButton = new JButton();
-        cancelButton = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -117,25 +116,13 @@ public class GUIStock extends JFrame {
 
                 //---- checkHeldButton ----
                 checkHeldButton.setText("Check held stocks ");
-                checkHeldButton.addActionListener(e -> {
-                    try {
-                        checkHeld(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                checkHeldButton.addActionListener(e -> checkHeld(e));
                 contentPanel.add(checkHeldButton);
                 checkHeldButton.setBounds(25, 160, 140, 30);
 
                 //---- checkMarketButton ----
                 checkMarketButton.setText("Check stock market");
-                checkMarketButton.addActionListener(e -> {
-                    try {
-                        checkMarket(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+                checkMarketButton.addActionListener(e -> checkMarket(e));
                 contentPanel.add(checkMarketButton);
                 checkMarketButton.setBounds(215, 160, 145, 30);
 
@@ -188,21 +175,12 @@ public class GUIStock extends JFrame {
                 //---- backButton ----
                 backButton.setText("back");
                 backButton.addActionListener(e -> {
-                    try {
-                        back(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
+			back(e);
+			back(e);
+		});
                 buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 5), 0, 0));
-
-                //---- cancelButton ----
-                cancelButton.setText("Cancel");
-                buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 0), 0, 0));
             }
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }
@@ -240,6 +218,5 @@ public class GUIStock extends JFrame {
     private JPanel security;
     private JPanel buttonBar;
     private JButton backButton;
-    private JButton cancelButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
