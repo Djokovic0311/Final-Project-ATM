@@ -81,7 +81,7 @@ public class GUICustomerAccountWindow extends JFrame {
                         new Object[][] {
                         },
                         new String[] {
-                            null, null, null, null, null
+                            "id", "type", "USD", "EUR", "CNY"
                         }
                     ));
                     scrollPane1.setViewportView(accountTable);

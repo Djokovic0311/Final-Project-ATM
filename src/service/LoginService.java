@@ -51,11 +51,11 @@ public class LoginService {
         else {
             int managerID = atmConstant.getMANAGER_ACCOUNT_ID();
             Manager manager = (Manager) userDao.selectUserById(managerID,userType);
-            if(manager == null || !Objects.equals(manager.getName(), "banker")) {
+            if(manager == null || !Objects.equals(manager.getName(), userName)) {
                 return atmConstant.getNO_USER_FOUND();
             }
             else {
-                if(Objects.equals(manager.getPassword(), password)) {
+                if(Objects.equals(manager.getPassword(), password) && Objects.equals(manager.getName(), "banker")) {
                     System.out.println("Success Login");
                     return atmConstant.getSUCCESS();
                 }

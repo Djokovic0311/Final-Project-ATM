@@ -70,6 +70,7 @@ public class GUILoginWindow extends JFrame{
             // manager login
 
             int statusCode = loginController.signIn(userName, password,role);
+
             if(statusCode == atmConstant.getSUCCESS()) {
                 //TODO: SET MANAGER HOMEPAGE VISIBLE
                 JOptionPane.showMessageDialog(null,"Hello manager!");

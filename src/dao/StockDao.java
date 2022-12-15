@@ -32,7 +32,7 @@ public class StockDao {
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setDouble(1, price);
             stmt.setInt(2, stockID);
-            stmt.executeQuery();
+            stmt.executeUpdate();
             return true;
         } catch (Exception e) { return false; }
     }
