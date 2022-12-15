@@ -42,8 +42,7 @@ public class GUIStock extends JFrame {
 
     private void back(ActionEvent e) throws Exception {
         dispose();
-        setVisible(false);
-        new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+        new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
     }
 
     private void buy(ActionEvent e) {
