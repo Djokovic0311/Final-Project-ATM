@@ -46,11 +46,11 @@ public class AccountService {
                 while(accountDao.doesAccountExists(accountID)) {
                     accountID = Utils.getFixedLengthRandom(8);
                 }
-                status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.SAVINGS, balance, currencyType);
+                status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.SAVINGS, balance-atmConstant.getOPEN_ACCOUNT_FEE()/currencyType.getValue(), currencyType);
                 if(status != 0) {
                     // successfully create
                     // pay fee to manager account
-                    accountDao.payBankFees(balance,atmConstant.getMANAGER_ACCOUNT_ID());
+                    accountDao.payBankFees(atmConstant.getOPEN_ACCOUNT_FEE(),atmConstant.getMANAGER_ACCOUNT_ID());
                     return atmConstant.getSUCCESS();
                 }
                 else return atmConstant.getERROR();
@@ -60,11 +60,11 @@ public class AccountService {
                     while(accountDao.doesAccountExists(accountID)) {
                         accountID = Utils.getFixedLengthRandom(8);
                     }
-                    status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance, currencyType);
+                    status = accountDao.insertIntoCheckingOrSaving(accountID, customer.getID(), AccountType.CHECKINGS, balance-atmConstant.getOPEN_ACCOUNT_FEE()/currencyType.getValue(), currencyType);
                     if(status != 0) {
                         // successfully create
                         // pay fee to manager account
-                        accountDao.payBankFees(balance,atmConstant.getMANAGER_ACCOUNT_ID());
+                        accountDao.payBankFees(atmConstant.getOPEN_ACCOUNT_FEE(),atmConstant.getMANAGER_ACCOUNT_ID());
                         return atmConstant.getSUCCESS();
                     }
                     else return atmConstant.getERROR();
@@ -112,6 +112,7 @@ public class AccountService {
         int status = 0;
         if(accountExists) {
             status = accountDao.deleteAccount(accountID, customerID);
+            accountDao.payBankFees(atmConstant.getOPEN_ACCOUNT_FEE(),atmConstant.getMANAGER_ACCOUNT_ID());
         }
         else {
             return atmConstant.getERROR();
@@ -128,10 +129,18 @@ public class AccountService {
     }
 
     public void transcurrency(Account account, CurrencyType from,CurrencyType to, double amount){
-        accountDao.updateAccountBalance(account.getAccountID(),account.getType(),from,
-                account.getBalanceByCurrency(from)-amount);
+        if(account.getType() == AccountType.CHECKINGS){
+            accountDao.payBankFees(amount*atmConstant.getFEE_RATE()/from.getValue(), atmConstant.getMANAGER_ACCOUNT_ID());
+            accountDao.updateAccountBalance(account.getAccountID(),account.getType(),from,
+                    account.getBalanceByCurrency(from)-amount*(1+atmConstant.getFEE_RATE()/from.getValue()));
+        }
+        else {
+            accountDao.updateAccountBalance(account.getAccountID(),account.getType(),from,
+                    account.getBalanceByCurrency(from)-amount);
+        }
         accountDao.updateAccountBalance(account.getAccountID(),account.getType(),to,
                 account.getBalanceByCurrency(to)+amount*from.getValue()/to.getValue());
+
     }
 
     public void redeem(int accountID) throws Exception {

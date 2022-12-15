@@ -14,6 +14,8 @@ public class ATMConstant {
     private int MANAGER_ACCOUNT_ID = 20221216;
 
     private double REDEEM_INTEREST = 0.1;
+    private double OPEN_ACCOUNT_FEE = 10;
+    private double FEE_RATE = 0.02;
 
     public int getIdBits() {
         return idBits;
@@ -103,4 +105,19 @@ public class ATMConstant {
         this.REDEEM_INTEREST = REDEEM_INTEREST;
     }
 
+    public double getOPEN_ACCOUNT_FEE() {
+        return OPEN_ACCOUNT_FEE;
+    }
+
+    public void setOPEN_ACCOUNT_FEE(double OPEN_ACCOUNT_FEE) {
+        this.OPEN_ACCOUNT_FEE = OPEN_ACCOUNT_FEE;
+    }
+
+    public double getFEE_RATE() {
+        return FEE_RATE;
+    }
+
+    public void setFEE_RATE(double FEE_RATE) {
+        this.FEE_RATE = FEE_RATE;
+    }
 }
