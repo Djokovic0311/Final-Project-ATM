@@ -29,9 +29,9 @@ public class LoanDao {
                 Loan l = new Loan(loanID, customerID, amount, t, date);
                 result.add(l);
             }
-        } catch (Exception e) { return null; }
+        } catch (Exception e) { return result; }
         if (result.isEmpty()) {
-            return null;
+            return result;
         }
         return result;
     }

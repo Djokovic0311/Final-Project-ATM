@@ -49,7 +49,7 @@ public class LoginService {
             }
         }
         else {
-            int managerID = atmConstant.getMANAGER_ACCOUNT_ID();
+            int managerID = atmConstant.getMANAGER_ID();
             Manager manager = (Manager) userDao.selectUserById(managerID,userType);
             if(manager == null || !Objects.equals(manager.getName(), userName)) {
                 return atmConstant.getNO_USER_FOUND();
