@@ -27,24 +27,14 @@ public class StockDao {
     //else return false;
     public boolean updatePriceByID(int stockID, double price) {
         try {
-            String query = "SELECT * FROM StockMarket where stockID = ?;";
+            String query = "UPDATE StockMarket SET price = ? WHERE stockID= ?;";
             Connection conn = ConnectDao.connectToDb();
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, stockID);
-            ResultSet rs = stmt.executeQuery();
-            if (!rs.next()) {
-                return false;
-            } else {
-                //stock price will be updated
-                query = "UPDATE StockMarket SET price = ? Where stockID= ?;";
-                stmt = conn.prepareStatement(query);
-                stmt.setInt(1, stockID);
-                stmt.setDouble(2, price);
-                stmt.executeQuery();
-                return true;
-            }
+            stmt.setDouble(1, price);
+            stmt.setInt(2, stockID);
+            stmt.executeQuery();
+            return true;
         } catch (Exception e) { return false; }
-
     }
 
     // check stock existence first, if it doesn't, insert stock  and return true;

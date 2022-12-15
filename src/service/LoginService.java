@@ -51,7 +51,7 @@ public class LoginService {
         else {
             int managerID = atmConstant.getMANAGER_ACCOUNT_ID();
             Manager manager = (Manager) userDao.selectUserById(managerID,userType);
-            if(manager == null) {
+            if(manager == null || !Objects.equals(manager.getName(), "banker")) {
                 return atmConstant.getNO_USER_FOUND();
             }
             else {
@@ -71,6 +71,7 @@ public class LoginService {
     public int signUp(Customer customer, String pwd) throws Exception {
         int id = customer.getID();
         String userName = customer.getName();
+        System.out.println(id);
         Customer existingUser = (Customer) userDao.selectUserById(id, "customer");
         if(existingUser == null) {
 //            System.out.println("1");
