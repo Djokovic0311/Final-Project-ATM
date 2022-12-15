@@ -87,11 +87,6 @@ public class GUICustomerHomePage extends JFrame {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            try {
-                money(e);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
         });
         contentPane.add(moneyButton);
 
