@@ -13,24 +13,29 @@ The GUI Layer in the Package "view":
   3. GUICustomerHomePage: The homepage of customer, where customer can choose to managing user information, account information or taking actions related to money.
   4. GUICustomerAccountWindow: The interface for customer to view, open and close their accounts. ?? need double check
   5. GUICustomerCloseAccount: The interface for customer to close an account.
-  6. GUICustomerOpenAccount: The interface for user to open a new account.
-  7. GUICustomerMoneyWindow: ?????
-  8. GUIUserProfileWindow: The interface to display user profile.
-  9. GUIMoneyMatterWindow: The interface for user to choose action related to money.
-  10. GUIDeposit: The interface for user to make deposit.
-  11. GUITransfer: The interface for user to transfer monsy to another account.
-  12. GUIWithdraw: The interface for customer to withdraw money.
-  13. GUIWithdrawWindow: ?????
-  14. GUILoan: The interface for user to take actions related to loan.
-  15. GUIDisplayLoan: The interface displaying all the loans that user have.
-  16. GUIRequireLoan: The interface for user to require a loan.
-  17. GUIPayForLoan: The interface for user to pay for loan.
-  18. GUIStock: The interface for user to take actions related to stock.
-  19. GUIDisplayStock: The interface displaying all the stocks that user hold.
-  20. GUIBuyOrSellStock: The interface for user having activated security account to buy or sell stocks.
-  21. GUITransactionHistory: The interface to display transactions.
-  22. GUITranscurrency: The interface for user to buy oyher currency.
-  23. GUIManagerHomePage: The interface for manager to choose action.
+  6. GUICustomerOpenAccount: The interface for customer to open a new account.
+  7. GUICustomerMoneyWindow: The interface for user to choose action related to money.
+  8. GUIUserProfileWindow: The interface to display customer profile.
+  9. GUIDailyReport: The interface for manager to choose which date report to check.
+  10. GUIDailyReportTable: The interface for specific date daily report.
+  11. GUIDeposit: The interface for customer to make deposit.
+  12. GUITransfer: The interface for customer to transfer monsy to another account.
+  13. GUIWithdraw: The interface for customer to withdraw money.
+  14. GUILoan: The interface for customer to take actions related to loan.
+  15. GUIStockManagement: The interface for manager to take actions related to stock.
+  16. GUIDisplayLoan: The interface displaying all the loans that customer have.
+  17. GUIRequireLoan: The interface for customer to require a loan.
+  18. GUIPayForLoan: The interface for customer to pay for loan.
+  19. GUIStock: The interface for user to take actions related to stock.
+  20. GUIDisplayStock: The interface displaying all the stocks that user hold or in the market depending on cases.
+  21. GUIBuyOrSellStock: The interface for customer having activated security account to buy or sell stocks.
+  22. GUITransactionHistory: The interface to display transactions.
+  23. GUITranscurrency: The interface for user to buy other currency.
+  24. GUIManagerHomePage: The interface for manager to choose action.
+  25. GUIManagerCheckCustomer: The interface for manager to check specific customer information.
+  26. GUIAddStock: The interface for manager to add stocks.
+  27. GUIUpdateStockPrice: The interface for manager to update stock price.
+  28. GUICustomerChecked: The interface to show checked customer.
   
 The Controller Layer in the Package "controller":
   1. LoginController: Handling all input when user log in.
@@ -49,7 +54,7 @@ The Service Layer in the Package "service":
 
 The DAO Layer in the Package "dao":
   1. AccountDao: The DAO layer access to database to retrieve information related to accounts.
-  2. ConnectDao: ?????
+  2. ConnectDao: The MySQL database connection built-up setting, including connecting and closing functions.
   3. CustomerHoldStocksDao: The DAO layer access to database to retrieve information related the the stocks hold by customer.
   4. LoanDao: the DAO layer access to database to retrieve information about loans.
   5. StockDao: the DAO layer access to database to retrieve information about loans.
@@ -60,7 +65,6 @@ The Model Layer in the package "model":
   1. User: The class contains the basic information of a user.
   2. Customer: Extends from user, contains some additional information of customer.
   3. Manager: Extends from user, contsins some additional information of manager.
-  4. Currency: ?????
   5. CurrencyType: The enumration of type of currency.
   6. Account: The abstract class contains attributes and information getters of account object.
   7. AccountType: The enumration of type of accounts.
@@ -78,5 +82,4 @@ The Model Layer in the package "model":
   19. BuyStockTransaction: Extends from Transaction, contains some additional information of transaction recording buying a stock.
   20. DepositTransaction: Extends from Transaction, contains some additional information of transaction recording making deposit.
   21. WithdrawTransaction: Extends from Transaction, contains some additional information of transaction recording withdrawing money.
-  22. ManagerTransaction: ?????
-  23. Loan: The class contains the basic information of a loan.
+  22. Loan: The class contains the basic information of a loan.
