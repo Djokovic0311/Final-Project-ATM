@@ -20,6 +20,7 @@ public class AccountService {
         List<Object> info = new ArrayList<>();
         info.add(user.getName());
         info.add(user.getPassword());
+        info.add(user.getID());
         return info;
     }
     public List<Account> getAccountsForCustomer(Customer customer) throws Exception {

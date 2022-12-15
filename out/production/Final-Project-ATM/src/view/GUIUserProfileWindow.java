@@ -38,6 +38,8 @@ public class GUIUserProfileWindow extends JFrame {
         userNameContent = new JLabel();
         passwordContent = new JLabel();
         backButton = new JButton();
+        userIDLabel = new JLabel();
+        userIDContent = new JLabel();
 
         //======== this ========
         setTitle("User Profile");
@@ -70,6 +72,16 @@ public class GUIUserProfileWindow extends JFrame {
         contentPane.add(backButton);
         backButton.setBounds(new Rectangle(new Point(300, 215), backButton.getPreferredSize()));
 
+        //---- userIDLabel ----
+        userIDLabel.setText("UserID");
+        contentPane.add(userIDLabel);
+        userIDLabel.setBounds(75, 170, 63, 16);
+
+        //---- userIDContent ----
+        userIDContent.setText("default");
+        contentPane.add(userIDContent);
+        userIDContent.setBounds(175, 170, 85, 16);
+
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -91,6 +103,7 @@ public class GUIUserProfileWindow extends JFrame {
     public void setText(List userInfo){
         userNameContent.setText(userInfo.get(0)+"");
         passwordContent.setText(userInfo.get(1)+"");
+        userIDContent.setText(userInfo.get(2)+"");
     }
 
 
@@ -100,5 +113,7 @@ public class GUIUserProfileWindow extends JFrame {
     private JLabel userNameContent;
     private JLabel passwordContent;
     private JButton backButton;
+    private JLabel userIDLabel;
+    private JLabel userIDContent;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

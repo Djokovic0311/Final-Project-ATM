@@ -46,6 +46,24 @@ new FormModel {
 				"x": 300
 				"y": 215
 			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "userIDLabel"
+				"text": "UserID"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 63
+				"height": 16
+				"x": 75
+				"y": 170
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "userIDContent"
+				"text": "default"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 85
+				"height": 16
+				"x": 175
+				"y": 170
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 400, 300 )
