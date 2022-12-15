@@ -123,9 +123,7 @@ public class GUICustomerOpenAccount extends JFrame {
                 currencyTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(currencyTypeComboBox);
                 currencyTypeComboBox.setBounds(165, 75, 84, 30);

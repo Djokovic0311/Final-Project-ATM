@@ -35,7 +35,6 @@ public class StockService {
                     customerHoldStocksDao.updateCustomerHeldStocks(stockID,customer.getID(),price,past+quantity,timestamp);
                 }
                 else {
-
                     customerHoldStocksDao.insertNewHeldStock(stockID,customer.getID(),price,quantity,timestamp);
                 }
                 accountDao.updateAccountBalance(securityAccount.getAccountID(), AccountType.SECURITY, CurrencyType.USD,

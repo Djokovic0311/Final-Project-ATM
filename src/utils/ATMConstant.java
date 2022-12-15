@@ -11,8 +11,8 @@ public class ATMConstant {
     private String DBUSERNAME = "root";
     private String DBPWD = "123456";
     private double LOAN_INTEREST = 0.05;
-    private int MANAGER_ACCOUNT_ID = 20221216;
-    private int MANAGER_ID = 1415926;
+    private int MANAGER_ACCOUNT_ID = 1415926;
+    private int MANAGER_ID = 20221216;
 
     private double REDEEM_INTEREST = 0.1;
     private double OPEN_ACCOUNT_FEE = 10;

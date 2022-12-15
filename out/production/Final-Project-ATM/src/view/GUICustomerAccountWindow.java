@@ -164,8 +164,9 @@ public class GUICustomerAccountWindow extends JFrame {
             v.addElement(accountID);
             v.addElement(accountType);
             v.addElement(balanceUSD);
-            v.addElement(balanceCNY);
             v.addElement(balanceEUR);
+            v.addElement(balanceCNY);
+
 
             defaultModel.addRow(v);
             accountTable.setModel(defaultModel);

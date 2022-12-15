@@ -209,10 +209,16 @@ public class AccountDao {
     }
     public void payBankFees(double amount, int bankId) { // No currency type！
         try {
+            double currentBalance = getBalanceByCurrencyType(atmConstant.getMANAGER_ACCOUNT_ID(), atmConstant.getMANAGER_ID(),
+                    AccountType.CHECKINGS,CurrencyType.USD);
+            System.out.println("currentBalance");
+            System.out.println(currentBalance);
+            System.out.println("amount");
+            System.out.println(amount);
             String query = "UPDATE CheckingAccount SET balanceUSD = ? WHERE accountID = ?;";
             Connection conn = ConnectDao.connectToDb();
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setDouble(1, amount);
+            stmt.setDouble(1, amount+currentBalance);
             stmt.setInt(2, bankId);
             stmt.executeUpdate();
         } catch (Exception ignored) {}

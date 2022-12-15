@@ -80,7 +80,8 @@ public class AccountService {
         int responseStatus = 0;
 
         boolean accountExists = accountDao.doesSecuritiesAccountExist(customer.getID());
-
+        System.out.println("security exists");
+        System.out.println(accountExists);
         if(!accountExists && accountDao.doesSavingAccountExist(customer.getID()) ){
             SavingAccount[] savingAccounts = accountDao.getSavingAccountInfoForCustomer(customer.getID());
             System.out.println("savingAccounts.length");
@@ -88,7 +89,8 @@ public class AccountService {
             for(SavingAccount savingAccount : savingAccounts) {
 
                 if(savingAccount.getBalanceByCurrency(currencyType)>=5000 && savingAccount.getBalanceByCurrency(currencyType)-depositAmount >=2500) {
-                    savingAccount.setBalanceByCurrency(currencyType,savingAccount.getBalanceByCurrency(currencyType)-depositAmount);
+//                    savingAccount.setBalanceByCurrency(currencyType,savingAccount.getBalanceByCurrency(currencyType)-depositAmount);
+                    accountDao.updateAccountBalance(savingAccount.getAccountID(),AccountType.SAVINGS,currencyType,savingAccount.getBalanceByCurrency(currencyType)-depositAmount);
                     int accountID = Utils.getFixedLengthRandom(8);
                     while(accountDao.doesAccountExists(accountID)) {
                         accountID = Utils.getFixedLengthRandom(8);
