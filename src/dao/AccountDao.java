@@ -8,12 +8,13 @@ import java.sql.*;
 import java.util.*;
 
 public class AccountDao {
+    ATMConstant atmConstant = new ATMConstant();
     public Account selectAccountByID(int accountID, AccountType type) { // remove customer here, add account type
         try {
             String query;
             switch (type) {
                 case SAVINGS :
-                    query = "SELECT * FROM SavingAccount WHERE accountID = ?;";
+                    query = "SELECT * FROM SavingAccount WHERE ID = ?;";
                     break;
                 case CHECKINGS :
                     query = "SELECT * FROM CheckingAccount WHERE accountID = ?;";
@@ -54,8 +55,7 @@ public class AccountDao {
             return null;
         } catch (Exception e) { return null; }
     }
-
-    public Account[] selectAccountByCustomerID(int customerID, AccountType type) {
+    public List<Account> selectAccountByCustomerID(int customerID, AccountType type) {
         List<Account> result = new ArrayList<>();
         try {
             String query;
@@ -88,10 +88,13 @@ public class AccountDao {
                     balance.put(CurrencyType.CNY, balance_cny);
                     switch (type) {
                         case SAVINGS :
+                            System.out.println(accountID);
                             long redeemTime = (long) rs.getDouble(6);
                             result.add(new SavingAccount(accountID, customerID, type, balance, redeemTime));
+                            break;
                         case CHECKINGS :
                             result.add(new CheckingAccount(accountID, customerID, type, balance));
+                            break;
                     }
                 } else {
                     double realizedProfit = rs.getDouble(4);
@@ -99,26 +102,11 @@ public class AccountDao {
                     result.add(new SecurityAccount(accountID, customerID, type, balance_usd, realizedProfit, unrealizedProfit));
                 }
             }
-            if (result.isEmpty()) {
-                return null;
-            } else {
-                Account[] a = new Account[result.size()];
-                for (int i = 0; i < result.size(); i ++) {
-                    a[i] = result.get(i);
-                }
-                return a;
-            }
+            System.out.println(result.size());
+            return result;
         } catch (Exception e) { return null; }
     }
 
-    public Account selectAccountByID(int accountID) {
-        SavingAccount sa = (SavingAccount) selectAccountByID(accountID, AccountType.SAVINGS);
-        if (sa != null) { return sa; }
-        CheckingAccount c = (CheckingAccount) selectAccountByID(accountID, AccountType.CHECKINGS);
-        if (c != null) { return c; }
-        SecurityAccount se = (SecurityAccount) selectAccountByID(accountID, AccountType.SECURITY);
-        return se;
-    }
 
     public boolean checkAccountExistByID(int ID, AccountType type, String basedOn) {
         try {
@@ -126,7 +114,7 @@ public class AccountDao {
             switch (type) {
                 case SAVINGS :
                     if (basedOn.equals("accountID")) {
-                        query = "SELECT * FROM SavingAccount WHERE accountID = ?;";
+                        query = "SELECT * FROM SavingAccount WHERE ID = ?;";
                     } else if (basedOn.equals("customerID")) {
                         query = "SELECT * FROM SavingAccount WHERE customerID = ?;";
                     } else { return false; }
@@ -175,10 +163,11 @@ public class AccountDao {
             Connection conn = ConnectDao.connectToDb();
             String query;
             PreparedStatement stmt;
+            System.out.println(accountType);
             switch (accountType) {
                 case SAVINGS:
                     long timeStamp = Calendar.getInstance().getTimeInMillis();
-                    query = "INSERT INTO SavingAccount (accountID, customerID, balanceUSD, balanceEUR, balanceCNY, lastTimeRedeem) VALUES (?,?,?,?,?,?);";
+                    query = "INSERT INTO SavingAccount (ID, customerID, balanceUSD, balanceEUR, balanceCNY, lastTimeRedeem) VALUES (?,?,?,?,?,?);";
                     stmt = conn.prepareStatement(query);
                     stmt.setInt(1, accountID);
                     stmt.setInt(2, customerID);
@@ -187,7 +176,7 @@ public class AccountDao {
                     stmt.setDouble(5, balanceCNY);
                     stmt.setDouble(6, (double) timeStamp);
                     stmt.executeUpdate();
-                    return 1;
+                    return atmConstant.getSUCCESS();
                 case CHECKINGS:
                     query = "INSERT INTO CheckingAccount (accountID, customerID, balanceUSD, balanceEUR, balanceCNY) VALUES (?,?,?,?,?);";
                     stmt = conn.prepareStatement(query);
@@ -197,10 +186,10 @@ public class AccountDao {
                     stmt.setDouble(4, balanceEUR);
                     stmt.setDouble(5, balanceCNY);
                     stmt.executeUpdate();
-                    return 1;
-                default : return 0;
+                    return atmConstant.getSUCCESS();
+                default : return atmConstant.getERROR();
             }
-        } catch (Exception e) { return 0; }
+        } catch (Exception e) { return atmConstant.getERROR(); }
     }
     public boolean doesAccountExists(int accountID) {
         boolean saving = checkAccountExistByID(accountID, AccountType.SAVINGS, "accountID");
@@ -269,12 +258,11 @@ public class AccountDao {
             return s;
         }
     }
-    }
     // check and delete this customer's account
     public int deleteAccount(int accountID, int customerID) {
         try {
             Connection conn = ConnectDao.connectToDb();
-            String query1 = "DELETE FROM SavingAccount WHERE accountID = ? AND customerID = ?;";
+            String query1 = "DELETE FROM SavingAccount WHERE ID = ? AND customerID = ?;";
             PreparedStatement stmt1 = conn.prepareStatement(query1);
             stmt1.setInt(1, accountID);
             stmt1.setInt(2, customerID);
@@ -289,8 +277,8 @@ public class AccountDao {
             stmt3.setInt(1, accountID);
             stmt3.setInt(2, customerID);
             stmt3.executeUpdate();
-            return 1;
-        } catch (Exception e) { return 0; }
+            return atmConstant.getSUCCESS();
+        } catch (Exception e) { return atmConstant.getERROR(); }
     }
 
     public double getBalanceByCurrencyType(int accountID, int customerID, AccountType accountType, CurrencyType currencyType) {
@@ -316,7 +304,7 @@ public class AccountDao {
             String query;
             switch (accountType) {
                 case SAVINGS :
-                    query = "UPDATE SavingAccount " + querySet + " WHERE accountID = ?;";
+                    query = "UPDATE SavingAccount " + querySet + " WHERE ID = ?;";
                     break;
                 case CHECKINGS :
                     query = "UPDATE CheckingAccount " + querySet + " WHERE accountID = ?;";
@@ -335,7 +323,7 @@ public class AccountDao {
         } catch (Exception ignored) {}
     }
 
-    public void redeemForSavingAccount(int accountID, long timestamp) {
+    public double[] redeemForSavingAccount(int accountID, long timestamp) throws Exception {
         try {
             String query1 = "SELECT * FROM SavingAccount WHERE ID = ?;";
             Connection conn = ConnectDao.connectToDb();
