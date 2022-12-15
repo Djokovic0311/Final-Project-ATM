@@ -335,7 +335,7 @@ public class AccountDao {
         } catch (Exception ignored) {}
     }
 
-    public void redeemForSavingAccount(int accountID, long timestamp) throws Exception {
+    public void redeemForSavingAccount(int accountID, long timestamp) {
         try {
             String query1 = "SELECT * FROM SavingAccount WHERE ID = ?;";
             Connection conn = ConnectDao.connectToDb();
