@@ -81,7 +81,7 @@ public class GUIDailyReportTable extends JFrame {
                         new Object[][] {
                         },
                         new String[] {
-                            null, null, null, null, null
+                            "transactionID", "type", "accountID", "amount", "currencyType"
                         }
                     ));
                     scrollPane1.setViewportView(transactionTable);
