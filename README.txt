@@ -18,7 +18,6 @@ The description of all the files is in the design documentation.
 ---------------------------------------------------------------------------
 1. Navigate to the directory "Team_17" after unzipping the files
 2. Run the following instructions:
-   <Example below>
    javac $(find src -name "*.java") -encoding UTF8 -classpath "XXX.jar" -d output/ 
    cd output
    java view.GUILoginWindow
