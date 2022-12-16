@@ -29,7 +29,6 @@ public class StockService {
         boolean sufficientMoney = securityAccount.getBalanceByCurrency(CurrencyType.USD) >= price * quantity;
         if(stockDao.checkStockByID(stockID)) {
             if(sufficientMoney) {
-//            System.out.println("sufficent!!!");
                 if(customerHoldStocksDao.checkCustomerHolds(stockID, customer.getID())) {
                     int past = (int) customerHoldStocksDao.getCustomerHeldStocksInfoByID(stockID,customer.getID())[0];
                     customerHoldStocksDao.updateCustomerHeldStocks(stockID,customer.getID(),price,past+quantity,timestamp);
@@ -92,7 +91,6 @@ public class StockService {
     }
 
     public int updateStockPrice(int stockID, double newPrice){
-//        System.out.println("enter service");
         if(stockDao.updatePriceByID(stockID,newPrice)){
             return atmConstant.getSUCCESS();
         }

@@ -54,8 +54,6 @@ public class GUILoginWindow extends JFrame{
 
             int statusCode = loginController.signIn(userName, password,role);
             if(statusCode == atmConstant.getSUCCESS()) {
-                System.out.println(userName+"success");
-                //TODO: SET CUSTOMER HOMEPAGE VISIBLE
                 JOptionPane.showMessageDialog(null,"Hello customer!");
                 setVisible(false);
                 List userInfo = accountController.getAccountInfoForCustomer(userName);

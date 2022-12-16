@@ -48,12 +48,10 @@ public class AccountController {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         Account account = getAccountsForCustomerByID(userName,accountID);
         if(account == null) {
-            System.out.println("No account");
-            return atmConstant.getERROR();
+             return atmConstant.getERROR();
         }
         else {
             if(account.getBalance().get(from) < amount) {
-                System.out.println("No enough money to transcurrency");
                 return atmConstant.getERROR();
             }
             else {

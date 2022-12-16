@@ -57,8 +57,6 @@ public class GUICustomerOpenAccount extends JFrame {
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
             userAccounts = accountController.getAccountsForCustomer(username);
-            System.out.println("length");
-            System.out.println(userAccounts.size());
             new GUICustomerAccountWindow(userAccounts, userInfo, username).setVisible(true);
             setVisible(false);
         } else {

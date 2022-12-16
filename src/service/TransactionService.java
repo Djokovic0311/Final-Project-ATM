@@ -20,7 +20,6 @@ public class TransactionService {
     public int withdraw(int customerId, int accountId, AccountType accountType, double amount, CurrencyType currencyType) {
         double balance = accountDao.getBalanceByCurrencyType(accountId, customerId, accountType, currencyType);
         if(balance < amount) {
-            System.out.println("Insufficient funds");
             return atmConstant.getNO_ENOUGH_BALANCE();
         }
         else {
@@ -34,7 +33,6 @@ public class TransactionService {
             insertTransaction(withdrawTransaction);
             accountDao.updateAccountBalance(accountId,accountType,currencyType,remaining);
             accountDao.payBankFees(amount*atmConstant.getFEE_RATE()/currencyType.getValue(), atmConstant.getMANAGER_ACCOUNT_ID());
-            System.out.println("withdrawn");
             return atmConstant.getSUCCESS();
         }
     }
@@ -54,7 +52,6 @@ public class TransactionService {
         accountDao.updateAccountBalance(accountId,accountType,currencyType,remaining);
         if(accountType == AccountType.CHECKINGS)
             accountDao.payBankFees(amount*atmConstant.getFEE_RATE()/currencyType.getValue(), atmConstant.getMANAGER_ACCOUNT_ID());
-        System.out.println("deposit");
         return atmConstant.getSUCCESS();
 
     }
@@ -64,7 +61,6 @@ public class TransactionService {
         double toBalance = accountDao.getBalanceByCurrencyType(toAccountId, customerId, accountTypeTo, currencyType);
 
         if(fromBalance < amount) {
-            System.out.println("Insufficient funds");
             return atmConstant.getNO_ENOUGH_BALANCE();
         }
         else {
@@ -83,7 +79,6 @@ public class TransactionService {
             accountDao.updateAccountBalance(toAccountId,accountTypeTo,currencyType,toBalanceAfter);
             if(accountTypeFrom == AccountType.CHECKINGS)
                 accountDao.payBankFees(amount*atmConstant.getFEE_RATE()/currencyType.getValue(), atmConstant.getMANAGER_ACCOUNT_ID());
-            System.out.println("transfer");
 
             return atmConstant.getSUCCESS();
         }

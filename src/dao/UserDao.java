@@ -52,7 +52,6 @@ public class UserDao {
             stmt.setString(4,"Customer");
             stmt.executeUpdate();
         }catch(Exception E){
-//            System.out.println("2");
             return false;
         }
 
