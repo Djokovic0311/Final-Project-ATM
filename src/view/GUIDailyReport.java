@@ -31,7 +31,7 @@ public class GUIDailyReport extends JFrame {
     private void check(ActionEvent e) throws Exception {
         String month = dateTextField.getText().split("\\.")[0];
         String day = dateTextField.getText().split("\\.")[1];
-
+        // convert input date like 12.14 into long timestamp
         long timestamp = Utils.dateToStamp(day,month);
         transactions = transactionController.getDailyReport(timestamp);
         new GUIDailyReportTable(transactions).setVisible(true);

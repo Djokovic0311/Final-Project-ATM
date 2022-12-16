@@ -53,7 +53,7 @@ public class GUITransfer extends JFrame {
             setVisible(false);
             userAccounts = accountController.getAccountsForCustomer(userName);
             userInfo = accountController.getAccountInfoForCustomer(userName);
-            new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+            new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
         }
