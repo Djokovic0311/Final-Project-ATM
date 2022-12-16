@@ -21,7 +21,7 @@ public class LoginService {
 
     ATMConstant atmConstant = new ATMConstant();
 
-    public int signIn(String userName,String password, String userType) throws Exception {
+    public int signIn(String userName,String password, String userType) {
         if(Objects.equals(userType, "Customer")){
             Customer customer = new Customer();
             customer.setName(userName);
@@ -31,36 +31,28 @@ public class LoginService {
 
             Customer existingUser = (Customer) userDao.selectUserById(customerId,userType);
             if(existingUser == null) {
-//                System.out.println("1");
                 return atmConstant.getNO_USER_FOUND();
             }
             else {
                 if(Objects.equals(existingUser.getPassword(), password)) {
-                    System.out.println("Success Login");
                     return atmConstant.getSUCCESS();
                 }
                 else {
-//                    System.out.println("2");
-                    System.out.println(existingUser.getPassword());
-                    System.out.println(password);
-                    System.out.println("Incorrect pwd");
                     return atmConstant.getERROR();
                 }
             }
         }
         else {
-            int managerID = atmConstant.getMANAGER_ACCOUNT_ID();
+            int managerID = atmConstant.getMANAGER_ID();
             Manager manager = (Manager) userDao.selectUserById(managerID,userType);
-            if(manager == null) {
+            if(manager == null || !Objects.equals(manager.getName(), userName)) {
                 return atmConstant.getNO_USER_FOUND();
             }
             else {
-                if(Objects.equals(manager.getPassword(), password)) {
-                    System.out.println("Success Login");
+                if(Objects.equals(manager.getPassword(), password) && Objects.equals(manager.getName(), "banker")) {
                     return atmConstant.getSUCCESS();
                 }
                 else {
-                    System.out.println("Incorrect pwd");
                     return atmConstant.getERROR();
                 }
             }
@@ -71,9 +63,9 @@ public class LoginService {
     public int signUp(Customer customer, String pwd) throws Exception {
         int id = customer.getID();
         String userName = customer.getName();
-        Customer existingUser = (Customer) userDao.selectUserById(id, "customer");
+
+        Customer existingUser = (Customer) userDao.selectUserById(id, "Customer");
         if(existingUser == null) {
-//            System.out.println("1");
             boolean status = userDao.insertIntoUser(id, userName, pwd);
             if(status) {
 
@@ -81,7 +73,6 @@ public class LoginService {
             }
 
             else {
-//                System.out.println("2");
                 return atmConstant.getERROR();
             }
         }

@@ -7,7 +7,6 @@ package model;/*
 public enum AccountType {
     SAVINGS,
     CHECKINGS,
-    LOAN,
     SECURITY,
     MANAGER
 }

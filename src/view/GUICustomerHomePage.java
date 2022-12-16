@@ -64,9 +64,8 @@ public class GUICustomerHomePage extends JFrame {
         //---- profileButton ----
         profileButton.setText("Manage Profile");
         profileButton.addActionListener(e -> {
-			profile(e);
-			profile(e);
-		});
+            profile(e);
+        });
         contentPane.add(profileButton);
 
         //---- accountButton ----
@@ -83,11 +82,6 @@ public class GUICustomerHomePage extends JFrame {
         //---- moneyButton ----
         moneyButton.setText("Money Matters");
         moneyButton.addActionListener(e -> {
-            try {
-                money(e);
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
             try {
                 money(e);
             } catch (Exception ex) {

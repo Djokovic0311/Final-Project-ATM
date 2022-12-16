@@ -45,8 +45,9 @@ public class GUIBuyOrSellStock extends JFrame {
 
         int status = stockController.trade(userName,stockID,quantity,tradeType);
         if(status == atmConstant.getSUCCESS()) {
-            JOptionPane.showMessageDialog(null, "Success!!");
             setVisible(false);
+            JOptionPane.showMessageDialog(null, "Success!!");
+            new GUIStock(userAccounts,userInfo,userName).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
         }

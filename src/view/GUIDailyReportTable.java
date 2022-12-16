@@ -1,20 +1,13 @@
 /*
- * Created by JFormDesigner on Sun Dec 11 21:42:18 EST 2022
+ * Created by JFormDesigner on Wed Dec 14 15:24:04 EST 2022
  */
 
 package view;
 
-import controller.AccountController;
-import controller.LoanController;
-import controller.StockController;
-import controller.TransactionController;
-import model.CurrencyType;
-import model.Loan;
+import java.awt.event.*;
 import model.Transaction;
-import model.TransactionType;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.*;
@@ -24,59 +17,48 @@ import javax.swing.table.*;
 /**
  * @author unknown
  */
-public class GUIDisplayLoan extends JFrame {
-    private List userAccounts;
-    private List userInfo;
-    private List<Loan> loans;
-    private String userName;
-
-    private TransactionController transactionController = new TransactionController();
-    private AccountController accountController = new AccountController();
-    private StockController stockController = new StockController();
-    private LoanController loanController = new LoanController();
-    public GUIDisplayLoan(List userInfo, String userName) throws Exception {
-        this.userInfo = userInfo;
-        this.userName = userName;
+public class GUIDailyReportTable extends JFrame {
+    private List<Transaction> transactions;
+    public GUIDailyReportTable(List<Transaction> transactions) throws Exception {
+        this.transactions = transactions;
         initComponents();
         fillTable();
     }
-
-    private void back(ActionEvent e) throws Exception {
-        dispose();
-        userInfo = accountController.getAccountInfoForCustomer(userName);
-        new GUILoan(userInfo,userName).setVisible(true);
-    }
     private void fillTable() throws Exception {
-        this.loans = loanController.getLoansForCustomer(userName);
-        DefaultTableModel defaultModel = (DefaultTableModel) loanTable.getModel();
-        for(Loan loan : loans) {
-
-            double amount = loan.getPrincipalAmount();
-            int loanID = loan.getLoanID();
-            CurrencyType currencyType = loan.getCurrency();
-            double interestRate = loan.getRateOfInterest();
-
+        DefaultTableModel defaultModel = (DefaultTableModel) transactionTable.getModel();
+        defaultModel.setNumRows(0);
+        for(Transaction transaction : transactions) {
             Vector v = new Vector();
-
-
+            int transactionID = transaction.getID();
+            String type = String.valueOf(transaction.getType());
+            int accountID = transaction.getFromAccountID();
+            double amount = transaction.getAmount();
+            String currency = transaction.getCurrencyType().toString();
+            v.addElement(transactionID);
+            v.addElement(type);
+            v.addElement(accountID);
             v.addElement(amount);
-            v.addElement(loanID);
-            v.addElement(currencyType);
-            v.addElement(interestRate);
-
+            v.addElement(currency);
 
             defaultModel.addRow(v);
-            loanTable.setModel(defaultModel);
+            transactionTable.setModel(defaultModel);
         }
+        contentPanel.revalidate();
+        scrollPane1.revalidate();
+    }
+
+    private void back(ActionEvent e) {
+        dispose();
+        new GUIDailyReport().setVisible(true);
     }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
         contentPanel = new JPanel();
         scrollPane1 = new JScrollPane();
-        loanTable = new JTable();
+        transactionTable = new JTable();
         buttonBar = new JPanel();
-        backButton = new JButton();
+        okButton = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -94,18 +76,18 @@ public class GUIDisplayLoan extends JFrame {
                 //======== scrollPane1 ========
                 {
 
-                    //---- loanTable ----
-                    loanTable.setModel(new DefaultTableModel(
+                    //---- transactionTable ----
+                    transactionTable.setModel(new DefaultTableModel(
                         new Object[][] {
                         },
                         new String[] {
-                            "amount", "loanID", "CurrencyType", "interestRate"
+                            "transactionID", "type", "accountID", "amount", "currencyType"
                         }
                     ));
-                    scrollPane1.setViewportView(loanTable);
+                    scrollPane1.setViewportView(transactionTable);
                 }
                 contentPanel.add(scrollPane1);
-                scrollPane1.setBounds(0, 0, 375, 200);
+                scrollPane1.setBounds(0, 0, 365, 155);
 
                 {
                     // compute preferred size
@@ -131,16 +113,10 @@ public class GUIDisplayLoan extends JFrame {
                 ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 80};
                 ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0};
 
-                //---- backButton ----
-                backButton.setText("Back");
-                backButton.addActionListener(e -> {
-                    try {
-                        back(e);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
-                });
-                buttonBar.add(backButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+                //---- okButton ----
+                okButton.setText("OK");
+                okButton.addActionListener(e -> back(e));
+                buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));
             }
@@ -156,8 +132,8 @@ public class GUIDisplayLoan extends JFrame {
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JScrollPane scrollPane1;
-    private JTable loanTable;
+    private JTable transactionTable;
     private JPanel buttonBar;
-    private JButton backButton;
+    private JButton okButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

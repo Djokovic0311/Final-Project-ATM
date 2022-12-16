@@ -18,7 +18,7 @@ public class TransactionController {
     AccountService accountService = new AccountService();
 
     public int withdraw(int customerId, int accountId, double amount, CurrencyType currencyType) {
-        Account account = (Account) accountService.getAccountByID(accountId);
+        Account account = accountService.getAccountByID(accountId);
         AccountType accountType = account.getType();
         int status = transactionService.withdraw(customerId,accountId,accountType,amount,currencyType);
         return status;
@@ -32,14 +32,16 @@ public class TransactionController {
     }
 
     public int transfer(int customerId, int fromAccountId, int toAccountId, double amount, CurrencyType currencyType) {
-        Account account = (Account) accountService.getAccountByID(fromAccountId);
-        AccountType accountType = account.getType();
-        int status = transactionService.transfer(customerId,fromAccountId, toAccountId,amount,currencyType,accountType);
+        Account accountFrom = accountService.getAccountByID(fromAccountId);
+        AccountType accountTypeFrom = accountFrom.getType();
+        Account accountTo = accountService.getAccountByID(toAccountId);
+        AccountType accountTypeTo = accountTo.getType();
+        int status = transactionService.transfer(customerId,fromAccountId, toAccountId,amount,currencyType,accountTypeFrom,accountTypeTo);
         return status;
     }
 
     public List<Transaction> getTransactionsForCustomer(String userName) throws Exception {
-        Customer customer = (Customer) loginService.getCustomerInfo(userName);
+        Customer customer = loginService.getCustomerInfo(userName);
 
         return transactionService.getTransactions(customer);
     }

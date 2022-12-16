@@ -46,6 +46,11 @@ public class GUIUpdateStockPrice extends JFrame {
         }
     }
 
+    private void cancel(ActionEvent e) {
+        dispose();
+        new GUIStockManagement().setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -118,6 +123,7 @@ public class GUIUpdateStockPrice extends JFrame {
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
+                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));

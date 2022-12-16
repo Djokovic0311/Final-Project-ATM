@@ -1,52 +1,37 @@
 /*
- * Created by JFormDesigner on Fri Dec 09 12:16:25 EST 2022
+ * Created by JFormDesigner on Wed Dec 14 15:28:29 EST 2022
  */
 
 package view;
 
 import java.awt.event.*;
+import model.Account;
+import model.CheckingAccount;
+import model.CurrencyType;
+import model.SavingAccount;
 
-import controller.AccountController;
-import model.*;
-
-import java.util.List;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 
 /**
- * @author Jiahang Li
+ * @author unknown
  */
-public class GUICustomerAccountWindow extends JFrame {
-    private List<Account> userAccounts;
-    private List userInfo;
-    private String username;
-    private AccountController accountController = new AccountController();
-    public GUICustomerAccountWindow(List userInfo, List userAccounts,String username) throws Exception {
-        this.userAccounts = accountController.getAccountsForCustomer(username);
-        this.userInfo = userInfo;
-        this.username = username;
+public class GUICustomerChecked extends JFrame {
+    private List<Account> accounts = new ArrayList<>();
+    public GUICustomerChecked(List<Account> accounts) throws Exception {
+        this.accounts = accounts;
         initComponents();
         fillTable();
     }
 
-    private void openAccount(ActionEvent e) {
+    private void ok(ActionEvent e) throws Exception {
         dispose();
-        new GUICustomerOpenAccount(userAccounts, userInfo, username).setVisible(true);
-    }
-
-    private void closeAccount(ActionEvent e) {
-
-        dispose();
-        new GUICustomerCloseAccount(userAccounts,userInfo, username).setVisible(true);
-    }
-
-    private void back(ActionEvent e) throws Exception {
-        dispose();
-        userInfo = accountController.getAccountInfoForCustomer(username);
-        new GUICustomerHomePage(userInfo, username).setVisible(true);
+        new GUIManagerCheckCustomer().setVisible(true);
     }
 
     private void initComponents() {
@@ -56,9 +41,7 @@ public class GUICustomerAccountWindow extends JFrame {
         scrollPane1 = new JScrollPane();
         accountTable = new JTable();
         buttonBar = new JPanel();
-        backButton = new JButton();
-        openAccountButton = new JButton();
-        closeAccountButton = new JButton();
+        okButton = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -81,13 +64,13 @@ public class GUICustomerAccountWindow extends JFrame {
                         new Object[][] {
                         },
                         new String[] {
-                            "id", "type", "USD", "EUR", "CNY"
+                            null, null, null
                         }
                     ));
                     scrollPane1.setViewportView(accountTable);
                 }
                 contentPanel.add(scrollPane1);
-                scrollPane1.setBounds(20, 15, 330, 170);
+                scrollPane1.setBounds(0, 0, 385, 160);
 
                 {
                     // compute preferred size
@@ -110,33 +93,19 @@ public class GUICustomerAccountWindow extends JFrame {
             {
                 buttonBar.setBorder(new EmptyBorder(12, 0, 0, 0));
                 buttonBar.setLayout(new GridBagLayout());
-                ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
-                ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
+                ((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 80};
+                ((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0};
 
-                //---- backButton ----
-                backButton.setText("back");
-                backButton.addActionListener(e -> {
+                //---- okButton ----
+                okButton.setText("OK");
+                okButton.addActionListener(e -> {
                     try {
-                        back(e);
+                        ok(e);
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
                 });
-                buttonBar.add(backButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 5), 0, 0));
-
-                //---- openAccountButton ----
-                openAccountButton.setText("Open an account");
-                openAccountButton.addActionListener(e -> openAccount(e));
-                buttonBar.add(openAccountButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 5), 0, 0));
-
-                //---- closeAccountButton ----
-                closeAccountButton.setText("Close an account");
-                closeAccountButton.addActionListener(e -> closeAccount(e));
-                buttonBar.add(closeAccountButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+                buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
                     GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                     new Insets(0, 0, 0, 0), 0, 0));
             }
@@ -147,40 +116,32 @@ public class GUICustomerAccountWindow extends JFrame {
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
-
     private void fillTable() throws Exception {
-        this.userAccounts = accountController.getAccountsForCustomer(username);
         DefaultTableModel defaultModel = (DefaultTableModel) accountTable.getModel();
-        for(Account account : userAccounts) {
-
-            int accountID = account.getAccountID();
-            String accountType = account.getType().toString();
-            double balanceUSD = account.getBalanceByCurrency(CurrencyType.USD);
-            double balanceCNY = account.getBalanceByCurrency(CurrencyType.CNY);
-            double balanceEUR = account.getBalanceByCurrency(CurrencyType.EUR);
+        for(Object account : accounts) {
             Vector v = new Vector();
-
-
-            v.addElement(accountID);
-            v.addElement(accountType);
-            v.addElement(balanceUSD);
-            v.addElement(balanceEUR);
-            v.addElement(balanceCNY);
-
-
+            if(account instanceof SavingAccount || account instanceof CheckingAccount){
+                int accountID = ((Account) account).getAccountID();
+                String accountType = String.valueOf(((Account) account).getType());
+                double balance = 0;
+                for(CurrencyType currencyType : ((Account) account).getBalance().keySet()){
+                    balance += ((Account) account).getBalanceByCurrency(currencyType) * currencyType.getValue();
+                }
+                v.addElement(accountID);
+                v.addElement(accountType);
+                v.addElement(balance);
+            }
             defaultModel.addRow(v);
             accountTable.setModel(defaultModel);
         }
-    }
 
+    }
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables  @formatter:off
     private JPanel dialogPane;
     private JPanel contentPanel;
     private JScrollPane scrollPane1;
     private JTable accountTable;
     private JPanel buttonBar;
-    private JButton backButton;
-    private JButton openAccountButton;
-    private JButton closeAccountButton;
+    private JButton okButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

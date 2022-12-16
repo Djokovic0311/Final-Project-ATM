@@ -54,8 +54,18 @@ CREATE TABLE Transactions (
     transactionTime double
 );
 
+CREATE TABLE StockTransactions (
+	transactionID int,
+    customerID int,
+    stockID int,
+    quantity int,
+    totalPrice double,
+    transactionType varchar(255),
+    transactionTime double
+);
+
 CREATE TABLE CustomerHoldStocks (
-	recordID int,
+    ID int,
 	stockID int,
     customerID int,
     quantity int,
@@ -68,10 +78,10 @@ CREATE TABLE StockMarket (
     price double
 );
 
-INSERT INTO Person VALUES (20221216, 'banker', '123456', 'Manager');
-INSERT INTO Person VALUES (3424432, 'owen', 'cs611', 'Customer');
-INSERT INTO CheckingAccount VALUES (1415926, 20221216, 10000.00, 100000.0, 100000.0);
-INSERT INTO SavingAccount VALUES (1245678, 3424432, 10000.00, 0.0, 10000.00, 1600033901960);
-INSERT INTO stockMarket VALUES (611, 45.0);
-INSERT INTO stockMarket VALUES (630, 24.0);
-INSERT INTO stockMarket VALUES (655, 85.0);
+CREATE TABLE Settings (
+	openAccountFee double,
+    closeAccountFee double,
+    savingInterest double,
+    loanInterest double,
+    transactionFee double # this is the percentage charged during traction
+);

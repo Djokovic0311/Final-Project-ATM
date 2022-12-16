@@ -13,6 +13,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -22,9 +23,11 @@ import java.util.Vector;
 public class GUIManagerCheckCustomer extends JFrame {
     AccountController accountController = new AccountController();
     LoginController loginController = new LoginController();
-    private List accounts;
-    public GUIManagerCheckCustomer() {
+    private List<Account> accounts = new ArrayList<>();
+    public GUIManagerCheckCustomer() throws Exception {
+
         initComponents();
+
     }
 
     private void back(ActionEvent e) {
@@ -36,29 +39,11 @@ public class GUIManagerCheckCustomer extends JFrame {
         int customerID = Integer.parseInt(customerIDTextField.getText());
         Customer customer = (Customer) loginController.getUserByID(customerID);
         this.accounts = accountController.getAccountsForCustomer(customer.getName());
-        fillTable();
+        dispose();
+        new GUICustomerChecked(accounts).setVisible(true);
     }
 
-    private void fillTable() throws Exception {
-        DefaultTableModel defaultModel = (DefaultTableModel) accountTable.getModel();
-        defaultModel.setNumRows(0);
-        for(Object account : accounts) {
-            Vector v = new Vector();
-            if(account instanceof SavingAccount || account instanceof CheckingAccount){
-                int accountID = ((Account) account).getAccountID();
-                String accountType = String.valueOf(((Account) account).getType());
-                double balance = 0;
-                for(CurrencyType currencyType : ((Account) account).getBalance().keySet()){
-                    balance += ((Account) account).getBalanceByCurrency(currencyType) * currencyType.getValue();
-                }
-                v.addElement(accountID);
-                v.addElement(accountType);
-                v.addElement(balance);
-            }
-            defaultModel.addRow(v);
-            accountTable.setModel(defaultModel);
-        }
-    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         dialogPane = new JPanel();
@@ -68,8 +53,6 @@ public class GUIManagerCheckCustomer extends JFrame {
         buttonBar = new JPanel();
         checkButton = new JButton();
         backButton = new JButton();
-        scrollPane1 = new JScrollPane();
-        accountTable = new JTable();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -140,21 +123,6 @@ public class GUIManagerCheckCustomer extends JFrame {
         contentPane.add(dialogPane, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(getOwner());
-
-        //======== scrollPane1 ========
-        {
-
-            //---- accountTable ----
-            accountTable.setModel(new DefaultTableModel(
-                new Object[][] {
-                },
-                new String[] {
-                    "accountID", "accountType", "total Balance"
-                }
-            ));
-            scrollPane1.setViewportView(accountTable);
-            scrollPane1.setBounds(0, 0, 375, 200);
-        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -166,7 +134,5 @@ public class GUIManagerCheckCustomer extends JFrame {
     private JPanel buttonBar;
     private JButton checkButton;
     private JButton backButton;
-    private JScrollPane scrollPane1;
-    private JTable accountTable;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

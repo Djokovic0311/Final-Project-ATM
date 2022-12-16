@@ -40,8 +40,7 @@ public class GUITransactionHistory extends JFrame {
 
     private void back(ActionEvent e) throws Exception {
         dispose();
-        setVisible(false);
-        new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+        new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
     }
     private void fillTable() throws Exception {
         this.transactions = transactionController.getTransactionsForCustomer(userName);
@@ -52,8 +51,8 @@ public class GUITransactionHistory extends JFrame {
             int transactionID = transaction.getID();
             int customerID = transaction.getuserID();
             long timestamp = transaction.getTimestamp();
-            CurrencyType currencyType = transaction.getCurrencyType();
-            TransactionType transactionType = transaction.getType();
+            String currencyType = String.valueOf(transaction.getCurrencyType());
+            String transactionType = String.valueOf(transaction.getType());
             int toAccountID = transaction.getToAccountID();
             int fromAccountID = transaction.getFromAccountID();
             Vector v = new Vector();
@@ -100,12 +99,18 @@ public class GUITransactionHistory extends JFrame {
                     transactionTable.setModel(new DefaultTableModel(
                         new Object[][] {
                         },
+                            //            v.addElement(transactionID);
+                            //            v.addElement(amount);
+                            //            v.addElement(transactionType);
+                            //            v.addElement(currencyType);
+                            //            v.addElement(timestamp);
+                            //            v.addElement(customerID);
+                            //            v.addElement(toAccountID);
+                            //            v.addElement(fromAccountID);
                         new String[] {
-                            "ID", "amount", "type", "currency", "timestamp", "userID", "toAccountID", "fromAccountID"
+                            "transactionID", "amount", "transactionType", "currencyType", "timestamp", "customerID", "toAccountID", "fromAccountID"
                         }
                     ));
-
-                    transactionTable.setPreferredScrollableViewportSize(new Dimension(455, 150));
                     scrollPane1.setViewportView(transactionTable);
                 }
                 contentPanel.add(scrollPane1);

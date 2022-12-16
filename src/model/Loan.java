@@ -17,6 +17,7 @@ public class Loan {
         this.amount = amount;
         this.currency = currency;
         this.tenure = 1;
+        this.loanCommenceDate = 1;
         this.rateOfInterest = 0.01;
         this.loanCommenceDate = date;
     }

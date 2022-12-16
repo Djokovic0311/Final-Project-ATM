@@ -4,6 +4,7 @@
 
 package view;
 
+import controller.AccountController;
 import controller.TransactionController;
 import model.CurrencyType;
 import utils.ATMConstant;
@@ -23,7 +24,7 @@ public class GUITransfer extends JFrame {
     private java.util.List userAccounts;
     private List userInfo;
     private String userName;
-
+    private AccountController accountController = new AccountController();
     private TransactionController transactionController = new TransactionController();
     ATMConstant atmConstant = new ATMConstant();
 
@@ -37,7 +38,7 @@ public class GUITransfer extends JFrame {
     private void cancel(ActionEvent e) throws Exception {
         dispose();
         setVisible(false);
-        new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+        new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
     }
 
     private void transfer(ActionEvent e) throws Exception {
@@ -50,7 +51,9 @@ public class GUITransfer extends JFrame {
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
             setVisible(false);
-            new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+            userAccounts = accountController.getAccountsForCustomer(userName);
+            userInfo = accountController.getAccountInfoForCustomer(userName);
+            new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
         }
@@ -92,11 +95,11 @@ public class GUITransfer extends JFrame {
 
                 //---- currencyTypeComboBox ----
                 currencyTypeComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
-                    "USD",
-                    "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                        "USD",
+                        "EUR",
+                        "GBP",
+                        "CNY",
+                        "HKD"
                 }));
                 contentPanel.add(currencyTypeComboBox);
                 currencyTypeComboBox.setBounds(195, 100, 84, 30);
@@ -156,8 +159,8 @@ public class GUITransfer extends JFrame {
                     }
                 });
                 buttonBar.add(transferButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 5), 0, 0));
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
@@ -169,8 +172,8 @@ public class GUITransfer extends JFrame {
                     }
                 });
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 0), 0, 0));
             }
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }

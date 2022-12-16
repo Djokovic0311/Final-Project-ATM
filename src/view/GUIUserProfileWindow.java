@@ -25,9 +25,6 @@ public class GUIUserProfileWindow extends JFrame {
         setText(userInfo);
     }
 
-    private void passwordChange(ActionEvent e) {
-        // TODO add your code here
-    }
 
     private void back(ActionEvent e) {
         dispose();
@@ -40,8 +37,9 @@ public class GUIUserProfileWindow extends JFrame {
         label2 = new JLabel();
         userNameContent = new JLabel();
         passwordContent = new JLabel();
-        passwordChangeButton = new JButton();
         backButton = new JButton();
+        userIDLabel = new JLabel();
+        userIDContent = new JLabel();
 
         //======== this ========
         setTitle("User Profile");
@@ -68,17 +66,21 @@ public class GUIUserProfileWindow extends JFrame {
         contentPane.add(passwordContent);
         passwordContent.setBounds(180, 110, 85, passwordContent.getPreferredSize().height);
 
-        //---- passwordChangeButton ----
-        passwordChangeButton.setText("change");
-        passwordChangeButton.addActionListener(e -> passwordChange(e));
-        contentPane.add(passwordChangeButton);
-        passwordChangeButton.setBounds(new Rectangle(new Point(280, 105), passwordChangeButton.getPreferredSize()));
-
         //---- backButton ----
         backButton.setText("back");
         backButton.addActionListener(e -> back(e));
         contentPane.add(backButton);
         backButton.setBounds(new Rectangle(new Point(300, 215), backButton.getPreferredSize()));
+
+        //---- userIDLabel ----
+        userIDLabel.setText("UserID");
+        contentPane.add(userIDLabel);
+        userIDLabel.setBounds(75, 170, 63, 16);
+
+        //---- userIDContent ----
+        userIDContent.setText("default");
+        contentPane.add(userIDContent);
+        userIDContent.setBounds(175, 170, 85, 16);
 
         {
             // compute preferred size
@@ -101,6 +103,7 @@ public class GUIUserProfileWindow extends JFrame {
     public void setText(List userInfo){
         userNameContent.setText(userInfo.get(0)+"");
         passwordContent.setText(userInfo.get(1)+"");
+        userIDContent.setText(userInfo.get(2)+"");
     }
 
 
@@ -109,7 +112,8 @@ public class GUIUserProfileWindow extends JFrame {
     private JLabel label2;
     private JLabel userNameContent;
     private JLabel passwordContent;
-    private JButton passwordChangeButton;
     private JButton backButton;
+    private JLabel userIDLabel;
+    private JLabel userIDContent;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

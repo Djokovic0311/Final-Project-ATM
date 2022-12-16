@@ -5,6 +5,8 @@
 package view;
 
 import java.awt.event.*;
+
+import controller.AccountController;
 import controller.TransactionController;
 import model.CurrencyType;
 import utils.ATMConstant;
@@ -25,6 +27,7 @@ public class GUIDeposit extends JFrame {
     private String userName;
 
     private TransactionController transactionController = new TransactionController();
+    private AccountController accountController = new AccountController();
     ATMConstant atmConstant = new ATMConstant();
     public GUIDeposit(List userAccounts, List userInfo, String userName) {
         this.userName = userName;
@@ -48,7 +51,9 @@ public class GUIDeposit extends JFrame {
         if(status == atmConstant.getSUCCESS()) {
             JOptionPane.showMessageDialog(null, "Success!!");
             setVisible(false);
-            new GUICustomerMoneyWindow(userAccounts, userInfo, userName);
+            userAccounts = accountController.getAccountsForCustomer(userName);
+            userInfo = accountController.getAccountInfoForCustomer(userName);
+            new GUICustomerMoneyWindow(userAccounts, userInfo, userName).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Something wrong! Please Try it again!");
         }

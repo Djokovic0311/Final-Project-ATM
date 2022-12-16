@@ -53,8 +53,8 @@ public class Utils {
     public static double redeem(double balance, int dayPass) {
         double new_balance = balance;
         ATMConstant a = new ATMConstant();
-        for (int i = 0; i < dayPass; i ++) {
-            new_balance *= a.getREDEEM_INTEREST();
+        for (int i = 0; i < dayPass/7; i ++) { // Gain interest each month
+            new_balance *= (1 + a.getREDEEM_INTEREST());
         }
         return new_balance;
     }

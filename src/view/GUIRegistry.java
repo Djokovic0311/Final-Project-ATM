@@ -29,6 +29,7 @@ public class GUIRegistry extends JFrame {
         String userName = this.userNameTextField.getText();
         String password = String.valueOf(this.passwordTextField.getPassword());
         int i = loginController.signUpCustomer(userName,password);
+        System.out.println(i);
         if(Utils.isEmpty(userName)) {
             JOptionPane.showMessageDialog(null, "Username cannot be empty");
             return;

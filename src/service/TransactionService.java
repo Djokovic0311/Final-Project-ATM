@@ -24,7 +24,7 @@ public class TransactionService {
             return atmConstant.getNO_ENOUGH_BALANCE();
         }
         else {
-            double remaining = balance - amount;
+            double remaining = balance - amount*(1+atmConstant.getFEE_RATE()/currencyType.getValue());
             long timestamp = Utils.getTimestamp();
             int transactionID = Utils.getFixedLengthRandom(10);
             while(transactionDao.transactionExist(transactionID)) {
@@ -33,7 +33,7 @@ public class TransactionService {
             WithdrawTransaction withdrawTransaction = new WithdrawTransaction(transactionID,timestamp,amount,customerId,accountId,-1,currencyType);
             insertTransaction(withdrawTransaction);
             accountDao.updateAccountBalance(accountId,accountType,currencyType,remaining);
-            accountDao.payBankFees(amount, atmConstant.getMANAGER_ACCOUNT_ID());
+            accountDao.payBankFees(amount*atmConstant.getFEE_RATE()/currencyType.getValue(), atmConstant.getMANAGER_ACCOUNT_ID());
             System.out.println("withdrawn");
             return atmConstant.getSUCCESS();
         }
@@ -42,7 +42,7 @@ public class TransactionService {
     public int deposit(int customerId, int accountId, AccountType accountType, double amount, CurrencyType currencyType) {
         double balance = accountDao.getBalanceByCurrencyType(accountId, customerId, accountType, currencyType);
 
-        double remaining = balance + amount;
+        double remaining = balance + amount*(1-atmConstant.getFEE_RATE()/currencyType.getValue());
         long timestamp = Utils.getTimestamp();
         int transactionID = Utils.getFixedLengthRandom(10);
         while(transactionDao.transactionExist(transactionID)) {
@@ -52,22 +52,23 @@ public class TransactionService {
         insertTransaction(depositTransaction);
 
         accountDao.updateAccountBalance(accountId,accountType,currencyType,remaining);
-        accountDao.payBankFees(amount, atmConstant.getMANAGER_ACCOUNT_ID());
+        if(accountType == AccountType.CHECKINGS)
+            accountDao.payBankFees(amount*atmConstant.getFEE_RATE()/currencyType.getValue(), atmConstant.getMANAGER_ACCOUNT_ID());
         System.out.println("deposit");
         return atmConstant.getSUCCESS();
 
     }
 
-    public int transfer(int customerId, int fromAccountId, int toAccountId, double amount, CurrencyType currencyType,AccountType accountType) {
-        double fromBalance = accountDao.getBalanceByCurrencyType(fromAccountId, customerId, accountType, currencyType);
-        double toBalance = accountDao.getBalanceByCurrencyType(toAccountId, customerId, accountType, currencyType);
+    public int transfer(int customerId, int fromAccountId, int toAccountId, double amount, CurrencyType currencyType,AccountType accountTypeFrom, AccountType accountTypeTo) {
+        double fromBalance = accountDao.getBalanceByCurrencyType(fromAccountId, customerId, accountTypeFrom, currencyType);
+        double toBalance = accountDao.getBalanceByCurrencyType(toAccountId, customerId, accountTypeTo, currencyType);
 
         if(fromBalance < amount) {
             System.out.println("Insufficient funds");
             return atmConstant.getNO_ENOUGH_BALANCE();
         }
         else {
-            double fromBalanceAfter = fromBalance - amount;
+            double fromBalanceAfter = fromBalance - amount*(1+atmConstant.getFEE_RATE()/currencyType.getValue());
             double toBalanceAfter = toBalance + amount;
 
             long timestamp = Utils.getTimestamp();
@@ -78,10 +79,10 @@ public class TransactionService {
             TransferTransaction transferTransaction = new TransferTransaction(transactionID,timestamp,amount,customerId,fromAccountId,toAccountId,currencyType);
             insertTransaction(transferTransaction);
 
-            accountDao.updateAccountBalance(fromAccountId,accountType,currencyType,fromBalanceAfter);
-            accountDao.updateAccountBalance(toAccountId,accountType,currencyType,toBalanceAfter);
-
-            accountDao.payBankFees(amount, atmConstant.getMANAGER_ACCOUNT_ID());
+            accountDao.updateAccountBalance(fromAccountId,accountTypeFrom,currencyType,fromBalanceAfter);
+            accountDao.updateAccountBalance(toAccountId,accountTypeTo,currencyType,toBalanceAfter);
+            if(accountTypeFrom == AccountType.CHECKINGS)
+                accountDao.payBankFees(amount*atmConstant.getFEE_RATE()/currencyType.getValue(), atmConstant.getMANAGER_ACCOUNT_ID());
             System.out.println("transfer");
 
             return atmConstant.getSUCCESS();

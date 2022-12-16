@@ -4,7 +4,9 @@ import model.CurrencyType;
 import model.Transaction;
 import model.TransactionType;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class TransactionDao {
 
 
     }
-    // check whether an transaction exists
+    // check whether a transaction exists
     public boolean transactionExist(int transactionID) {
         try {
             String query = "SELECT * FROM TRANSACTIONS WHERE transactionID = ?;";
@@ -50,8 +52,6 @@ public class TransactionDao {
             return false;
         }
     }
-
-
     public List<Transaction> getTransactionsforCustomer(int customerID) {
         List<Transaction> transactions = new ArrayList<>();
         try {
@@ -80,12 +80,14 @@ public class TransactionDao {
 
     public List<Transaction> getDailyTransactions (long timestamp){
         double time = (double) timestamp;
+        double todayEnd = time + 24*60*60*1000; // 24h, 60m, 60s, 1000ms
         List<Transaction> transactions = new ArrayList<>();
         try {
-            String query = "SELECT * FROM TRANSACTIONS WHERE transactionTime = ?;";
+            String query = "SELECT * FROM TRANSACTIONS WHERE transactionTime BETWEEN ? AND ?;";
             Connection conn = ConnectDao.connectToDb();
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setDouble(1, time);
+            stmt.setDouble(2, todayEnd);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 int transactionId = rs.getInt(1);
@@ -97,7 +99,8 @@ public class TransactionDao {
                 int balance = rs.getInt(6);
                 String type = rs.getString(7);
                 TransactionType transactiontype = TransactionType.getTypeFromString(type);
-                Transaction T = new Transaction(transactionId,timestamp, balance,customerID,transactiontype,fromacc,toacc,currencytype);
+                long transactionTime = (long) rs.getDouble(8);
+                Transaction T = new Transaction(transactionId,transactionTime, balance,customerID,transactiontype,fromacc,toacc,currencytype);
                 transactions.add(T);
             }
         } catch (Exception e) { return null; }

@@ -26,35 +26,20 @@ public class GUIDailyReport extends JFrame {
         initComponents();
     }
 
-    private void fillTable() throws Exception {
-        DefaultTableModel defaultModel = (DefaultTableModel) transactionTable.getModel();
 
-        defaultModel.setNumRows(0);
-        for(Transaction transaction : transactions) {
-            Vector v = new Vector();
-            int transactionID = transaction.getID();
-            String type = transaction.getType().toString();
-            int accountID = transaction.getFromAccountID();
-            double amount = transaction.getAmount();
-            String currency = transaction.getCurrencyType().toString();
-            v.addElement(transactionID);
-            v.addElement(type);
-            v.addElement(accountID);
-            v.addElement(amount);
-            v.addElement(currency);
-
-            defaultModel.addRow(v);
-            transactionTable.setModel(defaultModel);
-        }
-    }
 
     private void check(ActionEvent e) throws Exception {
         String month = dateTextField.getText().split("\\.")[0];
         String day = dateTextField.getText().split("\\.")[1];
-
+        // convert input date like 12.14 into long timestamp
         long timestamp = Utils.dateToStamp(day,month);
         transactions = transactionController.getDailyReport(timestamp);
-        fillTable();
+        new GUIDailyReportTable(transactions).setVisible(true);
+    }
+
+    private void cancel(ActionEvent e) {
+        dispose();
+        new GUIManagerHomepage().setVisible(true);
     }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
@@ -65,8 +50,6 @@ public class GUIDailyReport extends JFrame {
         buttonBar = new JPanel();
         checkButton = new JButton();
         cancelButton = new JButton();
-        scrollPane1 = new JScrollPane();
-        transactionTable = new JTable();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -122,34 +105,21 @@ public class GUIDailyReport extends JFrame {
                     }
                 });
                 buttonBar.add(checkButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 5), 0, 0));
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 5), 0, 0));
 
                 //---- cancelButton ----
                 cancelButton.setText("Cancel");
+                cancelButton.addActionListener(e -> cancel(e));
                 buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-                    GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                    new Insets(0, 0, 0, 0), 0, 0));
+                        GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                        new Insets(0, 0, 0, 0), 0, 0));
             }
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(getOwner());
-
-        //======== scrollPane1 ========
-        {
-
-            //---- transactionTable ----
-            transactionTable.setModel(new DefaultTableModel(
-                new Object[][] {
-                },
-                new String[] {
-                    null, null, null, null, null
-                }
-            ));
-            scrollPane1.setViewportView(transactionTable);
-        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -161,7 +131,5 @@ public class GUIDailyReport extends JFrame {
     private JPanel buttonBar;
     private JButton checkButton;
     private JButton cancelButton;
-    private JScrollPane scrollPane1;
-    private JTable transactionTable;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

@@ -31,7 +31,7 @@ public class GUITranscurrency extends JFrame {
     private StockController stockController = new StockController();
     ATMConstant atmConstant = new ATMConstant();
 
-    public GUITranscurrency() throws Exception {
+    public GUITranscurrency(String userName) throws Exception {
         this.userAccounts = accountController.getAccountsForCustomer(userName);
 
         this.userInfo = userInfo;
@@ -104,9 +104,7 @@ public class GUITranscurrency extends JFrame {
                 fromCurrencyComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(fromCurrencyComboBox);
                 fromCurrencyComboBox.setBounds(170, 60, 84, 30);
@@ -115,9 +113,7 @@ public class GUITranscurrency extends JFrame {
                 toCurrencyComboBox.setModel(new DefaultComboBoxModel<>(new String[] {
                     "USD",
                     "EUR",
-                    "GBP",
-                    "CNY",
-                    "HKD"
+                    "CNY"
                 }));
                 contentPanel.add(toCurrencyComboBox);
                 toCurrencyComboBox.setBounds(170, 100, 84, 30);
@@ -125,14 +121,14 @@ public class GUITranscurrency extends JFrame {
                 //---- amountLabel ----
                 amountLabel.setText("Amount");
                 contentPanel.add(amountLabel);
-                amountLabel.setBounds(50, 150, 47, 16);
+                amountLabel.setBounds(50, 150, 90, 16);
                 contentPanel.add(amountTextField);
                 amountTextField.setBounds(170, 145, 85, 30);
 
                 //---- accountLabel ----
                 accountLabel.setText("AccountID");
                 contentPanel.add(accountLabel);
-                accountLabel.setBounds(50, 25, 63, 16);
+                accountLabel.setBounds(50, 25, 105, 16);
                 contentPanel.add(accountIDTextField);
                 accountIDTextField.setBounds(170, 25, 120, 30);
 

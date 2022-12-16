@@ -19,7 +19,7 @@ public class AccountController {
         User user = loginService.getCustomerInfo(userName);
         return accountService.getAccountInfoForCustomer(user);
     }
-    public List<Object> getAccountsForCustomer(String userName) throws Exception {
+    public List<Account> getAccountsForCustomer(String userName) throws Exception {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         return accountService.getAccountsForCustomer(customer);
     }
@@ -48,6 +48,7 @@ public class AccountController {
         Customer customer = (Customer) loginService.getCustomerInfo(userName);
         Account account = getAccountsForCustomerByID(userName,accountID);
         if(account == null) {
+            System.out.println("No account");
             return atmConstant.getERROR();
         }
         else {

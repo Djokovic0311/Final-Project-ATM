@@ -57,6 +57,7 @@ new FormModel {
 						name: "backButton"
 						"text": "Back"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "back", true ) )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 1
 						"gridy": 0
