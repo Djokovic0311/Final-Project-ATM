@@ -18,6 +18,6 @@ The description of all the files is in the design documentation.
 ---------------------------------------------------------------------------
 1. Navigate to the directory "Team_17" after unzipping the files
 2. Run the following instructions:
-   javac $(find src -name "*.java") -encoding UTF8 -classpath "XXX.jar" -d output/ 
+   javac $(find src -name "*.java") -encoding UTF8 -classpath "lib/mysql-connector-j-8.0.31.jar" -d output/ 
    cd output
    java view.GUILoginWindow
