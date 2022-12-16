@@ -19,5 +19,6 @@ The description of all the files is in the design documentation.
 1. Navigate to the directory "pa1" after unzipping the files
 2. Run the following instructions:
    <Example below>
-   javac -d bin src/*.java
-   java -cp bin Main
+   javac $(find src -name "*.java") -encoding UTF8 -classpath "XXX.jar" -d output/ 
+   cd output
+   java view.GUILoginWindow
